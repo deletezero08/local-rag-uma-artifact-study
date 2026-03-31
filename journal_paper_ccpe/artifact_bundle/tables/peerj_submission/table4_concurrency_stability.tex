@@ -1,11 +1,11 @@
 \begin{table}[htbp]
 \centering
-\caption{Concurrency behavior under full-context and optimized execution paths at two contention levels.}
+\caption{Concurrency behavior under full-context and optimized execution paths at two contention levels, averaged over \texttt{n = 5} repeated rounds at each concurrency level.}
 \label{tab:concurrency-stability}
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{p{2.15cm} r r r r r}
 \hline
-Mode / N & Success rate & P95 TTFT (ms) & Aggregate TPS & Wall time (s) & Errors \\
+Mode / N & Success rate & P95 TTFT (ms) & Aggregate TPS & Wall time (s) & Mean errors/run \\
 \hline
 Full context / 2 & $1.00$ & $7725.955$ & $6.352$ & $40.670$ & $0.0$ \\
 Optimized path / 2 & $1.00$ & $6921.581$ & $7.025$ & $36.818$ & $0.0$ \\

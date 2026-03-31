@@ -165,7 +165,7 @@ These groups are intentionally sequential. The backend comparison establishes a 
 
 The main metrics used in this study are TTFT, TPS, wall time, P95 TTFT where explicitly stated, Recall@k, MAE, Max Error, and merged dual-judge Faithfulness/Relevance. This metric design follows a practical evaluation order: first determine whether the system is executable, then identify where the bottleneck lies, and finally examine whether the resulting quality loss is acceptable.
 
-Retrieval-side metrics measure the price of compression in index fidelity. For end-to-end output preservation, an automated dual-judge system provides an acceptability check on the final answer behavior. The dual-judge pipeline uses two strong teacher models (\texttt{Qwen3-8B} and \texttt{DeepSeek-R1-8B}) as independent evaluators to score Faithfulness and Relevance, and reports merged scores on a $0$--$10$ presentation scale after averaging the two judge outputs. By separating these signals, the evaluation avoids treating all improvements as interchangeable.
+Retrieval-side metrics measure the price of compression in index fidelity. For end-to-end output preservation, an automated dual-judge system provides an acceptability check on the final answer behavior. The dual-judge pipeline uses two strong teacher models (\texttt{Qwen3-8B} and \texttt{DeepSeek-R1-8B}) as independent evaluators to score Faithfulness and Relevance, and reports merged scores on a $0$--$10$ presentation scale after averaging the two judge outputs. By separating these signals, the evaluation avoids treating all improvements as interchangeable. Unless otherwise stated, repeated backend and concurrency conditions use \texttt{n = 5} runs, expanded long-context checks use \texttt{n = 3} rounds per depth, and answer-level dual-judge comparisons use the \texttt{test40} slice (\texttt{n = 40}).
 
 This isolation enables us to profile application-level proxy signals for hardware pressure, which are further cross-validated against OS-level virtual memory paging monitors. These measurements provide operational evidence of hardware stress, but they should not be interpreted as direct PMU-level proof of memory-bus saturation.
 
@@ -196,7 +196,7 @@ The most important observation is that backend migration within the same model f
 
 Two additional interpretations follow from this result. First, the most dramatic gain appears before any cross-family model comparison is needed: the backend route alone can determine whether a local path is deployable at all. Second, the negative baseline provides a clear boundary for what counts as deployable on the tested device. Once TTFT reaches minute-like scales and decode throughput collapses toward zero, the route is no longer meaningful as an interactive local RAG backend. This boundary motivates the rest of the paper's optimization sequence.
 
-To move this conclusion beyond a single observation, a follow-up repeated benchmark was run on the two GGUF paths. Under that repeated setting, \texttt{Falcon-7B-Q + GGUF} reaches \texttt{158.486 $\pm$ 52.038 ms} mean TTFT and \texttt{17.218 $\pm$ 0.859 TPS}, whereas \texttt{Llama-3-8B-Q + GGUF} reaches \texttt{122.888 $\pm$ 40.561 ms} mean TTFT and \texttt{16.960 $\pm$ 0.643 TPS}. These repeated measurements should not be read as converting the \texttt{MPS} row into an equivalent statistical comparison condition; the \texttt{Falcon-7B on MPS} row remains imported cautionary evidence because that route is operationally impractical in the current paper track. What the repeated check does show is that the deployability of the GGUF routes is stable under reruns rather than a one-off artifact of a single benchmark pass.
+To move this conclusion beyond a single observation, a follow-up repeated benchmark (\texttt{n = 5}) was run on the two GGUF paths. Under that repeated setting, \texttt{Falcon-7B-Q + GGUF} reaches \texttt{158.486 $\pm$ 52.038 ms} mean TTFT and \texttt{17.218 $\pm$ 0.859 TPS}, whereas \texttt{Llama-3-8B-Q + GGUF} reaches \texttt{122.888 $\pm$ 40.561 ms} mean TTFT and \texttt{16.960 $\pm$ 0.643 TPS}. These repeated measurements should not be read as converting the \texttt{MPS} row into an equivalent statistical comparison condition; the \texttt{Falcon-7B on MPS} row remains imported cautionary evidence because that route is operationally impractical in the current paper track. What the repeated check does show is that the deployability of the GGUF routes is stable under reruns rather than a one-off artifact of a single benchmark pass.
 
 \subsection{Unified Memory Bandwidth Profiling}
 
@@ -272,7 +272,7 @@ Table~\ref{tab:long-context-robustness} expands the depth sweep to \texttt{0\%},
 
 \subsection{Quality preservation under compression}
 
-To avoid interpreting the paper as speed-only optimization, quality preservation is examined using dual-judge \texttt{test40} results.
+To avoid interpreting the paper as speed-only optimization, quality preservation is examined using dual-judge \texttt{test40} results. This section differs from Section~5.3 in evaluation scope: Table~\ref{tab:turboquant-e2e-ablation} isolates the effect of retrieval compression under a fixed downstream setting, whereas the current section evaluates the final selected operating point after bounded joint selection over \texttt{topn} $\times$ \texttt{budget} under the current paper-track protocol.
 
 \begin{figure*}[t]
 \centering
@@ -305,7 +305,7 @@ Under the current evaluation setting, the selected operating point should be und
 \label{fig:e2e-breakdown}
 \end{figure*}
 
-The decomposition results make the bottleneck migration explicit. V1 and V2 differ not only in total latency (\texttt{16.8 s} vs. \texttt{5.3 s}) but also in the share of time spent in generation (\texttt{92.5\%} vs. \texttt{77.4\%}). Even within the representative optimized path, decode remains the dominant internal cost, which explains why retrieval-side improvements alone cannot fully eliminate end-to-end latency.
+The decomposition results make the bottleneck migration explicit for the baseline \texttt{keep\_ratio = 1.0} path and the optimized \texttt{keep\_ratio = 0.6} path shown in Figure~\ref{fig:e2e-breakdown}. End-to-end latency falls from \texttt{20.3 s} to \texttt{14.6 s}, with the largest absolute reduction coming from prefill (\texttt{5.29 s} to \texttt{0.87 s}). Decode changes much less in absolute terms (\texttt{14.44 s} to \texttt{13.69 s}) and therefore remains the dominant residual cost in the optimized path.
 
 \input{tables/peerj_submission/table6_latency_breakdown.tex}
 
@@ -360,7 +360,7 @@ Finally, we acknowledge that the layered nature of our evidence carries varying 
 
 \section{Reproducibility Statement}
 
-All major conclusions in this paper are bound to existing project assets, including benchmark JSON files, research logs, and execution scripts. Core evidence comes from backend-comparison logs, performance scans, keep-ratio trade-off curves, concurrency stress reports, quantization-quality evaluations, and the project research log. For submission readiness, a more formal replication package should additionally provide model identifiers, quantization formats, runtime flags, script entry points, and a compact result manifest.
+All major conclusions in this paper are bound to existing project assets, including benchmark JSON files, research logs, and execution scripts. Core evidence comes from backend-comparison logs, performance scans, keep-ratio trade-off curves, concurrency stress reports, quantization-quality evaluations, and the project research log. The current review artifact bundle provides model identifiers, quantization formats, runtime flags, script entry points, and a compact result manifest for the reported claims.
 
 At a minimum, the artifact package should expose three layers of material. The first layer is the benchmark evidence itself, including the backend comparison JSON, the keep-ratio scan outputs, the concurrency stress reports, and the quality-preservation records used in the tables and figures. The second layer is the generation pipeline for derived artifacts, including the plotting script, table sources, and manuscript source used to rebuild the reported figures and tables. The third layer is execution metadata, such as hardware description, backend flags, quantization format, and the command entry points needed to rerun each benchmark family.
 

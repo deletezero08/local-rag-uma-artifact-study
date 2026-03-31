@@ -9,9 +9,9 @@ import numpy as np
 from matplotlib.gridspec import GridSpec
 
 
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+ROOT_DIR = "/Users/delete/Desktop/rag_system_副本"
 RESULTS_DIR = os.path.join(ROOT_DIR, "results")
-FIGURES_DIR = os.path.join(ROOT_DIR, "manuscript", "figures", "peerj_submission")
+FIGURES_DIR = os.path.join(ROOT_DIR, "journal_paper_ccpe/figures/peerj_submission")
 os.makedirs(FIGURES_DIR, exist_ok=True)
 
 
@@ -79,15 +79,15 @@ def soften_axes(ax):
 
 
 def plot_fig1():
-    fig, ax = plt.subplots(figsize=(11.5, 3.7))
+    fig, ax = plt.subplots(figsize=(11.5, 4.05))
     ax.set_xlim(0, 100)
-    ax.set_ylim(0, 32)
+    ax.set_ylim(0, 34)
     ax.axis("off")
 
-    y = 19
-    h = 7
-    w = 16
-    xs = [4, 24, 44, 64, 84]
+    y = 22.2
+    h = 6.6
+    w = 15.2
+    xs = [4.2, 23.6, 43.0, 62.4, 81.8]
     labels = [
         ("Query", "user request"),
         ("Retriever", "candidate passages"),
@@ -113,45 +113,69 @@ def plot_fig1():
     for i, (x, (title, subtitle)) in enumerate(zip(xs, labels)):
         rect = patches.FancyBboxPatch(
             (x, y), w, h,
-            boxstyle="round,pad=0.25,rounding_size=0.6",
+            boxstyle="round,pad=0.28,rounding_size=0.58",
             facecolor=fills[i], edgecolor=edges[i], linewidth=1.5
         )
         ax.add_patch(rect)
-        ax.text(x + w / 2, y + 4.5, title, ha="center", va="center",
+        ax.text(x + w / 2, y + 4.25, title, ha="center", va="center",
                 fontsize=10, fontweight="bold", color=PALETTE["text"])
-        ax.text(x + w / 2, y + 2.0, subtitle, ha="center", va="center",
+        ax.text(x + w / 2, y + 1.9, subtitle, ha="center", va="center",
                 fontsize=8.3, color=PALETTE["text"])
         if i < len(xs) - 1:
-            ax.annotate("", xy=(x + w + 3, y + h / 2), xytext=(x + w, y + h / 2),
-                        arrowprops=dict(arrowstyle="-|>", lw=1.2, color=PALETTE["text"]))
+            ax.annotate(
+                "",
+                xy=(x + w + 2.4, y + h / 2),
+                xytext=(x + w, y + h / 2),
+                arrowprops=dict(arrowstyle="-|>", lw=1.15, color=PALETTE["text"]),
+            )
 
     tele = patches.FancyBboxPatch(
-        (70, 5), 24, 6.5, boxstyle="round,pad=0.25,rounding_size=0.6",
+        (69.8, 9.4), 24.6, 7.1, boxstyle="round,pad=0.25,rounding_size=0.55",
         facecolor="#F7F8FA", edgecolor=PALETTE["baseline"], linewidth=1.2
     )
     ax.add_patch(tele)
-    ax.text(82, 9.5, "Telemetry", ha="center", va="center",
+    ax.text(82.1, 13.6, "Telemetry", ha="center", va="center",
             fontsize=9.8, fontweight="bold", color=PALETTE["text"])
-    ax.text(82, 7.3, "retrieval | TTFT | TPS | paging", ha="center", va="center",
+    ax.text(82.1, 11.2, "retrieval | TTFT | TPS | paging", ha="center", va="center",
             fontsize=8.1, color=PALETTE["text"])
-    ax.annotate("", xy=(82, 11.5), xytext=(82, 19),
-                arrowprops=dict(arrowstyle="-|>", lw=1.0, ls="--", color=PALETTE["baseline"]))
+    ax.annotate(
+        "",
+        xy=(82.1, 16.5),
+        xytext=(89.4, 22.2),
+        arrowprops=dict(arrowstyle="-|>", lw=1.0, ls="--", color=PALETTE["baseline"]),
+    )
 
     budget = patches.FancyBboxPatch(
-        (4, 1.2), 92, 2.7, boxstyle="round,pad=0.15,rounding_size=0.4",
-        facecolor=PALETTE["shared"], edgecolor=PALETTE["grid"], linewidth=0.8
+        (4.3, 2.0), 92.0, 3.7, boxstyle="round,pad=0.18,rounding_size=0.38",
+        facecolor=PALETTE["shared"], edgecolor=PALETTE["grid"], linewidth=0.85
     )
     ax.add_patch(budget)
-    ax.text(50, 2.55,
-            "Shared unified-memory budget: retrieval state | prompt buffer | weights | KV cache | OS activity",
-            ha="center", va="center", fontsize=8.6, color=PALETTE["text"])
+    ax.text(
+        50.3,
+        4.38,
+        "Shared unified-memory budget:",
+        ha="center",
+        va="center",
+        fontsize=8.55,
+        fontweight="bold",
+        color=PALETTE["text"],
+    )
+    ax.text(
+        50.3,
+        2.98,
+        "retrieval state  |  prompt buffer  |  weights  |  KV cache  |  OS activity",
+        ha="center",
+        va="center",
+        fontsize=8.0,
+        color=PALETTE["text"],
+    )
 
     save_dual(fig, "figure1_system_architecture")
 
 
 def plot_fig2():
-    comp = load_json("evaluation/model_comparison.json")
-    mps = load_json("evaluation/v2_performance_final.json")
+    comp = load_json("evaluation/support_runtime/model_comparison.json")
+    mps = load_json("evaluation/support_runtime/v2_performance_final.json")
     mps_ttft = mps["scaling"]["16"]["ttft"] * 1000
     mps_tps = mps["scaling"]["16"]["tps"]
     mps_total = mps["scaling"]["16"]["total_time"]
@@ -248,7 +272,7 @@ def plot_fig3():
 
 
 def plot_fig4():
-    data = load_json("evaluation/tradeoff_curve.json")
+    data = load_json("evaluation/support_runtime/tradeoff_curve.json")
     ratios = [d["keep_ratio"] for d in data]
     ttft = [d["ttft_ms"] for d in data]
     tps = [d["tps"] for d in data]
@@ -373,7 +397,7 @@ def plot_fig5():
 
 
 def plot_fig6():
-    data = load_json("evaluation/tradeoff_curve.json")
+    data = load_json("evaluation/support_runtime/tradeoff_curve.json")
     baseline = next(d for d in data if d["keep_ratio"] == 1.0)
     optimized = next(d for d in data if d["keep_ratio"] == 0.6)
 
