@@ -1,0 +1,642 @@
+mode,id,question,source_docs,retrieved_doc_paths,recall_at_k,recall_hit_at_k,retrieval_ms,ttft_ms,total_ms,faith_m,rel_m,auto_error_category,answer
+fp32_off,Q008,docker_compose.md 中 API 服务的端口映射配置是什么？,E_config/docker_compose.md,E_config/docker_compose.md;E_config/docker_compose_llm_official.md;C_troubleshoot/port_conflict.md;C_troubleshoot/cuda_issues.md;B_deploy/tgi_docker.md;C_troubleshoot/port_conflict.md;C_troubleshoot/model_load_fail.md;D_design/microservices.md;B_deploy/vllm_single_gpu.md;D_design/llm_gateway.md,1.0,1.0,81.951,1988.68,6095.187,5.0,5.0,ok,"In the provided `docker-compose.yaml` file, the API service's port mapping configuration is:
+
+```yaml
+services:
+  gateway:
+    image: nginx:latest
+    ports:
+      - ""4000:4000""
+```
+
+This configuration maps port 4000 on the host machine to port 4000 in the container."
+fp32_off,Q009,vLLM Chat Completions 的端点路径是什么？,A_api/vllm_chat_completions.md,A_api/vllm_chat_completions.md;A_api/vllm_completions.md;A_api/tgi_chat.md;E_config/k8s_yaml.md;B_deploy/vllm_k8s_basic.md;A_api/vllm_nodejs_sdk.md;B_deploy/vllm_k8s_basic.md;D_design/inference_performance.md;B_deploy/vllm_k8s_basic.md;E_config/docker_compose.md,1.0,1.0,186.692,1480.932,9049.332,1.0,1.5,factual_drift,"Based on the provided context, I do not have enough information to determine the exact endpoint path of the vLLM Chat Completions API. However, I can infer that the vLLM Chat Completions API is likely a part of the vLLM (vLLM) system, which appears to be a service running on port 8000.
+
+The provided code snippets include a Kubernetes Service definition for the vLLM service, which specifies port 8000. Additionally, there is a command for port forwarding, `kubectl port-forward svc/vllm 8000:8000`, which suggests that the vLL"
+fp32_off,Q010,vLLM Completions 的端点路径是什么？,A_api/vllm_completions.md,A_api/vllm_completions.md;A_api/vllm_chat_completions.md;A_api/vllm_nodejs_sdk.md;B_deploy/vllm_k8s_basic.md;E_config/k8s_yaml.md;D_design/inference_performance.md;B_deploy/vllm_k8s_basic.md;B_deploy/vllm_k8s_basic.md;D_design/llm_gateway.md;E_config/docker_compose_llm_official.md,1.0,1.0,278.781,1890.28,9694.04,2.0,3.0,factual_drift,"Based on the provided context, I do not find any explicit information about the endpoint path for vLLM Completions. The context only includes YAML files for Kubernetes services, a command for running the vLLM benchmark, and a brief description of the LLM gateway's responsibilities.
+
+However, the `vLLM Completions API` is mentioned in the context, which suggests that it is a RESTful API that provides completion functionality. Typically, API endpoints are defined in the API specification or in the implementation of the API.
+
+Without further information, I am unable to determine the exact endpoint path for the vLLM Complet"
+fp32_off,Q011,vLLM Embeddings 的端点路径是什么？,A_api/vllm_embeddings.md,A_api/vllm_embeddings.md;A_api/vllm_completions.md;A_api/ollama_api_official.md;A_api/vllm_python_sdk.md;D_design/llm_gateway.md;A_api/vllm_nodejs_sdk.md;A_api/vllm_nodejs_sdk.md;A_api/embedding_models.md;B_deploy/vllm_k8s_basic.md;A_api/vllm_chat_completions.md,1.0,1.0,230.116,1291.54,2669.354,0.0,1.0,factual_drift,"According to the provided context, the endpoint path for vLLM Embeddings is `/api/embed`."
+fp32_off,Q012,vLLM Models 列表接口的端点路径是什么？,A_api/vllm_models.md,E_config/env_variables.md;D_design/inference_performance.md;A_api/vllm_completions.md;C_troubleshoot/error_codes.md;A_api/vllm_nodejs_sdk.md;B_deploy/vllm_k8s_basic.md;E_config/docker_compose_llm_official.md;A_api/tgi_completions.md;B_deploy/vllm_k8s_basic.md;B_deploy/vllm_single_gpu.md,0.0,0.0,77.862,1631.639,3115.627,6.5,8.5,retrieval_miss,"According to the provided context, the endpoint path for the vLLM Models list interface is `/v1/models`."
+fp32_off,Q013,TGI Chat 的端点路径是什么？,A_api/tgi_chat.md,A_api/tgi_chat.md;A_api/tgi_chat.md;B_deploy/vllm_k8s_basic.md;A_api/tgi_completions.md;A_api/tgi_info_metrics.md;B_deploy/vllm_k8s_basic.md;A_api/tgi_info_metrics.md;D_design/llm_gateway.md;D_design/microservices.md;A_api/vllm_chat_completions.md,1.0,1.0,162.909,1437.97,2620.33,6.5,8.0,ok,"Based on the context provided, the endpoint path for TGI Chat is `/v1/chat`."
+fp32_off,Q014,TGI Completions 的端点路径是什么？,A_api/tgi_completions.md,A_api/tgi_completions.md;A_api/tgi_chat.md;A_api/vllm_completions.md;A_api/tgi_info_metrics.md;B_deploy/vllm_k8s_basic.md;A_api/tgi_info_metrics.md;D_design/llm_gateway.md;B_deploy/vllm_k8s_basic.md;A_api/tgi_chat.md;B_deploy/cuda_install_official.md,1.0,1.0,81.068,1599.023,8509.824,1.0,1.0,factual_drift,"According to the provided context, it seems that the TGI Completions API is not explicitly mentioned with a specific endpoint path. However, it is mentioned that LLM (Large Language Model) Gateway is an intermediate layer between the client and LLM service, responsible for routing requests, load balancing, authentication, rate limiting, and logging.
+
+Given the context of the Kubernetes setup and the NVIDIA Device Plugin, it's possible that the endpoint path may be related to the LLM Gateway or the Kubernetes service. However, without further information, it's difficult to provide a specific endpoint path.
+
+If you're looking for the endpoint path for the"
+fp32_off,Q015,TGI 的 metrics/info 暴露端点路径是什么？,A_api/tgi_info_metrics.md,A_api/tgi_info_metrics.md;A_api/tgi_chat.md;A_api/tgi_completions.md;A_api/tgi_chat.md;B_deploy/vllm_k8s_basic.md;D_design/llm_gateway.md;A_api/tgi_info_metrics.md;E_config/docker_compose_llm_official.md;D_design/microservices.md;E_config/k8s_yaml.md,1.0,1.0,132.469,2449.842,7568.798,0.0,0.0,factual_drift,"According to the provided context, there is no explicit mention of the endpoint path for the TGI metrics/info. However, it is mentioned that the LLM gateway is responsible for handling requests, routing, and other tasks, but it does not provide information about the specific endpoint path for metrics/info.
+
+Therefore, I must answer with ""I don't know"" as the information is not explicitly provided in the context."
+fp32_off,Q016,Ollama Chat 的端点路径是什么？,A_api/ollama_chat.md,C_troubleshoot/port_conflict.md;A_api/ollama_nodejs_sdk.md;B_deploy/ollama_macos.md;D_design/inference_performance.md;B_deploy/ollama_windows.md;A_api/ollama_nodejs_sdk.md;B_deploy/ollama_linux.md;B_deploy/ollama_macos.md;A_api/ollama_generate.md;B_deploy/ollama_windows.md,0.0,0.0,144.824,1154.811,9028.65,4.5,6.0,retrieval_miss,"Based on the provided context, it seems that the Ollama Chat's endpoint path is not explicitly mentioned. However, I can try to help you find the answer.
+
+According to the Ollama documentation, the default endpoint path for the Ollama API is `/v1/generate`. You can use this endpoint to generate text based on the input prompts.
+
+Here's an example of how you can use the endpoint in your JavaScript code:
+```javascript
+const ollama = new Ollama({
+  host: 'http://localhost:11434'
+});
+
+const params = {
+  prompt: 'Hello World',
+  max"
+fp32_off,Q017,Ollama Generate 的端点路径是什么？,A_api/ollama_generate.md,A_api/ollama_generate.md;A_api/ollama_generate.md;C_troubleshoot/port_conflict.md;A_api/ollama_nodejs_sdk.md;A_api/ollama_nodejs_sdk.md;E_config/docker_compose.md;E_config/docker_compose_llm_official.md;A_api/ollama_python_sdk.md;A_api/ollama_python_sdk.md;B_deploy/ollama_macos.md,1.0,1.0,135.441,1855.725,7041.106,3.5,6.0,factual_drift,"According to the provided context, the Ollama Generate API endpoint path is not explicitly mentioned. However, we can infer that the API endpoint is likely to be `/generate` based on the common convention used in many text-to-text generation APIs.
+
+However, without further information, it is difficult to confirm the exact endpoint path. If you are looking for the official documentation or more information, I recommend checking the Ollama GitHub repository or contacting the Ollama support team for more details."
+fp32_off,Q018,Ollama Models 列表端点路径是什么？,A_api/ollama_models.md,B_deploy/ollama_linux.md;C_troubleshoot/model_load_fail.md;A_api/ollama_python_sdk.md;C_troubleshoot/port_conflict.md;E_config/env_variables.md;A_api/ollama_nodejs_sdk.md;A_api/ollama_nodejs_sdk.md;E_config/docker_compose_llm_official.md;B_deploy/ollama_macos.md;E_config/docker_compose.md,0.0,0.0,140.096,2005.489,9030.132,8.0,9.0,retrieval_miss,"Based on the provided context, the Ollama Models list endpoint path is not explicitly mentioned. However, we can infer that the `ollama list` command is used to list the models, and the `ls -la ~/.ollama/models/` command is used to list the models in the `~/.ollama/models/` directory.
+
+In Python, the `ollama.list()` function is used to list the models, but the endpoint path is not provided.
+
+It is also worth noting that the context does not provide information on the REST API endpoints or URLs used to interact with the Ollama service. Therefore, we"
+fp32_off,Q019,Ollama REST API 中列出本地模型的端点路径是什么？,A_api/ollama_api_official.md,A_api/ollama_generate.md;A_api/ollama_api_official.md;C_troubleshoot/port_conflict.md;A_api/ollama_nodejs_sdk.md;A_api/ollama_nodejs_sdk.md;E_config/env_variables.md;A_api/ollama_generate.md;A_api/ollama_nodejs_sdk.md;A_api/ollama_python_sdk.md;A_api/ollama_nodejs_sdk.md,1.0,1.0,63.937,1395.74,2653.985,0.0,0.0,factual_drift,根据 Ollama API 文档，列出本地模型的端点路径是 `/models`。
+fp32_off,Q020,Ollama REST API 中生成嵌入向量的端点路径是什么？,A_api/ollama_api_official.md,A_api/ollama_generate.md;A_api/ollama_nodejs_sdk.md;C_troubleshoot/port_conflict.md;A_api/ollama_nodejs_sdk.md;A_api/ollama_api_official.md;A_api/ollama_nodejs_sdk.md;A_api/ollama_generate.md;D_design/rag_system.md;E_config/docker_compose_llm_official.md;E_config/env_variables.md,1.0,1.0,22.489,2004.914,7850.603,9.5,9.0,ok,"According to the Ollama API Reference provided in the context, the endpoint for generating embedded vectors is not explicitly mentioned.
+
+However, based on the diagram provided, it appears that the ""Vector Store"" component is responsible for vectorization, which is a crucial step in the query processing pipeline.
+
+Unfortunately, without further information or documentation, I cannot pinpoint the exact endpoint path for generating embedded vectors in the Ollama REST API.
+
+If you have any additional context or documentation, I'd be happy to help you investigate further."
+fp32_off,Q028,总结 vLLM 多卡部署的关键参数与流程。,B_deploy/vllm_multi_gpu.md,B_deploy/vllm_k8s_basic.md;D_design/llm_gateway.md;E_config/docker_compose.md;E_config/docker_compose.md;B_deploy/vllm_multi_gpu.md;B_deploy/vllm_k8s_advanced.md;B_deploy/vllm_k8s_basic.md;B_deploy/vllm_quickstart_official.md;E_config/docker_compose.md;E_config/k8s_yaml.md,1.0,1.0,44.145,1725.827,8767.559,4.0,3.5,factual_drift,"Based on the provided context, here is a summary of the key parameters and process for vLLM multi-GPU deployment:
+
+**Key Parameters:**
+
+1. `volumes`: Define a volume named `vllm-cache` for caching.
+2. `qdrant`: Not specified in this context, but likely refers to a Qdrant service or configuration.
+3. `nvidia` driver: Specifies the NVIDIA GPU driver for multi-GPU deployment.
+4. `count: 1` and `capabilities: [gpu]`: Specify the number of GPUs to use and the GPU capabilities.
+5. `--model meta"
+fp32_off,Q029,总结 vLLM Kubernetes 基础部署流程。,B_deploy/vllm_k8s_basic.md,B_deploy/vllm_k8s_basic.md;B_deploy/vllm_k8s_advanced.md;C_troubleshoot/model_load_fail.md;B_deploy/vllm_k8s_basic.md;D_design/llm_gateway.md;E_config/docker_compose.md;C_troubleshoot/port_conflict.md;E_config/docker_compose.md;D_design/inference_performance.md;A_api/vllm_completions.md,1.0,1.0,156.26,805.741,8375.787,6.5,7.5,ok,"Based on the provided context, here is a summary of the vLLM Kubernetes basic deployment process:
+
+1. Set up a Kubernetes cluster with at least one GPU node.
+2. Install the NVIDIA Device Plugin to enable GPU support.
+3. Configure the vLLM cache volume, which is likely used for caching model data.
+4. Set up the qdrant volume, which is likely used for indexing and querying.
+5. Deploy the vLLM pods, which include the API server and other components.
+6. Route requests to different LLM (Large Language Model) services based on models, users, and scenarios.
+
+Note that"
+fp32_off,Q030,总结 vLLM Kubernetes 进阶部署的优化点。,B_deploy/vllm_k8s_advanced.md,B_deploy/vllm_k8s_basic.md;B_deploy/vllm_k8s_advanced.md;B_deploy/vllm_k8s_basic.md;E_config/docker_compose.md;D_design/llm_gateway.md;A_api/tgi_chat.md;E_config/docker_compose.md;A_api/ollama_api_official.md;B_deploy/vllm_k8s_basic.md;B_deploy/vllm_quickstart_official.md,1.0,1.0,300.912,969.639,8078.636,4.0,5.0,factual_drift,"Based on the provided context, I will summarize the optimization points for advanced vLLM Kubernetes deployment:
+
+1. **GPU Node**: At least one GPU node is required for NVIDIA Device Plugin to utilize the GPU resources efficiently.
+2. **vLLM Cache**: A volume named `vllm-cache` is defined, which suggests caching is enabled for improved performance.
+3. **Qdrant**: A volume named `qdrant` is also defined, which might be used for indexing and querying the LLM models.
+4. **Model Routing**: The vLLM deployment supports routing to different LLM services based on the model"
+fp32_off,Q031,总结 CUDA 官方安装流程的关键步骤。,B_deploy/cuda_install_official.md,C_troubleshoot/cuda_issues.md;E_config/env_variables.md;B_deploy/cuda_install_official.md;B_deploy/cuda_install_official.md;B_deploy/cuda_install_official.md;B_deploy/ollama_linux.md;B_deploy/cuda_install_official.md;B_deploy/cuda_install_official.md;B_deploy/ollama_linux.md;B_deploy/ollama_windows.md,1.0,1.0,125.984,2090.981,8895.135,7.0,7.5,ok,"Based on the provided context, the key steps to install CUDA officially are:
+
+1. **System Preparation**: Ensure the system is updated and remove any previous NVIDIA driver installations to avoid conflicts.
+2. **Download and Add CUDA Keyring**: If CUDA is not already installed, download the CUDA keyring and add it using `sudo dpkg -i cuda-keyring_1.1-1_all.deb`.
+3. **Update and Install CUDA**: Update the package list with `sudo apt update` and then install the CUDA Toolkit with `sudo apt install cuda-toolkit-12-4`.
+4. **Configure Environment Variables**: Add the"
+fp32_off,Q032,总结 GPU 监控方案的关键组件与指标。,E_config/gpu_monitoring.md,C_troubleshoot/cuda_issues.md;C_troubleshoot/oom_nccl_troubleshoot.md;E_config/docker_compose.md;B_deploy/vllm_single_gpu.md;E_config/gpu_monitoring.md;B_deploy/vllm_k8s_basic.md;E_config/env_variables.md;E_config/gpu_monitoring.md;B_deploy/cuda_install_official.md;B_deploy/ollama_linux.md,1.0,1.0,42.385,2227.765,9018.688,7.0,8.0,ok,"Based on the provided context, the key components and metrics for GPU monitoring are:
+
+**Components:**
+
+1. `nvidia-smi`: a command-line utility to monitor and manage NVIDIA GPU devices.
+2. `lspci`: a command-line utility to list and monitor PCI devices, including NVIDIA GPUs.
+3. `CUDA_VISIBLE_DEVICES`: an environment variable to specify which GPU(s) to use.
+4. `GPU utilization` monitoring: to track the percentage of GPU resources used.
+5. `Memory used` monitoring: to track the percentage of GPU memory used.
+6. `Temperature` monitoring: to track the GPU temperature"
+fp32_off,Q033,总结官方 LLM Docker Compose 部署配置中的主要服务。,E_config/docker_compose_llm_official.md,E_config/docker_compose.md;E_config/docker_compose_llm_official.md;E_config/docker_compose_llm_official.md;D_design/microservices.md;C_troubleshoot/model_load_fail.md;C_troubleshoot/port_conflict.md;E_config/docker_compose_llm_official.md;C_troubleshoot/cuda_issues.md;D_design/llm_gateway.md;D_design/llm_gateway.md,1.0,1.0,121.168,1495.933,8291.105,8.0,8.5,ok,"Based on the provided Docker Compose template, the main services are:
+
+1. `gateway`: This service uses the `nginx:latest` image and is responsible for routing traffic to different LLM services based on the model, user, and scenario.
+2. `model-service`: This service uses the `vllm/vllm-openai` image and is deployed with 3 replicas, using 1 NVIDIA GPU. It's likely responsible for running the LLM model.
+3. `embedding-service`: This service uses the `embedding-service` image and is deployed with 2 replicas. Its purpose is unclear, but it might"
+fp32_off,Q034,总结 K8s YAML 配置中常见字段及用途。,E_config/k8s_yaml.md,E_config/k8s_yaml.md;B_deploy/vllm_k8s_advanced.md;E_config/env_variables.md;B_deploy/vllm_k8s_advanced.md;B_deploy/vllm_k8s_advanced.md;D_design/microservices.md;E_config/k8s_yaml.md;D_design/llm_gateway.md;B_deploy/vllm_k8s_basic.md;E_config/gpu_monitoring.md,1.0,1.0,124.647,3125.981,10152.304,7.0,6.5,ok,"Based on the provided K8s YAML configurations, here's a summary of common fields and their purposes:
+
+**General Fields**
+
+* `apiVersion`: specifies the API version of the Kubernetes resource.
+* `kind`: specifies the type of Kubernetes resource (e.g., Deployment, Service, ConfigMap, etc.).
+* `metadata`: contains metadata about the resource, such as its name, namespace, and labels.
+
+**Deployment Fields**
+
+* `scaleTargetRef`: references the target resource to scale (in this case, a Deployment).
+* `minReplicas` and `maxReplicas`: specify the minimum and maximum number of replicas"
+fp32_off,Q035,总结端口冲突排查的主要步骤。,C_troubleshoot/port_conflict.md,D_design/rag_system.md;C_troubleshoot/oom_nccl_troubleshoot.md;D_design/rag_system.md;DATASET_DESCRIPTION.md;A_api/tgi_completions.md;A_api/vllm_completions.md;B_deploy/ollama_windows.md;A_api/vllm_python_sdk.md;B_deploy/tgi_docker.md;D_design/llm_gateway.md,0.0,0.0,122.314,2717.57,9747.747,4.5,4.5,retrieval_miss,"Based on the provided context, the main steps for port conflict detection and troubleshooting are:
+
+1. **Check if all GPUs are of the same architecture**: This is not a direct step for port conflict detection, but rather a general check.
+2. **Verify NVLink status**: This is also not directly related to port conflicts, but rather a check for NVIDIA GPU performance.
+
+For port conflict detection, the main steps are:
+
+1. **Check the port status**: Use a command like `netstat -ano | findstr 11434` to check if a specific port (in this case, 11434) is in use."
+fp32_off,Q036,总结模型加载失败的常见原因与处理方式。,C_troubleshoot/model_load_fail.md,C_troubleshoot/oom_solution.md;C_troubleshoot/model_load_fail.md;C_troubleshoot/model_load_fail.md;C_troubleshoot/error_codes.md;C_troubleshoot/error_codes.md;C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/error_codes.md;D_design/llm_gateway.md;C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/error_codes.md,1.0,1.0,159.986,2461.448,10043.035,8.0,9.0,ok,"Based on the provided context, here's a summary of the common causes and solutions for model loading failures:
+
+**Common Causes:**
+
+1. **File not found**: Model file is missing or not accessible.
+	* Solution: Re-pull the model or check the model file path.
+2. **Permission denied**: Insufficient permissions to load the model.
+	* Solution: Check the permissions and adjust them if necessary (e.g., `chmod 755`).
+3. **Out of memory**: Insufficient memory to load the model.
+	* Solution: Reduce the model's parameters or quantize the model to reduce memory usage."
+fp32_off,Q037,总结 CUDA 常见问题与解决思路。,C_troubleshoot/cuda_issues.md,C_troubleshoot/cuda_issues.md;C_troubleshoot/oom_solution.md;E_config/env_variables.md;B_deploy/cuda_install_official.md;C_troubleshoot/port_conflict.md;B_deploy/ollama_linux.md;DATASET_DESCRIPTION.md;B_deploy/ollama_linux.md;C_troubleshoot/error_codes.md;B_deploy/ollama_linux.md,1.0,1.0,121.504,2570.52,9576.884,5.0,5.5,ok,"Based on the provided context, here is a summary of common CUDA errors and their solutions:
+
+**Error 1: CUDA out of memory**
+
+* Cause: The system runs out of memory during CUDA operation.
+* Solution: Check the system's available memory and adjust the allocation size accordingly. If necessary, consider upgrading the system's memory.
+
+**Error 2: Model loading failure**
+
+* Cause: The model cannot be loaded due to an incorrect file path or permission issue.
+* Solution: Check the file path and ensure it is correct. If permission issues occur, use `sudo` or `chmod` to resolve them.
+
+**Error"
+fp32_off,Q038,总结推理性能优化的关键策略。,D_design/inference_performance.md,C_troubleshoot/oom_solution.md;deploy_spec.md;D_design/rag_architecture_patterns.md;B_deploy/vllm_quickstart_official.md;D_design/rag_architecture_patterns.md;deploy_spec.md;E_config/env_variables.md;A_api/ollama_api_official.md;D_design/rag_architecture_patterns.md;memory_spec.md,0.0,0.0,125.297,1890.5,8024.301,4.5,4.5,retrieval_miss,"Based on the provided context, the key strategies for optimizing the performance of the RAG system and recording performance metrics for benchmarking are:
+
+1. **Chunking Strategy**: Use overlap to preserve context between chunks.
+2. **Metadata Tagging**: Store source info, timestamps, and categories to allow for structured filtering.
+3. **Evaluation**: Use frameworks like RAGAS or iteration-based ablation studies to measure faithfulness and relevance.
+
+These strategies are mentioned in the ""Best Practices"" section and are aimed at improving the performance of the RAG system and facilitating the evaluation of its performance."
+fp32_off,Q039,总结微服务架构的核心模块划分。,D_design/microservices.md,D_design/llm_gateway.md;memory_spec.md;DATASET_DESCRIPTION.md;B_deploy/vllm_k8s_basic.md;E_config/api_security.md;A_api/tgi_completions.md;A_api/vector_db_comparison.md;D_design/rag_system.md;B_deploy/vllm_single_gpu.md;D_design/microservices.md,1.0,1.0,102.807,2858.547,9386.034,4.5,4.5,factual_drift,"Based on the provided context, the core modules of the microservice architecture can be summarized as follows:
+
+1. **Llama Service**: This is the core service that provides natural language processing capabilities, allowing users to interact with the system through text-based inputs.
+2. **Indexing Service**: This service is responsible for indexing and vectorizing the documents, which enables efficient querying and retrieval.
+3. **Query Service**: This service receives queries and performs vectorized search and ranking to retrieve relevant results.
+4. **Model Service**: This service manages the models, including their creation, deployment, and versioning.
+5. **Authentication and Authorization"
+fp32_off,Q040,总结 LLM 网关的职责与能力。,D_design/llm_gateway.md,D_design/llm_gateway.md;D_design/llm_gateway.md;A_api/tgi_completions.md;B_deploy/vllm_quickstart_official.md;A_api/vllm_completions.md;D_design/llm_gateway.md;A_api/vllm_embeddings.md;B_deploy/vllm_quickstart_official.md;A_api/vllm_nodejs_sdk.md;A_api/tgi_chat.md,1.0,1.0,114.049,2056.669,8698.479,10.0,10.0,ok,"Based on the provided context, I can summarize the responsibilities and capabilities of the LLM Gateway as follows:
+
+**Responsibilities:**
+
+1. Request routing: Routes requests to the appropriate LLM service based on the model, user, and scenario.
+2. Load balancing: Distributes incoming requests across multiple LLM services to ensure efficient use of resources.
+3. Authentication and authorization: Verifies the identity and permissions of clients or users before allowing them to access the LLM services.
+4. Rate limiting: Controls the rate at which clients can make requests to prevent abuse and overload.
+5. Logging and monitoring: Monitors and logs requests"
+fp32_off,Q047,结合 oom_solution 与 quantization，说明降低显存占用的两类路径。,C_troubleshoot/oom_solution.md;E_config/quantization.md,C_troubleshoot/model_load_fail.md;C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/oom_solution.md;C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/oom_nccl_troubleshoot.md;E_config/gpu_monitoring.md;E_config/quantization.md;E_config/docker_compose.md;E_config/docker_compose.md;C_troubleshoot/model_load_fail.md,1.0,1.0,47.25,2213.502,8830.454,7.0,6.0,ok,"Based on the provided context, I can explain the two types of paths to reduce GPU memory utilization:
+
+**Path 1: Quantization**
+
+Quantization is a technique that reduces the precision of the model's weights and activations from 32-bit floating-point numbers to 8-bit or 4-bit integers. This reduction in precision results in a significant reduction in memory usage. The context provides the following information:
+
+* **Quantization**: Use 4-bit or 8-bit (AWQ/GPTQ) to reduce memory.
+
+By using quantization, the memory usage can be reduced by:
+
+* INT8: 75% reduction"
+fp32_off,Q048,结合 oom_nccl_troubleshoot 与 cuda_issues，说明 NCCL/驱动问题的排查顺序。,C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/cuda_issues.md,C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/oom_nccl_troubleshoot.md;D_design/rag_system.md;C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/oom_nccl_troubleshoot.md;E_config/env_variables.md;C_troubleshoot/cuda_issues.md;D_design/rag_system.md;B_deploy/vllm_single_gpu.md;B_deploy/vllm_single_gpu.md,1.0,1.0,45.737,1585.49,9204.14,5.5,5.5,ok,"Based on the provided context, here's a step-by-step guide to troubleshoot NCCL and CUDA issues:
+
+**Step 1: Verify CUDA Version**
+
+* Run `nvcc --version` to check the CUDA compiler version.
+* Run `nvidia-smi` to check the CUDA runtime version.
+* Verify that the versions match and are compatible.
+
+**Step 2: Check for NCCL Errors**
+
+* Run `export NCCL_DEBUG=INFO` to enable verbose logging.
+* Check for any NCCL error messages in the logs.
+
+**Step 3: Force Communication Over Specific Interfaces**
+
+* Run `export NCCL_IB"
+fp32_off,Q049,对比 TGI Chat 与 TGI Completions 的请求结构差异。,A_api/tgi_chat.md;A_api/tgi_completions.md,A_api/tgi_chat.md;A_api/tgi_chat.md;A_api/tgi_completions.md;A_api/tgi_info_metrics.md;A_api/ollama_nodejs_sdk.md;A_api/vllm_nodejs_sdk.md;A_api/vllm_nodejs_sdk.md;A_api/vllm_chat_completions.md;A_api/tgi_chat.md;A_api/ollama_api_official.md,1.0,1.0,102.779,1517.159,8833.651,6.0,6.5,ok,"According to the provided context, there are two APIs: TGI Chat API and TGI Completions API.
+
+1. TGI Chat API:
+
+The TGI Chat API does not have a specific request structure mentioned in the context. However, it is mentioned that you can create a chat session using the `client.chat.completions.create()` method, which takes a model and a message as input.
+
+2. TGI Completions API:
+
+The TGI Completions API has a specific request structure. The endpoint `POST /v1/chat/completions` is mentioned, but no specific request body or query parameters are"
+fp32_off,Q050,结合 api_security 与 llm_gateway，说明 API 安全控制应放在系统哪一层。,E_config/api_security.md;D_design/llm_gateway.md,D_design/microservices.md;D_design/llm_gateway.md;A_api/tgi_chat.md;E_config/api_security.md;D_design/microservices.md;A_api/vllm_chat_completions.md;E_config/docker_compose.md;E_config/env_variables.md;A_api/vllm_nodejs_sdk.md;B_deploy/cuda_install_official.md,1.0,1.0,97.868,2438.94,9570.779,6.0,7.5,ok,"Based on the context, I can conclude that the API security control should be placed in the LLM Gateway layer.
+
+The LLM Gateway is responsible for:
+
+1. 认证鉴权 (Authentication and Authorization)
+2. 限流控制 (Rate Limiting)
+
+The `security` configuration in the YAML file specifies the OAuth client ID, client secret, and token URL, which implies that the API gateway is responsible for handling authentication and authorization.
+
+The LLM Gateway is the first layer after the client, and it is responsible for verifying the client's identity and ensuring that the requests are legitimate. Therefore, it is reasonable to place"
+fp32_off,Q051,结合 gpu_monitoring 与 inference_performance，说明监控指标如何指导性能优化。,E_config/gpu_monitoring.md;D_design/inference_performance.md,B_deploy/cuda_install_official.md;C_troubleshoot/oom_nccl_troubleshoot.md;E_config/gpu_monitoring.md;E_config/gpu_monitoring.md;C_troubleshoot/oom_nccl_troubleshoot.md;B_deploy/vllm_k8s_advanced.md;deploy_spec.md;B_deploy/vllm_k8s_advanced.md;E_config/docker_compose.md;B_deploy/vllm_quickstart_official.md,0.5,1.0,97.358,2606.285,9908.452,5.0,6.5,ok,"Based on the provided context, we can see that there are several monitoring metrics related to GPU performance and inference performance. Here's how these metrics can guide performance optimization:
+
+1. **GPU Utilization**: The `GPUUtilization` metric is used to monitor the usage of GPU resources. If the utilization is high (above 95%), it may indicate that the GPU is overloaded, and it's necessary to reduce the workload or increase the number of GPUs.
+
+Guided optimization: Increase the number of GPUs, reduce the batch size, or reduce the model complexity to reduce the GPU utilization.
+
+2. **GPU Memory Utilization**: The `"
+fp32_off,Q052,结合 rag_architecture_patterns 与 rag_system，说明架构设计如何映射到系统实现模块。,D_design/rag_architecture_patterns.md;D_design/rag_system.md,D_design/rag_architecture_patterns.md;memory_spec.md;D_design/rag_architecture_patterns.md;DATASET_DESCRIPTION.md;DATASET_DESCRIPTION.md;D_design/rag_architecture_patterns.md;B_deploy/vllm_quickstart_official.md;DATASET_DESCRIPTION.md;C_troubleshoot/oom_nccl_troubleshoot.md;D_design/rag_system.md,1.0,1.0,127.167,2267.782,9344.071,1.5,1.5,factual_drift,"Based on the provided context, I will explain how the RAG architecture patterns can be mapped to the system implementation modules.
+
+**RAG Architecture Patterns:**
+
+1. **Fragment-then-Compose**: Break down the entire conversation into multiple atomic memory fragments, allowing for more precise retrieval and recall.
+2. **Naive RAG**: Simple vector retrieval -> LLM generation.
+3. **Hybrid Search RAG**: Combines BM25 keyword search with dense vector search to improve recovery of specific terms.
+4. **Reranking**: A two-stage process where a re-ranker model refines the order of top-K retrieved chunks"
+fp32_off,Q053,结合 microservices 与 docker_compose_llm_official，说明服务拆分与编排关系。,D_design/microservices.md;E_config/docker_compose_llm_official.md,C_troubleshoot/port_conflict.md;C_troubleshoot/model_load_fail.md;E_config/docker_compose.md;E_config/docker_compose_llm_official.md;D_design/microservices.md;C_troubleshoot/cuda_issues.md;C_troubleshoot/port_conflict.md;D_design/llm_gateway.md;E_config/docker_compose_llm_official.md;E_config/docker_compose_llm_official.md,1.0,1.0,36.596,1401.71,8183.768,6.0,6.5,ok,"Based on the provided context, I'll explain the service decomposition and orchestration relationship in the LLM serving stack using Docker Compose.
+
+The provided `docker-compose.yaml` file defines a microservices architecture with three services: `gateway`, `model-service`, and `embedding-service`. Each service is responsible for a specific function in the LLM serving pipeline:
+
+1. `gateway`: This service acts as the entry point for incoming requests. It's responsible for routing requests to the appropriate service.
+2. `model-service`: This service is responsible for processing natural language processing (NLP) tasks using the vllm-openai image."
+fp32_off,Q054,对比 Ollama Python SDK 与 Node.js SDK 的基础调用方式。,A_api/ollama_python_sdk.md;A_api/ollama_nodejs_sdk.md,A_api/ollama_nodejs_sdk.md;B_deploy/ollama_macos.md;A_api/ollama_nodejs_sdk.md;A_api/ollama_nodejs_sdk.md;A_api/ollama_api_official.md;A_api/ollama_generate.md;A_api/vllm_chat_completions.md;A_api/ollama_python_sdk.md;A_api/ollama_python_sdk.md;A_api/ollama_api_official.md,1.0,1.0,20.322,802.711,9491.37,1.5,2.0,factual_drift,"According to the provided context, the Ollama JavaScript/Node.js SDK is used as follows:
+
+```javascript
+import { Ollama } from 'ollama'
+
+const ollama = new Ollama({
+  host: 'http://localhost:11434'
+})
+```
+
+On the other hand, the Ollama Python SDK is not shown in the provided context. Therefore, I do not know the basic calling method of the Python SDK.
+
+However, based on the Python import statement `import ollama` and the comment `Ollama API Reference`, it can be inferred that the Python SDK is likely to"
+fp32_off,Q055,对比 vLLM Python SDK 与 Node.js SDK 的基础调用方式。,A_api/vllm_python_sdk.md;A_api/vllm_nodejs_sdk.md,A_api/vllm_nodejs_sdk.md;D_design/inference_performance.md;A_api/vllm_completions.md;A_api/ollama_nodejs_sdk.md;A_api/vllm_nodejs_sdk.md;A_api/tgi_completions.md;A_api/vllm_chat_completions.md;A_api/vllm_python_sdk.md;A_api/vllm_python_sdk.md;A_api/vllm_chat_completions.md,1.0,1.0,86.508,1328.427,8369.376,5.5,6.5,ok,"According to the provided context, here's a comparison of the basic calling methods between the vLLM Python SDK and the vLLM Node.js SDK:
+
+**1. Embeddings API:**
+
+Python SDK:
+```python
+embedding = client.embeddings.create({
+  model: 'BAAI/bge-small-en-v1.5',
+  input: 'Hello world'
+})
+print(embedding.data[0].embedding)
+```
+
+Node.js SDK:
+```javascript
+const embedding = await client.embeddings.create({
+  model: 'BAAI/bge-small-en-v1.5',
+  input: 'Hello world'
+})"
+fp32_off,Q056,结合 vector_db_comparison 与 embedding_models，说明向量库选择对嵌入模型的影响。,A_api/vector_db_comparison.md;A_api/embedding_models.md,D_design/rag_system.md;A_api/ollama_api_official.md;B_deploy/vllm_quickstart_official.md;A_api/embedding_models.md;A_api/ollama_api_official.md;A_api/vllm_nodejs_sdk.md;D_design/inference_performance.md;C_troubleshoot/model_load_fail.md;A_api/ollama_python_sdk.md;A_api/vllm_python_sdk.md,0.5,1.0,72.588,1409.584,8138.747,5.5,5.0,ok,"The vector library (vector_db_comparison) and the embedding model (embedding_models) are two separate components that can affect the performance and quality of the embedded vectors.
+
+The vector library, such as Faiss or Annoy, is responsible for indexing and searching the embedded vectors. The choice of vector library can impact the efficiency and effectiveness of the indexing and search process. For example, some libraries may be faster or more memory-efficient than others.
+
+The embedding model, on the other hand, is responsible for generating the embedded vectors. The choice of embedding model can impact the quality and accuracy of the embedded vectors. Different models may have different strengths"
+fp32_off,Q057,对比 api_security 与 env_variables 中关于鉴权配置的说明。,E_config/api_security.md;E_config/env_variables.md,skills_spec.md;D_design/microservices.md;A_api/tgi_completions.md;A_api/tgi_chat.md;A_api/vllm_nodejs_sdk.md;A_api/ollama_api_official.md;D_design/rag_system.md;A_api/vllm_chat_completions.md;C_troubleshoot/oom_nccl_troubleshoot.md;E_config/k8s_yaml.md,0.0,0.0,70.857,2287.041,9419.843,5.0,5.5,retrieval_miss,"I can help you compare the API security and environment variables in terms of authorization configuration.
+
+From the provided context, I don't see any direct mention of `api_security` or `env_variables` related to authorization configuration. However, I can try to provide a general comparison based on common practices.
+
+**API Security:**
+
+API security typically refers to the measures taken to protect APIs from unauthorized access, tampering, and data breaches. Common authorization configurations in API security include:
+
+* API keys
+* OAuth tokens
+* JWT (JSON Web Tokens)
+* Basic Authentication
+* Role-Based Access Control (RBAC)
+* Attribute-Based Access Control"
+fp32_off,Q058,结合 k8s_yaml 与 vllm_k8s_basic，说明关键资源字段如何落地到部署。,E_config/k8s_yaml.md;B_deploy/vllm_k8s_basic.md,E_config/env_variables.md;B_deploy/vllm_k8s_basic.md;E_config/k8s_yaml.md;B_deploy/vllm_k8s_basic.md;E_config/k8s_yaml.md;B_deploy/vllm_k8s_advanced.md;E_config/k8s_yaml.md;B_deploy/vllm_k8s_advanced.md;B_deploy/vllm_k8s_advanced.md;E_config/env_variables.md,1.0,1.0,80.861,2989.881,10175.688,6.0,6.5,ok,"Based on the provided context, I can help explain how the key resource fields are deployed in the Kubernetes YAML files.
+
+**1. `CUDA_VISIBLE_DEVICES`**: This field is not directly used in the YAML files provided. However, it is a common environment variable used to specify the GPU devices to use for a container. If you want to use this variable in your deployment, you would need to add it as an environment variable in the container specification.
+
+**2. `VLLM_LOGGING_LEVEL`**: This field is also not used in the provided YAML files. If you want to use this variable, you would need to add"
+fp32_off,Q059,结合 tgi_docker 与 docker_compose_llm_official，说明容器部署参数的一致性。,B_deploy/tgi_docker.md;E_config/docker_compose_llm_official.md,E_config/docker_compose_llm_official.md;C_troubleshoot/model_load_fail.md;C_troubleshoot/port_conflict.md;E_config/docker_compose.md;E_config/docker_compose_llm_official.md;B_deploy/vllm_single_gpu.md;D_design/llm_gateway.md;D_design/microservices.md;C_troubleshoot/port_conflict.md;C_troubleshoot/cuda_issues.md,0.5,1.0,110.834,1483.992,8496.742,1.0,0.5,factual_drift,"Based on the provided context, I can help you understand the consistency of container deployment parameters between `docker-compose.yaml` and `docker-compose_llm_official`.
+
+**Consistency in `docker-compose.yaml`**
+
+1. In the first `docker-compose.yaml` file, the `gateway` service specifies the `image` parameter as `litellm/main`, which is consistent with the Docker image name.
+2. The `ports` parameter is set to `4000:4000`, indicating that port 4000 on the host machine will be mapped to port 4000 in the container.
+3. The `environment` parameter"
+fp32_off,Q060,结合 ollama_api_official 与 ollama_models，说明模型管理与 API 使用的关系。,A_api/ollama_api_official.md;A_api/ollama_models.md,A_api/ollama_generate.md;A_api/ollama_api_official.md;A_api/ollama_nodejs_sdk.md;A_api/ollama_api_official.md;A_api/ollama_generate.md;A_api/ollama_python_sdk.md;C_troubleshoot/model_load_fail.md;E_config/env_variables.md;A_api/ollama_nodejs_sdk.md;B_deploy/ollama_macos.md,0.5,1.0,62.38,1316.894,9151.331,3.5,4.5,factual_drift,"Based on the context, I can explain the relationship between model management and API usage in Ollama.
+
+**Model Management:**
+
+Ollama provides a way to manage models through the `ollama list` command, which lists all the available models. You can also use the `ollama list` command to verify the existence of a model. Additionally, you can use the `ollama` command to check the available models.
+
+In the context of the `ollama.list()` function in the JavaScript/Node.js SDK, it appears to retrieve a list of available models, which can be iterated through to access the model names"
+turboquant_on,Q008,docker_compose.md 中 API 服务的端口映射配置是什么？,E_config/docker_compose.md,E_config/docker_compose.md;C_troubleshoot/port_conflict.md;E_config/docker_compose_llm_official.md;B_deploy/vllm_single_gpu.md;B_deploy/tgi_docker.md;E_config/gpu_monitoring.md;D_design/microservices.md;C_troubleshoot/cuda_issues.md;C_troubleshoot/port_conflict.md;C_troubleshoot/model_load_fail.md,1.0,1.0,118.067,1671.575,7322.279,4.0,3.5,factual_drift,"According to the context, there is no specific API service mentioned in the `docker-compose.yaml` file. However, there is a `gateway` service with an `image` specified as `nginx:latest`. It does not have any explicit port mapping specified.
+
+The port mapping is mentioned in the command line parameter `-p 3000:80`, which maps port 3000 on the host machine to port 80 in the container."
+turboquant_on,Q009,vLLM Chat Completions 的端点路径是什么？,A_api/vllm_chat_completions.md,A_api/vllm_chat_completions.md;A_api/vllm_completions.md;B_deploy/vllm_k8s_basic.md;B_deploy/ollama_windows.md;A_api/tgi_chat.md;A_api/vllm_nodejs_sdk.md;B_deploy/cuda_install_official.md;D_design/inference_performance.md;B_deploy/vllm_quickstart_official.md;A_api/tgi_completions.md,1.0,1.0,49.026,1318.748,6165.823,2.0,2.5,factual_drift,"According to the provided context, the endpoint path for the vLLM Chat Completions API is not explicitly mentioned. However, we can infer that it is `completions.create` based on the code snippet:
+```python
+stream = client.completions.create(
+    model=""model"",
+    prompt=""Tell a story"",
+    stream=True
+)
+```
+This suggests that the `create` endpoint is used to create a new completion."
+turboquant_on,Q010,vLLM Completions 的端点路径是什么？,A_api/vllm_completions.md,A_api/vllm_completions.md;A_api/vllm_chat_completions.md;A_api/vllm_nodejs_sdk.md;B_deploy/vllm_k8s_basic.md;B_deploy/vllm_quickstart_official.md;A_api/tgi_completions.md;B_deploy/ollama_windows.md;D_design/inference_performance.md;A_api/tgi_completions.md;E_config/docker_compose_llm_official.md,1.0,1.0,38.163,1342.681,6023.236,3.0,4.5,factual_drift,"According to the provided context, the endpoint path for vLLM Completions is `/completions`. Specifically, it is mentioned in the following code snippet:
+
+```python
+stream = client.completions.create(
+    model=""model"",
+    prompt=""Tell a story"",
+    stream=True
+)
+```
+
+Here, `client.completions.create` is the endpoint for creating a completion request."
+turboquant_on,Q011,vLLM Embeddings 的端点路径是什么？,A_api/vllm_embeddings.md,A_api/vllm_embeddings.md;A_api/vllm_completions.md;A_api/vllm_python_sdk.md;A_api/ollama_api_official.md;B_deploy/vllm_k8s_basic.md;A_api/vllm_nodejs_sdk.md;A_api/embedding_models.md;A_api/embedding_models.md;A_api/vllm_nodejs_sdk.md;B_deploy/ollama_windows.md,1.0,1.0,107.508,1309.228,2482.482,0.0,0.0,factual_drift,"According to the provided context, the endpoint path for vLLM Embeddings is `/api/embed`."
+turboquant_on,Q012,vLLM Models 列表接口的端点路径是什么？,A_api/vllm_models.md,C_troubleshoot/error_codes.md;A_api/tgi_completions.md;D_design/inference_performance.md;E_config/env_variables.md;A_api/vllm_completions.md;E_config/docker_compose_llm_official.md;A_api/vllm_nodejs_sdk.md;B_deploy/vllm_single_gpu.md;A_api/vllm_models.md;B_deploy/vllm_k8s_basic.md,1.0,1.0,23.494,1330.494,2996.839,9.5,10.0,ok,"According to the context, the endpoint path for the ""模型列表"" (model list) interface is `http://localhost:8000/v1/models`."
+turboquant_on,Q013,TGI Chat 的端点路径是什么？,A_api/tgi_chat.md,A_api/tgi_chat.md;A_api/tgi_chat.md;A_api/tgi_completions.md;B_deploy/vllm_k8s_basic.md;A_api/tgi_info_metrics.md;A_api/tgi_info_metrics.md;B_deploy/cuda_install_official.md;D_design/microservices.md;B_deploy/ollama_windows.md;B_deploy/vllm_k8s_basic.md,1.0,1.0,29.214,1642.349,2713.264,6.5,7.5,ok,"According to the provided context, the endpoint path for TGI Chat is `/v1/chat`."
+turboquant_on,Q014,TGI Completions 的端点路径是什么？,A_api/tgi_completions.md,A_api/tgi_completions.md;A_api/tgi_chat.md;A_api/vllm_completions.md;A_api/tgi_info_metrics.md;B_deploy/vllm_k8s_basic.md;A_api/tgi_info_metrics.md;B_deploy/cuda_install_official.md;B_deploy/ollama_linux.md;B_deploy/vllm_k8s_basic.md;A_api/vllm_python_sdk.md,1.0,1.0,28.451,1484.876,5515.977,0.0,0.0,factual_drift,"Based on the provided context, I do not know the endpoint path of TGI Completions. The context only provides information about the TGI APIs, such as the Text Completions API, Chat Completions API, vLLM Completions API, and Info & Metrics API, but does not specify the endpoint path of the TGI Completions API."
+turboquant_on,Q015,TGI 的 metrics/info 暴露端点路径是什么？,A_api/tgi_info_metrics.md,A_api/tgi_info_metrics.md;A_api/tgi_completions.md;B_deploy/vllm_k8s_basic.md;B_deploy/ollama_windows.md;A_api/tgi_chat.md;A_api/tgi_info_metrics.md;D_design/llm_gateway.md;A_api/tgi_chat.md;E_config/docker_compose_llm_official.md;B_deploy/vllm_k8s_advanced.md,1.0,1.0,51.205,2444.097,9390.459,0.0,0.5,factual_drift,"Based on the provided context, I found that there is no explicit mention of the endpoint path for TGI's metrics/info. However, it does mention the following metrics:
+
+| 指标 | 描述 |
+|------|------|
+| tgi_requests_success_total | 成功请求数 |
+| tgi_requests_error_total | 错误请求数 |
+| tgi_batch_total | 总批次 |
+| tgi_tokens_generated_total | 生成 token 总数 |
+| tgi_forward_duration_seconds | 前向传播耗时 |
+
+These metrics seem to be related to the TGI Text Completions API, but"
+turboquant_on,Q016,Ollama Chat 的端点路径是什么？,A_api/ollama_chat.md,C_troubleshoot/port_conflict.md;A_api/ollama_api_official.md;B_deploy/ollama_macos.md;B_deploy/ollama_linux.md;B_deploy/ollama_linux.md;C_troubleshoot/oom_solution.md;B_deploy/ollama_windows.md;E_config/docker_compose_llm_official.md;B_deploy/ollama_macos.md;D_design/inference_performance.md,0.0,0.0,104.349,1793.85,8877.908,4.5,8.0,retrieval_miss,"According to the provided context, the Ollama Chat endpoint path is not explicitly mentioned. However, it is mentioned that the Ollama service is running on port 11434:
+
+```bash
+# /etc/environment
+OLLAMA_HOST=0.0.0.0:11434
+```
+
+And in the Docker service configuration:
+
+```yaml
+ports:
+  - ""11434:11434""
+```
+
+This suggests that the Ollama Chat endpoint is likely to be at `http://localhost:11434` or `http://<machine_ip>:11434`, depending on the environment.
+
+Please note that this"
+turboquant_on,Q017,Ollama Generate 的端点路径是什么？,A_api/ollama_generate.md,A_api/ollama_generate.md;A_api/ollama_generate.md;C_troubleshoot/port_conflict.md;E_config/docker_compose_llm_official.md;A_api/ollama_api_official.md;E_config/docker_compose.md;A_api/ollama_nodejs_sdk.md;C_troubleshoot/oom_solution.md;A_api/ollama_python_sdk.md;A_api/ollama_python_sdk.md,1.0,1.0,88.166,2104.143,3277.035,0.0,0.0,factual_drift,"According to the provided context, the endpoint path of Ollama Generate API is `/`."
+turboquant_on,Q018,Ollama Models 列表端点路径是什么？,A_api/ollama_models.md,B_deploy/ollama_linux.md;C_troubleshoot/model_load_fail.md;A_api/ollama_nodejs_sdk.md;E_config/env_variables.md;E_config/docker_compose_llm_official.md;A_api/ollama_api_official.md;E_config/docker_compose.md;B_deploy/ollama_macos.md;C_troubleshoot/port_conflict.md;A_api/ollama_python_sdk.md,0.0,0.0,27.84,2142.413,8657.502,3.0,4.5,retrieval_miss,"Based on the provided context, I can help you with that.
+
+The Ollama Models列表端点路径 is `/ollama/list` or `ollama.list()` in JavaScript.
+
+This is evident from the following lines of code:
+```bash
+# 验证模型存在
+ollama list
+```
+and
+```javascript
+const models = await ollama.list()
+console.log(models.models)
+```
+Both of these commands seem to be interacting with the Ollama API to list the available models."
+turboquant_on,Q019,Ollama REST API 中列出本地模型的端点路径是什么？,A_api/ollama_api_official.md,A_api/ollama_api_official.md;A_api/ollama_generate.md;A_api/ollama_nodejs_sdk.md;C_troubleshoot/port_conflict.md;E_config/env_variables.md;E_config/docker_compose_llm_official.md;A_api/ollama_generate.md;A_api/ollama_nodejs_sdk.md;A_api/ollama_python_sdk.md;E_config/docker_compose.md,1.0,1.0,144.66,2126.673,9077.408,2.0,3.0,factual_drift,"According to the Ollama API Reference, the endpoint to list local models is `/`.
+
+The `list` function in the Ollama JavaScript API is used to list the models, and it is not a REST API endpoint. Instead, it is a method that returns a list of models.
+
+However, in the Docker configuration, the command `const models = await ollama.list()` is used to list the models. This suggests that the `list` function is used to retrieve the list of models from the Ollama server."
+turboquant_on,Q020,Ollama REST API 中生成嵌入向量的端点路径是什么？,A_api/ollama_api_official.md,A_api/ollama_generate.md;A_api/ollama_api_official.md;A_api/ollama_nodejs_sdk.md;A_api/ollama_generate.md;C_troubleshoot/port_conflict.md;A_api/ollama_nodejs_sdk.md;E_config/env_variables.md;B_deploy/vllm_k8s_basic.md;E_config/gpu_monitoring.md;D_design/rag_system.md,1.0,1.0,33.671,2060.117,8836.109,8.5,9.0,ok,"According to the provided context, the Ollama REST API reference does not explicitly mention a specific endpoint path for generating embedded vectors. However, we can infer that the Ollama API provides a `generate` endpoint for text generation.
+
+In the provided code snippet, it is mentioned that `const models = await ollama.list()` is used to list models, but there is no mention of a specific endpoint for generating embedded vectors.
+
+If you're looking for a specific endpoint, I would recommend checking the Ollama documentation or contacting the Ollama support team for more information.
+
+In general, if you're trying to generate embedded"
+turboquant_on,Q028,总结 vLLM 多卡部署的关键参数与流程。,B_deploy/vllm_multi_gpu.md,B_deploy/vllm_k8s_basic.md;D_design/llm_gateway.md;E_config/docker_compose.md;B_deploy/vllm_k8s_advanced.md;B_deploy/vllm_quickstart_official.md;B_deploy/vllm_multi_gpu.md;E_config/docker_compose.md;B_deploy/vllm_k8s_basic.md;E_config/docker_compose.md;E_config/k8s_yaml.md,1.0,1.0,54.256,2219.189,9102.651,2.5,4.0,factual_drift,"Based on the provided context, here are the key parameters and process for vLLM multi-card deployment:
+
+**Key Parameters:**
+
+1. `nvidia` device count: 1
+2. `gpu` capabilities: [gpu]
+3. `command` parameters:
+	* `--model`: meta-llama/Llama-3-8B-Instruct
+	* `--dtype`: half
+	* `--gpu-memory-utilization`: 0.9
+
+**Process:**
+
+1. **Tensor Parallelism**: The vLLM deployment uses Tensor Parallelism, which is required for 2+ GPU deployments"
+turboquant_on,Q029,总结 vLLM Kubernetes 基础部署流程。,B_deploy/vllm_k8s_basic.md,B_deploy/vllm_k8s_basic.md;B_deploy/vllm_k8s_advanced.md;B_deploy/vllm_k8s_basic.md;D_design/llm_gateway.md;B_deploy/ollama_windows.md;E_config/docker_compose.md;C_troubleshoot/model_load_fail.md;C_troubleshoot/port_conflict.md;E_config/docker_compose.md;B_deploy/vllm_quickstart_official.md,1.0,1.0,68.373,820.808,9001.243,7.0,6.5,ok,"Based on the provided context, here is a summary of the vLLM Kubernetes basic deployment process:
+
+**Step 1: Install vLLM with pip**
+
+* Run the command `pip install vLLM` to install vLLM.
+
+**Step 2: Set up Kubernetes cluster**
+
+* Set up a Kubernetes cluster, which requires at least one GPU node.
+
+**Step 3: Install NVIDIA Device Plugin**
+
+* Install the NVIDIA Device Plugin to enable GPU support in the Kubernetes cluster.
+
+**Step 4: Define deployment configuration**
+
+* Define the deployment configuration, which includes routing models, users, and scenarios to different LLM"
+turboquant_on,Q030,总结 vLLM Kubernetes 进阶部署的优化点。,B_deploy/vllm_k8s_advanced.md,B_deploy/vllm_k8s_basic.md;B_deploy/vllm_k8s_advanced.md;C_troubleshoot/model_load_fail.md;E_config/docker_compose.md;B_deploy/vllm_k8s_basic.md;A_api/vllm_chat_completions.md;E_config/docker_compose.md;C_troubleshoot/oom_solution.md;A_api/tgi_chat.md;D_design/llm_gateway.md,1.0,1.0,113.047,1171.97,9721.963,6.5,6.5,ok,"Based on the provided context, I can summarize the advanced deployment optimization points for vLLM Kubernetes as follows:
+
+1. **Device Reservation**: Reserve a specific NVIDIA GPU device for the vLLM container, ensuring exclusive access to the device for better performance and reduced interference.
+2. **GPU-enabled Cluster**: Ensure the Kubernetes cluster has at least one GPU node to take advantage of the reserved device.
+3. **NVIDIA Device Plugin**: Install and configure the NVIDIA Device Plugin to enable GPU support and manage GPU resources within the cluster.
+4. **Quantization**: Utilize quantization techniques such as awq, gptq, and"
+turboquant_on,Q031,总结 CUDA 官方安装流程的关键步骤。,B_deploy/cuda_install_official.md,C_troubleshoot/cuda_issues.md;E_config/env_variables.md;B_deploy/cuda_install_official.md;B_deploy/cuda_install_official.md;B_deploy/cuda_install_official.md;B_deploy/cuda_install_official.md;B_deploy/cuda_install_official.md;B_deploy/ollama_windows.md;C_troubleshoot/oom_solution.md;B_deploy/ollama_linux.md,1.0,1.0,76.642,1838.11,10540.087,6.5,8.0,ok,"Based on the provided context, the key steps for the official CUDA installation process are:
+
+1. **System Preparation**: Ensure the system is updated and remove any previous NVIDIA driver installations to avoid conflicts.
+2. **Installation Methods**:
+	* **Package Manager (Recommended)**:
+		1. Add the external repository: `sudo add-apt-repository ppa:graphics-drivers/ppa`
+		2. Install the driver: `sudo apt install nvidia-driver-xxx`
+		3. Install CUDA Toolkit: `sudo apt install cuda`
+3. **Post-installation**:
+	* Add the following to `"
+turboquant_on,Q032,总结 GPU 监控方案的关键组件与指标。,E_config/gpu_monitoring.md,C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/cuda_issues.md;E_config/gpu_monitoring.md;E_config/env_variables.md;deploy_spec.md;E_config/gpu_monitoring.md;B_deploy/vllm_k8s_basic.md;B_deploy/vllm_k8s_advanced.md;B_deploy/ollama_linux.md;E_config/docker_compose.md,1.0,1.0,46.24,2475.571,10885.032,6.5,5.0,ok,"Based on the provided context, the key components of the GPU monitoring plan are:
+
+1. **GPU Utilization**: The monitoring plan checks for GPU utilization and sends alerts when it exceeds 95% for more than 5 minutes (HighGPUUtilization alert) or 2 minutes (GPUMemoryAlmostFull alert).
+2. **GPU Memory Utilization**: The plan also monitors GPU memory usage and sends alerts when the used memory is more than 0% of the total memory (GPUMemoryAlmostFull alert).
+3. **GPU Architecture**: The plan ensures that all GPUs are of the same architecture.
+4. **NVLink"
+turboquant_on,Q033,总结官方 LLM Docker Compose 部署配置中的主要服务。,E_config/docker_compose_llm_official.md,E_config/docker_compose.md;E_config/docker_compose_llm_official.md;E_config/docker_compose_llm_official.md;E_config/docker_compose_llm_official.md;D_design/microservices.md;C_troubleshoot/model_load_fail.md;C_troubleshoot/port_conflict.md;D_design/llm_gateway.md;B_deploy/ollama_windows.md;B_deploy/vllm_single_gpu.md,1.0,1.0,32.877,1409.888,7995.25,9.5,9.5,ok,"According to the provided context, the official LLM Docker Compose deployment configuration consists of three main services:
+
+1. **gateway**: This service uses the `nginx:latest` image and is responsible for routing requests to other services.
+2. **model-service**: This service uses the `vllm/vllm-openai` image and has three replicas. It is also limited to one NVIDIA GPU.
+3. **embedding-service**: This service uses the `embedding-service` image and has two replicas.
+
+These services are defined in the `docker-compose.yaml` file, which is used to manage the deployment of the LLM stack using"
+turboquant_on,Q034,总结 K8s YAML 配置中常见字段及用途。,E_config/k8s_yaml.md,E_config/k8s_yaml.md;D_design/microservices.md;D_design/llm_gateway.md;B_deploy/vllm_k8s_advanced.md;E_config/k8s_yaml.md;E_config/docker_compose.md;E_config/docker_compose_llm_official.md;E_config/docker_compose.md;E_config/docker_compose.md;E_config/docker_compose.md,1.0,1.0,34.946,1955.612,8673.401,6.5,7.0,ok,"Based on the provided YAML configuration files, here's a summary of common fields and their purposes in Kubernetes:
+
+**HorizontalPodAutoscaler (HPA)**
+
+* `metadata`: Metadata about the HPA, such as its name and namespace.
+* `spec`: Specification of the HPA, which defines its behavior.
+* `scaleTargetRef`: Reference to the target deployment that the HPA will scale.
+* `minReplicas` and `maxReplicas`: Minimum and maximum number of replicas (pods) to scale to.
+* `metrics`: List of metrics to monitor for scaling.
+	+ `type`: Type of"
+turboquant_on,Q035,总结端口冲突排查的主要步骤。,C_troubleshoot/port_conflict.md,D_design/rag_system.md;D_design/rag_system.md;C_troubleshoot/oom_nccl_troubleshoot.md;B_deploy/tgi_docker.md;A_api/tgi_completions.md;C_troubleshoot/port_conflict.md;B_deploy/vllm_k8s_basic.md;B_deploy/ollama_windows.md;A_api/vllm_python_sdk.md;D_design/llm_gateway.md,1.0,1.0,26.871,2325.87,9572.885,2.5,5.5,factual_drift,"Based on the context, the main steps to troubleshoot port conflict are:
+
+1. **Check if the port is in use**: Use commands like `netstat` or `ps` to check if the port is already in use.
+2. **Identify the process using the port**: If the port is in use, use a command like `lsof` or `fuser` to identify the process using the port.
+3. **Kill the process or change the port**: If necessary, kill the process using the port or change the port to a different one.
+4. **Check permissions**: If the error is due"
+turboquant_on,Q036,总结模型加载失败的常见原因与处理方式。,C_troubleshoot/model_load_fail.md,C_troubleshoot/oom_solution.md;C_troubleshoot/model_load_fail.md;C_troubleshoot/model_load_fail.md;C_troubleshoot/error_codes.md;C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/error_codes.md;A_api/ollama_nodejs_sdk.md;C_troubleshoot/error_codes.md;C_troubleshoot/oom_nccl_troubleshoot.md;D_design/llm_gateway.md,1.0,1.0,45.9,2581.971,9784.094,8.5,9.5,ok,"Based on the provided context, the common causes and solutions for model loading failures are summarized as follows:
+
+1. **File not found**: The model file is missing.
+	* Solution: Re-pull the model.
+2. **Permission denied**: Permission issues with the model file.
+	* Solution: Change the permission to 755.
+3. **CUDA out of memory**: Insufficient GPU memory.
+	* Solution: Reduce the model's parameters or quantize the model.
+4. **Invalid model**: Model format error.
+	* Solution: Check the model name.
+
+Additionally, API-related errors can also cause model loading failures:
+
+1"
+turboquant_on,Q037,总结 CUDA 常见问题与解决思路。,C_troubleshoot/cuda_issues.md,C_troubleshoot/oom_solution.md;C_troubleshoot/port_conflict.md;C_troubleshoot/cuda_issues.md;E_config/env_variables.md;C_troubleshoot/error_codes.md;B_deploy/cuda_install_official.md;deploy_spec.md;B_deploy/ollama_linux.md;B_deploy/ollama_linux.md;C_troubleshoot/oom_nccl_troubleshoot.md,1.0,1.0,100.245,1601.889,8534.992,7.5,8.0,ok,"Based on the provided context, here is a summary of common CUDA-related issues and their solutions:
+
+**Common Issues:**
+
+1. **CUDA out of memory**: CUDA out of memory error occurs when the GPU does not have enough memory to allocate for a computation.
+	* Solution: Check the available GPU memory and reduce the batch size or model size.
+2. **模型加载失败**: Model loading failure may occur due to incorrect model path or missing dependencies.
+	* Solution: Check the model path and dependencies, and ensure they are correct.
+3. **推理过程中崩溃**: Inference failure may occur due to"
+turboquant_on,Q038,总结推理性能优化的关键策略。,D_design/inference_performance.md,C_troubleshoot/oom_solution.md;deploy_spec.md;D_design/rag_architecture_patterns.md;D_design/rag_architecture_patterns.md;B_deploy/vllm_quickstart_official.md;deploy_spec.md;A_api/ollama_api_official.md;D_design/rag_architecture_patterns.md;C_troubleshoot/model_load_fail.md;skills_spec.md,0.0,0.0,45.542,1609.561,8293.772,6.5,5.5,retrieval_miss,"Based on the provided context, the key strategies for optimizing the performance of inference and reasoning in RAG systems are:
+
+1. **Chunking Strategy**: Using overlap to preserve context between chunks to improve the accuracy of reasoning.
+2. **Metadata Tagging**: Storing source information, timestamps, and categories to allow for structured filtering and retrieval.
+3. **Evaluation**: Using frameworks like RAGAS or iteration-based ablation studies to measure faithfulness and relevance.
+
+Additionally, the context also mentions the use of **quantization** techniques (AWQ, GPTQ, SqueezeLLM) to optimize the performance of the RAG"
+turboquant_on,Q039,总结微服务架构的核心模块划分。,D_design/microservices.md,D_design/llm_gateway.md;DATASET_DESCRIPTION.md;memory_spec.md;B_deploy/vllm_k8s_basic.md;A_api/ollama_nodejs_sdk.md;A_api/tgi_completions.md;B_deploy/vllm_k8s_basic.md;A_api/vllm_chat_completions.md;A_api/vllm_nodejs_sdk.md;E_config/gpu_monitoring.md,0.0,0.0,59.057,2842.959,9854.171,3.0,3.5,retrieval_miss,"Based on the provided context, I can summarize the core modules of the microservice architecture as follows:
+
+1. **Model Service**: This module is responsible for managing and serving the large language model (LLM) services. It includes the following sub-modules:
+	* Model Management: This sub-module is responsible for managing the LLM models, including model versioning, deployment, and scaling.
+	* Model Inference: This sub-module is responsible for processing user requests and generating responses using the LLM models.
+2. **Kubernetes Cluster**: This module is responsible for deploying and managing the LLM services in a Kubernetes cluster. It"
+turboquant_on,Q040,总结 LLM 网关的职责与能力。,D_design/llm_gateway.md,D_design/llm_gateway.md;D_design/llm_gateway.md;A_api/vllm_completions.md;B_deploy/vllm_quickstart_official.md;A_api/tgi_completions.md;B_deploy/vllm_quickstart_official.md;A_api/vllm_python_sdk.md;D_design/llm_gateway.md;A_api/vllm_embeddings.md;D_design/microservices.md,1.0,1.0,113.376,1779.886,9990.557,6.0,7.5,ok,"Based on the context, the responsibilities and capabilities of the LLM Gateway can be summarized as follows:
+
+**Responsibilities:**
+
+1. Request Routing: The LLM Gateway is responsible for routing requests from the client to the appropriate LLM (Large Language Model) service.
+2. Load Balancing: The Gateway is responsible for distributing incoming requests across multiple LLM services to ensure high availability and scalability.
+3. Authentication and Authorization: The Gateway handles authentication and authorization for clients, ensuring that only authorized clients can access the LLM services.
+4. Rate Limiting: The Gateway can enforce rate limits on client requests to prevent abuse and maintain"
+turboquant_on,Q047,结合 oom_solution 与 quantization，说明降低显存占用的两类路径。,C_troubleshoot/oom_solution.md;E_config/quantization.md,C_troubleshoot/model_load_fail.md;C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/oom_solution.md;C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/model_load_fail.md;C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/oom_solution.md;deploy_spec.md;E_config/quantization.md;E_config/gpu_monitoring.md,1.0,1.0,99.424,2399.649,9379.611,9.0,8.5,ok,"Based on the context, there are two types of paths to reduce GPU memory usage, which are:
+
+**Path 1: Quantization**
+
+* Quantization is a technique to reduce the precision of model weights and activations, which can significantly reduce the memory usage.
+* In the context, it is mentioned that quantization can reduce memory usage by 50% (INT8), 75% (INT4), or even 87.5% (INT4).
+* The command `--quantization awq` or `--quantization gptq` can be used to enable quantization.
+* This path can be used to"
+turboquant_on,Q048,结合 oom_nccl_troubleshoot 与 cuda_issues，说明 NCCL/驱动问题的排查顺序。,C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/cuda_issues.md,C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/oom_nccl_troubleshoot.md;D_design/rag_system.md;C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/oom_nccl_troubleshoot.md;C_troubleshoot/cuda_issues.md;E_config/env_variables.md;B_deploy/vllm_single_gpu.md;C_troubleshoot/oom_solution.md;A_api/vllm_python_sdk.md,1.0,1.0,83.227,1855.61,8746.917,6.5,7.5,ok,"Based on the provided context, I will outline the troubleshooting steps for NCCL and CUDA issues:
+
+**Step 1: Enable verbose logging for NCCL**
+
+* Run the command `export NCCL_DEBUG=INFO` to enable verbose logging for NCCL.
+* This will help to gather more detailed information about NCCL errors and may provide clues about the root cause of the issue.
+
+**Step 2: Check NCCL version**
+
+* Run the command `nvcc --version` to check the version of the NVIDIA CUDA compiler.
+* Check if the version is compatible with the NCCL version.
+
+**Step 3: Check CUDA version"
+turboquant_on,Q049,对比 TGI Chat 与 TGI Completions 的请求结构差异。,A_api/tgi_chat.md;A_api/tgi_completions.md,A_api/tgi_chat.md;A_api/tgi_chat.md;A_api/tgi_info_metrics.md;A_api/ollama_nodejs_sdk.md;A_api/ollama_api_official.md;A_api/vllm_python_sdk.md;A_api/tgi_chat.md;A_api/vllm_chat_completions.md;A_api/vllm_embeddings.md;A_api/vllm_nodejs_sdk.md,0.5,1.0,95.346,1483.302,8471.237,5.5,7.0,ok,"Based on the provided context, I can compare the request structures of TGI Chat and TGI Completions.
+
+**TGI Chat:**
+
+The TGI Chat API is not explicitly mentioned to have a specific request structure in the provided context. However, it is mentioned that the API endpoint is `/api/chat` and that it can be used to generate a chat completion.
+
+**TGI Completions:**
+
+The TGI Completions API has two endpoints mentioned: `/v1/chat/completions` and `/v1/chat/completions`. The latter is not explicitly mentioned in the provided context, but it is likely"
+turboquant_on,Q050,结合 api_security 与 llm_gateway，说明 API 安全控制应放在系统哪一层。,E_config/api_security.md;D_design/llm_gateway.md,D_design/microservices.md;A_api/vllm_python_sdk.md;A_api/vllm_chat_completions.md;A_api/vllm_embeddings.md;A_api/vllm_completions.md;D_design/llm_gateway.md;A_api/tgi_completions.md;A_api/tgi_chat.md;A_api/tgi_chat.md;D_design/llm_gateway.md,0.5,1.0,77.54,1624.166,8913.035,8.5,8.0,ok,"Based on the given context, the LLM (Large Language Model) Gateway is responsible for handling API security, specifically:
+
+* 认证鉴权 (Authentication and Authorization)
+
+This suggests that the API security control should be placed at the LLM Gateway layer, which is the middle layer between the client and the LLM service.
+
+The LLM Gateway is responsible for handling requests and routing them to the appropriate LLM service. By placing API security control at this layer, it can ensure that only authorized clients can access the LLM services and that requests are authenticated and authorized accordingly.
+
+In this architecture, the API security control is dec"
+turboquant_on,Q051,结合 gpu_monitoring 与 inference_performance，说明监控指标如何指导性能优化。,E_config/gpu_monitoring.md;D_design/inference_performance.md,E_config/gpu_monitoring.md;E_config/gpu_monitoring.md;B_deploy/vllm_k8s_advanced.md;B_deploy/vllm_k8s_advanced.md;E_config/docker_compose.md;B_deploy/cuda_install_official.md;deploy_spec.md;C_troubleshoot/oom_nccl_troubleshoot.md;B_deploy/ollama_linux.md;B_deploy/vllm_k8s_basic.md,0.5,1.0,123.325,3160.522,11055.624,6.5,7.0,ok,"Based on the provided context, I'll explain how the monitoring metrics can guide performance optimization.
+
+**GPU Utilization**: The threshold for GPU utilization is set to > 80%. If this metric exceeds 95%, an alert will be triggered. This indicates that the GPU is heavily utilized, which may lead to performance degradation. To optimize, consider:
+
+* Increasing the batch size to reduce the number of requests per GPU
+* Reducing the model size or complexity to decrease the computational requirements
+* Using quantization techniques (e.g., 4-bit or 8-bit) to reduce memory usage
+
+**Memory Used**: The threshold for memory"
+turboquant_on,Q052,结合 rag_architecture_patterns 与 rag_system，说明架构设计如何映射到系统实现模块。,D_design/rag_architecture_patterns.md;D_design/rag_system.md,D_design/rag_architecture_patterns.md;D_design/rag_architecture_patterns.md;memory_spec.md;DATASET_DESCRIPTION.md;B_deploy/vllm_quickstart_official.md;deploy_spec.md;E_config/gpu_monitoring.md;D_design/rag_system.md;D_design/rag_architecture_patterns.md;E_config/docker_compose.md,1.0,1.0,37.546,2227.812,9054.532,5.5,5.5,ok,"Based on the RAG system architecture and design patterns, I can explain how the architectural design patterns can be mapped to the system implementation modules.
+
+**Naive RAG**: Simple vector retrieval -> LLM generation.
+
+* In the system implementation, this pattern can be mapped to the **Retrieval** module, which retrieves relevant fragments from the database or knowledge graph.
+* The retrieved fragments are then passed to the **LLM Generation** module, which uses the fragments as input to generate a response.
+
+**Hybrid Search RAG**: Combines BM25 keyword search with dense vector search to improve recovery of specific terms.
+
+* In the"
+turboquant_on,Q053,结合 microservices 与 docker_compose_llm_official，说明服务拆分与编排关系。,D_design/microservices.md;E_config/docker_compose_llm_official.md,E_config/docker_compose.md;E_config/docker_compose_llm_official.md;D_design/microservices.md;C_troubleshoot/port_conflict.md;E_config/docker_compose_llm_official.md;E_config/docker_compose_llm_official.md;C_troubleshoot/port_conflict.md;C_troubleshoot/model_load_fail.md;C_troubleshoot/cuda_issues.md;B_deploy/tgi_docker.md,1.0,1.0,102.347,1432.934,8069.211,4.5,4.0,factual_drift,"Based on the provided context, the `docker-compose.yaml` file defines three services: `gateway`, `model-service`, and `embedding-service`. These services are deployed using Docker Compose, which is a tool for defining and running multi-container Docker applications.
+
+Here's a brief explanation of each service and their roles in the LLM (Large Language Model) serving architecture:
+
+1. `gateway` service:
+	* This service uses the `nginx:latest` image, which is a popular web server that can act as a reverse proxy, load balancer, or gateway.
+	* Its role is to handle incoming requests and route them"
+turboquant_on,Q054,对比 Ollama Python SDK 与 Node.js SDK 的基础调用方式。,A_api/ollama_python_sdk.md;A_api/ollama_nodejs_sdk.md,A_api/ollama_nodejs_sdk.md;B_deploy/ollama_macos.md;A_api/vllm_chat_completions.md;A_api/ollama_api_official.md;A_api/ollama_api_official.md;A_api/ollama_nodejs_sdk.md;E_config/env_variables.md;A_api/ollama_nodejs_sdk.md;A_api/ollama_generate.md;A_api/ollama_nodejs_sdk.md,0.5,1.0,49.783,1273.248,7950.979,3.0,4.0,factual_drift,"Based on the provided context, I can compare the basic usage of the Ollama Python SDK and Node.js SDK.
+
+**Python SDK:**
+
+Unfortunately, I couldn't find any information on the Ollama Python SDK, as the provided context only mentions the JavaScript/Node.js SDK. Therefore, I cannot provide a comparison of the basic usage of the Python SDK and Node.js SDK.
+
+**Node.js SDK:**
+
+The Node.js SDK is initialized by creating an instance of the `Ollama` class and specifying the host URL:
+```javascript
+const ollama = new Ollama({
+  host: 'http://"
+turboquant_on,Q055,对比 vLLM Python SDK 与 Node.js SDK 的基础调用方式。,A_api/vllm_python_sdk.md;A_api/vllm_nodejs_sdk.md,A_api/vllm_nodejs_sdk.md;A_api/vllm_chat_completions.md;D_design/inference_performance.md;B_deploy/vllm_k8s_basic.md;A_api/vllm_python_sdk.md;A_api/vllm_completions.md;A_api/tgi_completions.md;A_api/vllm_nodejs_sdk.md;A_api/ollama_nodejs_sdk.md;B_deploy/vllm_k8s_advanced.md,1.0,1.0,113.292,2034.074,8830.647,2.5,3.5,factual_drift,"Based on the provided context, I can compare the basic usage of the vLLM Python SDK and Node.js SDK.
+
+**Python SDK (using OpenAI API)**
+
+The Python SDK uses the `vllm.entrypoints.openai.api_server` command to start the API server, and then uses the `openai` API to make requests.
+
+Here is an example of creating a prompt:
+```python
+import vllm
+import openai
+
+openai.api(""https://localhost:8000"", ""model"", ""prompt"")
+```
+To create an embedding, you can use the `embeddings.create` method:
+```"
+turboquant_on,Q056,结合 vector_db_comparison 与 embedding_models，说明向量库选择对嵌入模型的影响。,A_api/vector_db_comparison.md;A_api/embedding_models.md,A_api/embedding_models.md;B_deploy/vllm_quickstart_official.md;D_design/rag_system.md;B_deploy/vllm_quickstart_official.md;A_api/ollama_nodejs_sdk.md;A_api/vllm_nodejs_sdk.md;A_api/ollama_api_official.md;C_troubleshoot/model_load_fail.md;E_config/gpu_monitoring.md;D_design/rag_architecture_patterns.md,0.5,1.0,96.416,1723.953,8463.4,3.5,3.5,factual_drift,"The vector library selection can have an impact on the embedding model. Here's a breakdown:
+
+1. **Vector Library**: The vector library used to store and manage the embeddings can affect the performance and efficiency of the embedding model. For example:
+	* **Memory efficiency**: Some vector libraries, such as Hugging Face's Transformers, provide optimized memory management for embeddings, which can reduce memory usage and improve performance.
+	* **Query efficiency**: The query efficiency of the vector library can impact the speed of retrieving embeddings. For example, a library like FAISS provides efficient nearest-neighbor search algorithms, which can speed up query times.
+2"
+turboquant_on,Q057,对比 api_security 与 env_variables 中关于鉴权配置的说明。,E_config/api_security.md;E_config/env_variables.md,skills_spec.md;E_config/k8s_yaml.md;A_api/vllm_nodejs_sdk.md;D_design/microservices.md;A_api/vllm_chat_completions.md;A_api/tgi_chat.md;A_api/ollama_api_official.md;C_troubleshoot/oom_nccl_troubleshoot.md;A_api/ollama_nodejs_sdk.md;deploy_spec.md,0.0,0.0,66.816,2346.269,5306.725,0.0,0.0,retrieval_miss,"I do not know.
+
+The provided context does not mention `api_security` or `env_variables` related to authorization configuration. The context only provides information about Horizontal Pod Autoscaler configuration, API usage, and environment standardization, but not about security or environment variables."
+turboquant_on,Q058,结合 k8s_yaml 与 vllm_k8s_basic，说明关键资源字段如何落地到部署。,E_config/k8s_yaml.md;B_deploy/vllm_k8s_basic.md,B_deploy/vllm_k8s_basic.md;E_config/k8s_yaml.md;E_config/k8s_yaml.md;E_config/env_variables.md;D_design/llm_gateway.md;B_deploy/vllm_k8s_advanced.md;E_config/env_variables.md;E_config/k8s_yaml.md;B_deploy/vllm_k8s_basic.md;B_deploy/vllm_k8s_advanced.md,1.0,1.0,32.667,2914.572,9791.088,3.5,3.5,factual_drift,"Based on the provided context, I'll explain how the key resources are deployed in the vLLM Kubernetes cluster.
+
+1. **Secrets:**
+	* `hf-secret`: This secret contains the `token` value, which is used to authenticate with the Hugging Face API. It's referenced in the `HUGGINGFACE_TOKEN` environment variable in the `vllm` deployment.
+	* `api-keys`: This secret contains the `api-key` value, which is not used in the provided YAML files.
+2. **ConfigMap:**
+	* `vllm-config`: This ConfigMap contains several key"
+turboquant_on,Q059,结合 tgi_docker 与 docker_compose_llm_official，说明容器部署参数的一致性。,B_deploy/tgi_docker.md;E_config/docker_compose_llm_official.md,B_deploy/vllm_single_gpu.md;E_config/docker_compose_llm_official.md;E_config/docker_compose.md;C_troubleshoot/port_conflict.md;C_troubleshoot/port_conflict.md;C_troubleshoot/model_load_fail.md;E_config/docker_compose_llm_official.md;D_design/llm_gateway.md;E_config/docker_compose_llm_official.md;D_design/microservices.md,0.5,1.0,130.347,1409.837,8020.355,0.0,0.0,factual_drift,"Based on the provided templates, I'll compare the consistency of container deployment parameters between `docker` and `docker-compose`.
+
+**1. `docker` command:**
+```bash
+docker stats
+```
+This command shows the real-time resource usage of running containers, but it doesn't provide any information about container deployment parameters.
+
+**2. `docker-compose.yml` template:**
+
+The provided `docker-compose.yml` template defines three services: `gateway`, `model-service`, and `embedding-service`. Let's analyze the deployment parameters for each service:
+
+* `gateway`:
+	+ `image`: `nginx:latest`
+	+"
+turboquant_on,Q060,结合 ollama_api_official 与 ollama_models，说明模型管理与 API 使用的关系。,A_api/ollama_api_official.md;A_api/ollama_models.md,A_api/ollama_api_official.md;A_api/ollama_nodejs_sdk.md;A_api/ollama_generate.md;A_api/ollama_api_official.md;A_api/ollama_generate.md;E_config/env_variables.md;A_api/ollama_python_sdk.md;C_troubleshoot/model_load_fail.md;B_deploy/ollama_linux.md;C_troubleshoot/model_load_fail.md,0.5,1.0,26.509,1391.413,8240.384,4.0,4.5,factual_drift,"Based on the provided context, here's an explanation of the relationship between model management and API usage in Ollama:
+
+**Model Management**: Ollama provides a REST API for running and managing models. The `ollama.list()` function is used to list all available models. The `OLLAMA_MODELS` environment variable specifies the directory where the models are stored.
+
+**API Usage**: The Ollama API reference mentions the `Generate API` as the most basic text generation interface. This API is used to generate text based on the models loaded in the system.
+
+**Relationship**: The models listed by the `ollama.list()`"

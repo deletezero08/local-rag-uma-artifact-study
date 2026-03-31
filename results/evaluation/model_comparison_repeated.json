@@ -1,0 +1,155 @@
+{
+  "timestamp": "2026-03-30 12:25:05",
+  "script": "scripts/benchmarking/paper_model_comparison_repeat.py",
+  "output_schema_version": "1.0",
+  "experiment": "E1_backend_repeated",
+  "config": {
+    "rounds": 5,
+    "n_ctx": 4096,
+    "max_tokens": 128,
+    "prompt": "Explain in two concise sentences why local RAG on constrained unified-memory hardware requires joint tuning of retrieval, prompt budget, and generation."
+  },
+  "configs": [
+    {
+      "rounds": 1,
+      "runs": [
+        {
+          "ttft_ms": 77573.29,
+          "tps": 0.011,
+          "total_time_s": 264.254,
+          "generated_tokens": 3,
+          "answer_preview": "Imported from cautionary single-run MPS baseline."
+        }
+      ],
+      "ttft_ms_mean": 77573.29,
+      "ttft_ms_std": 0.0,
+      "ttft_ms_ci95": 0.0,
+      "ttft_ms_p95": 77573.29,
+      "tps_mean": 0.011,
+      "tps_std": 0.0,
+      "tps_ci95": 0.0,
+      "tps_p95": 0.011,
+      "total_time_s_mean": 264.254,
+      "total_time_s_std": 0.0,
+      "total_time_s_ci95": 0.0,
+      "total_time_s_p95": 264.254,
+      "label": "Falcon-7B on MPS",
+      "backend": "transformers + MPS",
+      "model_path": "/Users/delete/Desktop/rag_system_副本/results/evaluation/v2_performance_final.json",
+      "evidence_class": "cautionary_single_run_import",
+      "note": "Imported from existing negative-result smoke baseline because the original MPS path is operationally impractical in the current paper track."
+    },
+    {
+      "rounds": 5,
+      "runs": [
+        {
+          "ttft_ms": 262.449,
+          "total_time_s": 1.4,
+          "tps": 16.703,
+          "generated_tokens": 19,
+          "answer_preview": "LocalRAG requires joint tuning ofretrieval, Prompt budgetLocal RAG"
+        },
+        {
+          "ttft_ms": 136.029,
+          "total_time_s": 1.775,
+          "tps": 16.473,
+          "generated_tokens": 27,
+          "answer_preview": "Local RAG, a memoryConsistently allocating a finite setLocal RAG onConstrained unified-memory hardware"
+        },
+        {
+          "ttft_ms": 134.152,
+          "total_time_s": 1.77,
+          "tps": 16.506,
+          "generated_tokens": 27,
+          "answer_preview": "Local RAGrequires joint tuning ofretrieval, Prompt BudgetJoint tuning is essential forLocal RAG because local memory"
+        },
+        {
+          "ttft_ms": 130.421,
+          "total_time_s": 0.72,
+          "tps": 18.659,
+          "generated_tokens": 11,
+          "answer_preview": "Local RAG, orRandom Access Memory"
+        },
+        {
+          "ttft_ms": 129.381,
+          "total_time_s": 1.031,
+          "tps": 17.749,
+          "generated_tokens": 16,
+          "answer_preview": "Local RAG requiresjoint tuning of retrieval, promptBudgetary constraints"
+        }
+      ],
+      "ttft_ms_mean": 158.486,
+      "ttft_ms_std": 52.038,
+      "ttft_ms_ci95": 45.613,
+      "ttft_ms_p95": 237.165,
+      "tps_mean": 17.218,
+      "tps_std": 0.859,
+      "tps_ci95": 0.753,
+      "tps_p95": 18.477,
+      "total_time_s_mean": 1.339,
+      "total_time_s_std": 0.414,
+      "total_time_s_ci95": 0.363,
+      "total_time_s_p95": 1.774,
+      "label": "Falcon-7B-Q + GGUF",
+      "backend": "GGUF / llama.cpp",
+      "model_path": "/Users/delete/Desktop/rag_system_副本/models/falcon-7b-multihop-q4_k_m.gguf",
+      "evidence_class": "repeated_measurement"
+    },
+    {
+      "rounds": 5,
+      "runs": [
+        {
+          "ttft_ms": 187.355,
+          "total_time_s": 7.481,
+          "tps": 17.686,
+          "generated_tokens": 129,
+          "answer_preview": "In the fewest number of words possible, describe the interplay between the three components. \n\nLocal RAG on constrained unified-memory hardware requires joint tuning of retrieval, prompt budget, and g"
+        },
+        {
+          "ttft_ms": 60.255,
+          "total_time_s": 7.339,
+          "tps": 17.724,
+          "generated_tokens": 129,
+          "answer_preview": "On constrained unified-memory hardware, local RAG requires joint tuning of retrieval, prompt budget, and generation because these components have competing memory demands that can be alleviated by adj"
+        },
+        {
+          "ttft_ms": 128.689,
+          "total_time_s": 8.043,
+          "tps": 16.299,
+          "generated_tokens": 129,
+          "answer_preview": "Answer: On constrained unified-memory hardware, local RAG requires joint tuning of retrieval, prompt budget, and generation because the limited memory resources can only accommodate a certain amount o"
+        },
+        {
+          "ttft_ms": 125.558,
+          "total_time_s": 4.926,
+          "tps": 16.249,
+          "generated_tokens": 78,
+          "answer_preview": "**Answer:** \nLocal RAG on constrained unified-memory hardware requires joint tuning of retrieval, prompt budget, and generation because it necessitates optimizing the memory access patterns to minimiz"
+        },
+        {
+          "ttft_ms": 112.582,
+          "total_time_s": 7.773,
+          "tps": 16.841,
+          "generated_tokens": 129,
+          "answer_preview": "Local RAG on constrained unified-memory hardware requires joint tuning of retrieval, prompt budget, and generation because the limited memory bandwidth and cache hierarchy of the hardware can lead to "
+        }
+      ],
+      "ttft_ms_mean": 122.888,
+      "ttft_ms_std": 40.561,
+      "ttft_ms_ci95": 35.553,
+      "ttft_ms_p95": 175.622,
+      "tps_mean": 16.96,
+      "tps_std": 0.643,
+      "tps_ci95": 0.564,
+      "tps_p95": 17.716,
+      "total_time_s_mean": 7.112,
+      "total_time_s_std": 1.12,
+      "total_time_s_ci95": 0.982,
+      "total_time_s_p95": 7.989,
+      "label": "Llama-3-8B-Q + GGUF",
+      "backend": "GGUF / llama.cpp",
+      "model_path": "/Users/delete/Desktop/rag_system_副本/models/Llama-3-8B-Instruct.Q4_K_M.gguf",
+      "evidence_class": "repeated_measurement"
+    }
+  ]
+}

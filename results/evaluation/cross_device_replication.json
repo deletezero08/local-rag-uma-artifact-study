@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-03-30 22:39:18",
+  "artifact_type": "cross_device_replication_status",
+  "status": "blocked",
+  "reason": "No second Apple Silicon device or alternate unified-memory tier is available in the current workspace for a real replication run.",
+  "current_device": {
+    "model_name": "Mac mini",
+    "model_identifier": "Mac16,10",
+    "chip": "Apple M4",
+    "memory": "16 GB"
+  },
+  "requested_replication_scope": [
+    "backend comparison",
+    "selected keep_ratio operating point",
+    "optimized vs baseline concurrency"
+  ],
+  "manuscript_use": "blocker note only; not experimental evidence"
+}

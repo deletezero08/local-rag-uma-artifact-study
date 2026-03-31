@@ -1,0 +1,9 @@
+# MemoraRAG V2 SOTA Dependencies
+# Optimized for Apple Silicon (Metal) & UMA Architecture
+
+llama-cpp-python>=0.3.0
+sentence-transformers>=3.0
+numpy>=1.24
+scipy>=1.10
+psutil>=5.9
+torch>=2.0 # for embedding inference

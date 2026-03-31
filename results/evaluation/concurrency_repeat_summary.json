@@ -1,0 +1,118 @@
+{
+  "timestamp": "2026-03-29 17:37:09",
+  "source_report": "results/evaluation/concurrency_tail_latency_report.json",
+  "schema_version": 1,
+  "config": {
+    "model_path": "/Users/delete/Desktop/rag_system_副本/models/Llama-3-8B-Instruct.Q4_K_M.gguf",
+    "index_path": "/Users/delete/Desktop/rag_system_副本/models/vector_indices/turbo_index.json",
+    "rounds": 5,
+    "concurrency_levels": [
+      2,
+      4
+    ],
+    "n_ctx": 2048,
+    "top_k": 15,
+    "num_docs": 25,
+    "doc_repeat": 2,
+    "query": "Explain the hardware bandwidth limitations when processing large contexts in local LLMs.",
+    "vmstat_dir": "/Users/delete/Desktop/rag_system_副本/results/hardware/concurrency_vmstat"
+  },
+  "summary_rows": [
+    {
+      "mode": "full_context",
+      "concurrency_label": "N=2",
+      "concurrency": 2,
+      "round_count": 5,
+      "successful_rounds": 5,
+      "success_rate_mean": 1.0,
+      "success_rate_std": 0.0,
+      "error_count_mean": 0.0,
+      "error_count_std": 0.0,
+      "p50_ttft_ms_mean": 7706.5,
+      "p95_ttft_ms_mean": 7725.955,
+      "p99_ttft_ms_mean": 7727.684,
+      "aggregate_tps_mean": 6.352,
+      "wall_time_sec_mean": 40.67,
+      "vm_peak_total_ops_max": 94,
+      "vm_peak_pageouts_max": 94,
+      "vm_peak_swapouts_max": 0
+    },
+    {
+      "mode": "full_context",
+      "concurrency_label": "N=4",
+      "concurrency": 4,
+      "round_count": 5,
+      "successful_rounds": 5,
+      "success_rate_mean": 0.95,
+      "success_rate_std": 0.1,
+      "error_count_mean": 0.2,
+      "error_count_std": 0.4,
+      "p50_ttft_ms_mean": 12746.973,
+      "p95_ttft_ms_mean": 13200.869,
+      "p99_ttft_ms_mean": 13229.95,
+      "aggregate_tps_mean": 4.613,
+      "wall_time_sec_mean": 106.391,
+      "vm_peak_total_ops_max": 19534,
+      "vm_peak_pageouts_max": 258,
+      "vm_peak_swapouts_max": 19276
+    },
+    {
+      "mode": "optimized_path",
+      "concurrency_label": "N=2",
+      "concurrency": 2,
+      "round_count": 5,
+      "successful_rounds": 5,
+      "success_rate_mean": 1.0,
+      "success_rate_std": 0.0,
+      "error_count_mean": 0.0,
+      "error_count_std": 0.0,
+      "p50_ttft_ms_mean": 6831.879,
+      "p95_ttft_ms_mean": 6921.581,
+      "p99_ttft_ms_mean": 6929.554,
+      "aggregate_tps_mean": 7.025,
+      "wall_time_sec_mean": 36.818,
+      "vm_peak_total_ops_max": 78,
+      "vm_peak_pageouts_max": 78,
+      "vm_peak_swapouts_max": 0
+    },
+    {
+      "mode": "optimized_path",
+      "concurrency_label": "N=4",
+      "concurrency": 4,
+      "round_count": 5,
+      "successful_rounds": 5,
+      "success_rate_mean": 0.75,
+      "success_rate_std": 0.224,
+      "error_count_mean": 1.0,
+      "error_count_std": 0.894,
+      "p50_ttft_ms_mean": 9983.346,
+      "p95_ttft_ms_mean": 10369.998,
+      "p99_ttft_ms_mean": 10405.805,
+      "aggregate_tps_mean": 5.408,
+      "wall_time_sec_mean": 76.382,
+      "vm_peak_total_ops_max": 14959,
+      "vm_peak_pageouts_max": 108,
+      "vm_peak_swapouts_max": 14952
+    }
+  ],
+  "mode_deltas_vs_full_context": {
+    "N=2": {
+      "p95_ttft_ms_delta": -804.374,
+      "p95_ttft_ms_delta_percent": -10.411,
+      "aggregate_tps_delta": 0.673,
+      "wall_time_sec_delta": -3.852,
+      "success_rate_delta": 0.0,
+      "error_count_delta": 0.0,
+      "peak_swapouts_max_delta": 0
+    },
+    "N=4": {
+      "p95_ttft_ms_delta": -2830.871,
+      "p95_ttft_ms_delta_percent": -21.445,
+      "aggregate_tps_delta": 0.795,
+      "wall_time_sec_delta": -30.009,
+      "success_rate_delta": -0.2,
+      "error_count_delta": 0.8,
+      "peak_swapouts_max_delta": -4324
+    }
+  }
+}

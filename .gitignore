@@ -1,0 +1,87 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments
+venv/
+.venv*/
+env/
+node_modules/
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Vector database (auto-generated)
+chroma_db/
+chroma_db.bak.*/
+
+# macOS
+.DS_Store
+.!*
+~$*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Runtime artifacts and logs
+*.log
+server.log
+
+# Tool caches and local runtime state
+.cache/
+.mplconfig/
+.playwright/
+.playwright-cli/
+
+# Evaluation checkpoints (transient, auto-generated)
+experiments/results/temp_*_checkpoint.json
+experiments/results/archive/
+output/thesis_data/
+
+# Heavy Assets & Research Artifacts (EXCLUDE ALL GGUF)
+*.gguf
+models/
+multihoprag-merged/
+arXiv-*/
+archive/
+
+# User Data Directories
+docs/*
+!docs/.gitkeep
+!docs/README.md
+!docs/PROJECT_MAP.md
+memory/*
+!memory/.gitkeep
+sessions/*
+!sessions/.gitkeep
+skills/*
+!skills/.gitkeep
+pdfs/*
+!pdfs/.gitkeep
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+
+# Paper and thesis scratch space
+journal_paper_ccpe/tmp/
+thesis/tmp/
+tmp/pdfs/

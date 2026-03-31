@@ -1,0 +1,20 @@
+[
+    {
+        "mode": "Baseline (100% Context)",
+        "wall_time_sec": 134.09,
+        "p95_ttft_ms": 17435.46,
+        "aggregate_tps": 3.85,
+        "strategies_used": [
+            "static_ratio_100.0%"
+        ]
+    },
+    {
+        "mode": "MemoraRAG (Gradient Pruned)",
+        "wall_time_sec": 55.29,
+        "p95_ttft_ms": 8979.26,
+        "aggregate_tps": 4.67,
+        "strategies_used": [
+            "adaptive_high_70%"
+        ]
+    }
+]

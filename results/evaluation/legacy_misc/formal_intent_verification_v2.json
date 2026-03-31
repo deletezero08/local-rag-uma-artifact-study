@@ -1,0 +1,40 @@
+{
+  "test_runs": [
+    {
+      "description": "Smalltalk Bypass",
+      "query": "你好，请问你是谁？",
+      "expected_state": "smalltalk",
+      "actual_state": "smalltalk",
+      "fallback_file": null,
+      "pass": true,
+      "status_messages": []
+    },
+    {
+      "description": "Memory Fallback (History)",
+      "query": "它刚才写了什么？",
+      "expected_state": "memory_fallback",
+      "actual_state": "memory_fallback",
+      "fallback_file": "api_v1.md",
+      "pass": true,
+      "status_messages": [
+        "🔍 正在分析您的意图...",
+        "📂 正在检索知识库...",
+        "🔍 意图分析完成。 类别: markdown. 目标文件: api_v1.md."
+      ]
+    },
+    {
+      "description": "Regex Boundary Check",
+      "query": "麻烦分析下内容",
+      "expected_state": "none",
+      "actual_state": "none",
+      "fallback_file": null,
+      "pass": true,
+      "status_messages": [
+        "🔍 正在分析您的意图...",
+        "📂 正在检索知识库...",
+        "🔍 意图分析完成。",
+        "📑 正在提取全库最相关的参考片段..."
+      ]
+    }
+  ]
+}

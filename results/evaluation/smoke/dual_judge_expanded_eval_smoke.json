@@ -1,0 +1,281 @@
+{
+  "timestamp": "2026-03-29 20:04:09",
+  "script": "scripts/evaluation/paper_dual_judge_memorarag.py",
+  "output_schema_version": "1.0",
+  "cases_file": "/Users/delete/Desktop/rag_system_副本/data/eval/test_cases_test40.json",
+  "sample_size": 4,
+  "baseline": {
+    "name": "baseline",
+    "n": 4,
+    "latency_mean": 6.04,
+    "ttft_mean_ms": 1499.044,
+    "total_mean_ms": 6040.186,
+    "faithfulness_mean_judge_a": 1.75,
+    "relevance_mean_judge_a": 3.0,
+    "faithfulness_mean_judge_b": 1.5,
+    "relevance_mean_judge_b": 2.0,
+    "faithfulness_mean_merged": 1.625,
+    "relevance_mean_merged": 2.5,
+    "judge_gap_faithfulness_mean": 1.25,
+    "judge_gap_relevance_mean": 3.0,
+    "judge_agreement_rate_gap_le_1": 0.25
+  },
+  "optimized": {
+    "name": "optimized",
+    "n": 4,
+    "latency_mean": 6.387,
+    "ttft_mean_ms": 1153.958,
+    "total_mean_ms": 6386.497,
+    "faithfulness_mean_judge_a": 5.0,
+    "relevance_mean_judge_a": 5.5,
+    "faithfulness_mean_judge_b": 2.75,
+    "relevance_mean_judge_b": 3.0,
+    "faithfulness_mean_merged": 3.875,
+    "relevance_mean_merged": 4.25,
+    "judge_gap_faithfulness_mean": 2.25,
+    "judge_gap_relevance_mean": 2.5,
+    "judge_agreement_rate_gap_le_1": 0.5
+  },
+  "acceptance_by_merged_judge": {
+    "faithfulness_drop_le_0_2": true,
+    "latency_drop_ge_10_percent": false,
+    "faithfulness_drop": -2.25,
+    "latency_drop_percent": -5.75
+  },
+  "baseline_rows": [
+    {
+      "id": "Q008",
+      "question": "docker_compose.md 中 API 服务的端口映射配置是什么？",
+      "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 1 的配置，API 服务的端口映射配置如下：\n\n```yaml\nports:\n- \"8080:8080\"\n```\n\n**说明：**\n- 主机端口 8080 映射到容器内部的 8080 端口（根据第 1 页内容）\n- 该配置位于 `api` 服务的 `ports` 字段中（根据第 1 页内容）\n\n其他文档（2-4 页）主要涉及 `vllm`、`qdrant` 和 `ollama` 服务的配置，未包含 API 服务的端口设置。",
+      "answer": "根据提供的 Docker Compose 文件，API 服务的端口映射配置可以在 `docker-compose.yaml` 文件中找到：\n\n```yaml\nservices:\n  gateway:\n    image: nginx:latest\n```\n\n在上面的配置中，`gateway` 服务使用的是 `nginx:latest` 镜像，但是没有指定端口映射配置。因此，API 服务的端口映射配置为无。",
+      "context": "# Docker Compose 完整配置\n\n```bash\n# Docker\ndocker --version\nnvidia-docker --version\n\n## Template: `docker-compose.yml`\n\n# 查看容器资源\ndocker stats\n```\n\n| 参数 | 描述 |\n|------|------|\n| -p 3000:80 | 端口映射 (host:container) |\n| -v $PWD/data:/data | 数据卷挂载 |\n| --gpus all | GPU 加速 |\n\n```yaml\n# node_exporter 配置\nscrape_configs:\n  - job_name: 'nvidia'\n    static_configs:\n      - targets: ['nvidia-exporter:9100']\n```\n\n```yaml\n# docker-compose.yaml\nservices:\n  gateway:\n    image: nginx:latest\n    \n  model-service:\n    image: vllm/vllm-openai\n    deploy:\n      replicas: 3\n      resources:\n        limits:\n          nvidia.com/gpu: 1\n    \n  embedding-service:\n    image: embedding-service\n    deploy:\n      replicas: 2\n```\n\n# 解决方案\n# 安装匹配的 CUDA 版本\n# 或使用 Docker (自带 CUDA)\n```\n\n# Docker\ndocker logs <container>\n\n# Docker\ndocker logs <container>",
+      "latency": 8.846,
+      "top_k": 10,
+      "use_dynamic": false,
+      "ttft_ms": 1930.645,
+      "total_ms": 8845.64,
+      "strategy": "passthrough",
+      "judge_a": {
+        "faithfulness": 0.0,
+        "relevance": 0.0
+      },
+      "judge_b": {
+        "faithfulness": 0.0,
+        "relevance": 0.0
+      },
+      "faith_a": 0.0,
+      "rel_a": 0.0,
+      "faith_b": 0.0,
+      "rel_b": 0.0,
+      "faith_m": 0.0,
+      "rel_m": 0.0,
+      "gap_f": 0.0,
+      "gap_r": 0.0
+    },
+    {
+      "id": "Q009",
+      "question": "vLLM Chat Completions 的端点路径是什么？",
+      "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 3 的内容，vLLM Chat Completions 的端点路径与 OpenAI Chat API 兼容，因此其端点路径为：\n\n```\n/v1/chat/completions\n```\n\n该路径在文档 1（`tgi_chat.md`）和文档 7（`tgi_chat.md`）中也被明确提及，用于 TGI 的 Chat API 服务。虽然文档 8 提到通过 `kubectl port-forward` 转发 8000 端口，但端点路径仍遵循标准的 `/v1/chat/completions` 格式。",
+      "answer": "According to the provided context, the endpoint path for vLLM Chat Completions is not explicitly stated. However, we can infer from the `client.completions.create` API call in the `vLLM benchmark` section that the endpoint path is likely to be `/completions`. \n\nTherefore, the endpoint path for vLLM Chat Completions is `/completions`.",
+      "context": "# vLLM Chat Completions API\n\n# vLLM Completions API\n\n# vLLM Kubernetes 部署 - 基础篇\n\n```powershell\n# 检查端口\nnetstat -ano | findstr 11434\n\n# TGI Chat Completions API\n\n# vLLM JavaScript SDK\n\n## 3. Post-installation\nAdd the following to your `~/.bashrc`:\n```bash\nexport PATH=/usr/local/cuda/bin${PATH:+:${PATH}}\nexport LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}\n```\n\n```bash\n# vLLM benchmark\npython -m vllm.entrypoints.openai.api_server --model model\n\n## 2. Offline Batched Inference\n```python\nfrom vllm import LLM, SamplingParams\n\n```python\nstream = client.completions.create(\n    model=\"model\",\n    prompt=\"Tell a story\",\n    stream=True\n)",
+      "latency": 6.539,
+      "top_k": 10,
+      "use_dynamic": false,
+      "ttft_ms": 1419.886,
+      "total_ms": 6538.461,
+      "strategy": "passthrough",
+      "judge_a": {
+        "faithfulness": 2.0,
+        "relevance": 4.0
+      },
+      "judge_b": {
+        "faithfulness": 0.0,
+        "relevance": 0.0
+      },
+      "faith_a": 2.0,
+      "rel_a": 4.0,
+      "faith_b": 0.0,
+      "rel_b": 0.0,
+      "faith_m": 1.0,
+      "rel_m": 2.0,
+      "gap_f": 2.0,
+      "gap_r": 4.0
+    },
+    {
+      "id": "Q010",
+      "question": "vLLM Completions 的端点路径是什么？",
+      "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 2（tgi_completions.md）的内容，vLLM Completions 的端点路径为：\n\n```\nPOST /v1/completions\n```\n\n该信息直接来源于文档中明确标注的 API 路径定义。其他文档未涉及此特定端点路径的说明。",
+      "answer": "According to the context, the endpoint path for vLLM Completions API is `/completions`. This is mentioned in the following code snippet:\n```python\nstream = client.completions.create(\n    model=\"model\",\n    prompt=\"Tell a story\",\n    stream=True\n)\n```\nHere, `client.completions.create` is the endpoint for creating a completion.",
+      "context": "# vLLM Completions API\n\n# vLLM Chat Completions API\n\n# vLLM JavaScript SDK\n\n# vLLM Kubernetes 部署 - 基础篇\n\n## 2. Offline Batched Inference\n```python\nfrom vllm import LLM, SamplingParams\n\n# TGI Text Completions API\n\n```powershell\n# 检查端口\nnetstat -ano | findstr 11434\n\n```bash\n# vLLM benchmark\npython -m vllm.entrypoints.openai.api_server --model model\n\n```python\nstream = client.completions.create(\n    model=\"model\",\n    prompt=\"Tell a story\",\n    stream=True\n)\n\nvllm:\n    image: vllm/vllm-openai:latest\n    container_name: vllm\n    command: --model facebook/opt-125m\n    ports:\n      - \"8000:8000\"\n    ipc: host\n    deploy:\n      resources:\n        reservations:\n          devices:\n            - driver: nvidia\n              count: all\n              capabilities: [gpu]",
+      "latency": 6.251,
+      "top_k": 10,
+      "use_dynamic": false,
+      "ttft_ms": 1331.54,
+      "total_ms": 6250.689,
+      "strategy": "passthrough",
+      "judge_a": {
+        "faithfulness": 5.0,
+        "relevance": 8.0
+      },
+      "judge_b": {
+        "faithfulness": 4.0,
+        "relevance": 4.0
+      },
+      "faith_a": 5.0,
+      "rel_a": 8.0,
+      "faith_b": 4.0,
+      "rel_b": 4.0,
+      "faith_m": 4.5,
+      "rel_m": 6.0,
+      "gap_f": 1.0,
+      "gap_r": 4.0
+    },
+    {
+      "id": "Q011",
+      "question": "vLLM Embeddings 的端点路径是什么？",
+      "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 1 的内容，vLLM Embeddings 的端点路径为：\n\n```\nPOST /v1/embeddings\n```\n\n该信息来源于：\n- 文档 1: `vllm_embeddings.md`（修改时间: 2026-03-12 12:58:06）  \n  内容直接包含 `POST /v1/embeddings` 这一 API 端点定义。",
+      "answer": "According to the context, the endpoint path for vLLM Embeddings is `/api/embed`.",
+      "context": "# vLLM Embeddings API\n\n# vLLM Completions API\n\n```python\nembedding = client.embeddings.create(\n    model=\"BAAI/bge-small-en-v1.5\",\n    input=\"Hello world\"\n)\nprint(embedding.data[0].embedding)\n```\n\n### Generate Embeddings\n`POST /api/embed`\n\n# vLLM Kubernetes 部署 - 基础篇\n\n```javascript\nconst embedding = await client.embeddings.create({\n  model: 'BAAI/bge-small-en-v1.5',\n  input: 'Hello world'\n})\nconsole.log(embedding.data[0].embedding)\n```\n\n```python\n# 中文 Embedding\nembeddings = HuggingFaceEmbeddings(\n    model_name=\"BAAI/bge-small-zh-v1.5\"\n)\n\n# 文本\nvector = embeddings.embed_query(\"你好世界\")\n```\n\n# vLLM JavaScript SDK\n\n```powershell\n# 检查端口\nnetstat -ano | findstr 11434",
+      "latency": 2.526,
+      "top_k": 10,
+      "use_dynamic": false,
+      "ttft_ms": 1314.107,
+      "total_ms": 2525.955,
+      "strategy": "passthrough",
+      "judge_a": {
+        "faithfulness": 0.0,
+        "relevance": 0.0
+      },
+      "judge_b": {
+        "faithfulness": 2.0,
+        "relevance": 4.0
+      },
+      "faith_a": 0.0,
+      "rel_a": 0.0,
+      "faith_b": 2.0,
+      "rel_b": 4.0,
+      "faith_m": 1.0,
+      "rel_m": 2.0,
+      "gap_f": 2.0,
+      "gap_r": 4.0
+    }
+  ],
+  "optimized_rows": [
+    {
+      "id": "Q008",
+      "question": "docker_compose.md 中 API 服务的端口映射配置是什么？",
+      "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 1 的配置，API 服务的端口映射配置如下：\n\n```yaml\nports:\n- \"8080:8080\"\n```\n\n**说明：**\n- 主机端口 8080 映射到容器内部的 8080 端口（根据第 1 页内容）\n- 该配置位于 `api` 服务的 `ports` 字段中（根据第 1 页内容）\n\n其他文档（2-4 页）主要涉及 `vllm`、`qdrant` 和 `ollama` 服务的配置，未包含 API 服务的端口设置。",
+      "answer": "Based on the provided context, there is no API service mentioned in the `docker-compose.yml` file. The file only defines three services: `gateway`, `model-service`, and `embedding-service`, but there is no mention of API service.\n\nHowever, in the `docker-compose.yml` file, there is a `gateway` service that is based on the `nginx:latest` image. Nginx is a web server, and it is possible that this service is intended to serve an API.\n\nIn that case, if you want to expose the API, you would need to configure the `gateway` service to expose its port",
+      "context": "# Docker Compose 完整配置\n\n```bash\n# Docker\ndocker --version\nnvidia-docker --version\n\n## Template: `docker-compose.yml`\n\n# 查看容器资源\ndocker stats\n```\n\n| 参数 | 描述 |\n|------|------|\n| -p 3000:80 | 端口映射 (host:container) |\n| -v $PWD/data:/data | 数据卷挂载 |\n| --gpus all | GPU 加速 |\n\n```yaml\n# node_exporter 配置\nscrape_configs:\n  - job_name: 'nvidia'\n    static_configs:\n      - targets: ['nvidia-exporter:9100']\n```\n\n```yaml\n# docker-compose.yaml\nservices:\n  gateway:\n    image: nginx:latest\n    \n  model-service:\n    image: vllm/vllm-openai\n    deploy:\n      replicas: 3\n      resources:\n        limits:\n          nvidia.com/gpu: 1\n    \n  embedding-service:\n    image: embedding-service\n    deploy:\n      replicas: 2\n```\n\n# 解决方案\n# 安装匹配的 CUDA 版本\n# 或使用 Docker (自带 CUDA)\n```",
+      "latency": 9.105,
+      "top_k": 8,
+      "use_dynamic": true,
+      "ttft_ms": 1530.553,
+      "total_ms": 9104.499,
+      "strategy": "passthrough",
+      "judge_a": {
+        "faithfulness": 10.0,
+        "relevance": 10.0
+      },
+      "judge_b": {
+        "faithfulness": 8.0,
+        "relevance": 6.0
+      },
+      "faith_a": 10.0,
+      "rel_a": 10.0,
+      "faith_b": 8.0,
+      "rel_b": 6.0,
+      "faith_m": 9.0,
+      "rel_m": 8.0,
+      "gap_f": 2.0,
+      "gap_r": 4.0
+    },
+    {
+      "id": "Q009",
+      "question": "vLLM Chat Completions 的端点路径是什么？",
+      "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 3 的内容，vLLM Chat Completions 的端点路径与 OpenAI Chat API 兼容，因此其端点路径为：\n\n```\n/v1/chat/completions\n```\n\n该路径在文档 1（`tgi_chat.md`）和文档 7（`tgi_chat.md`）中也被明确提及，用于 TGI 的 Chat API 服务。虽然文档 8 提到通过 `kubectl port-forward` 转发 8000 端口，但端点路径仍遵循标准的 `/v1/chat/completions` 格式。",
+      "answer": "Based on the context provided, I do not know the specific endpoint path for vLLM Chat Completions. The context only mentions the PowerShell command `netstat -ano | findstr 11434` to check the port, and the installation process for vLLM, but it does not provide information about the endpoint path for vLLM Chat Completions.",
+      "context": "# vLLM Chat Completions API\n\n# vLLM Completions API\n\n# vLLM Kubernetes 部署 - 基础篇\n\n```powershell\n# 检查端口\nnetstat -ano | findstr 11434\n\n# TGI Chat Completions API\n\n# vLLM JavaScript SDK\n\n## 3. Post-installation\nAdd the following to your `~/.bashrc`:\n```bash\nexport PATH=/usr/local/cuda/bin${PATH:+:${PATH}}\nexport LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}\n```\n\n```bash\n# vLLM benchmark\npython -m vllm.entrypoints.openai.api_server --model model",
+      "latency": 5.683,
+      "top_k": 8,
+      "use_dynamic": true,
+      "ttft_ms": 1020.827,
+      "total_ms": 5682.861,
+      "strategy": "passthrough",
+      "judge_a": {
+        "faithfulness": 0.0,
+        "relevance": 1.0
+      },
+      "judge_b": {
+        "faithfulness": 0.0,
+        "relevance": 1.0
+      },
+      "faith_a": 0.0,
+      "rel_a": 1.0,
+      "faith_b": 0.0,
+      "rel_b": 1.0,
+      "faith_m": 0.0,
+      "rel_m": 1.0,
+      "gap_f": 0.0,
+      "gap_r": 0.0
+    },
+    {
+      "id": "Q010",
+      "question": "vLLM Completions 的端点路径是什么？",
+      "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 2（tgi_completions.md）的内容，vLLM Completions 的端点路径为：\n\n```\nPOST /v1/completions\n```\n\n该信息直接来源于文档中明确标注的 API 路径定义。其他文档未涉及此特定端点路径的说明。",
+      "answer": "Based on the provided context, it appears that vLLM Completions API is a text completion API, and the endpoint path is not explicitly mentioned. However, it is possible that the endpoint path is not directly related to the provided code snippets.\n\nFrom the context, we can see that the vLLM Completions API is likely to be used with the JavaScript SDK, Python code, and PowerShell commands. The endpoint path might be specific to the programming language or the implementation of the API.\n\nWithout more information, I cannot provide a precise answer to the question. If you could provide more details or context about the endpoint path,",
+      "context": "# vLLM Completions API\n\n# vLLM Chat Completions API\n\n# vLLM JavaScript SDK\n\n# vLLM Kubernetes 部署 - 基础篇\n\n## 2. Offline Batched Inference\n```python\nfrom vllm import LLM, SamplingParams\n\n# TGI Text Completions API\n\n```powershell\n# 检查端口\nnetstat -ano | findstr 11434\n\n```bash\n# vLLM benchmark\npython -m vllm.entrypoints.openai.api_server --model model",
+      "latency": 8.301,
+      "top_k": 8,
+      "use_dynamic": true,
+      "ttft_ms": 867.172,
+      "total_ms": 8300.602,
+      "strategy": "passthrough",
+      "judge_a": {
+        "faithfulness": 0.0,
+        "relevance": 1.0
+      },
+      "judge_b": {
+        "faithfulness": 0.0,
+        "relevance": 0.0
+      },
+      "faith_a": 0.0,
+      "rel_a": 1.0,
+      "faith_b": 0.0,
+      "rel_b": 0.0,
+      "faith_m": 0.0,
+      "rel_m": 0.5,
+      "gap_f": 0.0,
+      "gap_r": 1.0
+    },
+    {
+      "id": "Q011",
+      "question": "vLLM Embeddings 的端点路径是什么？",
+      "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 1 的内容，vLLM Embeddings 的端点路径为：\n\n```\nPOST /v1/embeddings\n```\n\n该信息来源于：\n- 文档 1: `vllm_embeddings.md`（修改时间: 2026-03-12 12:58:06）  \n  内容直接包含 `POST /v1/embeddings` 这一 API 端点定义。",
+      "answer": "Based on the provided context, the endpoint path for vLLM Embeddings is `/api/embed`.",
+      "context": "# vLLM Embeddings API\n\n# vLLM Completions API\n\n```python\nembedding = client.embeddings.create(\n    model=\"BAAI/bge-small-en-v1.5\",\n    input=\"Hello world\"\n)\nprint(embedding.data[0].embedding)\n```\n\n### Generate Embeddings\n`POST /api/embed`\n\n# vLLM Kubernetes 部署 - 基础篇\n\n```javascript\nconst embedding = await client.embeddings.create({\n  model: 'BAAI/bge-small-en-v1.5',\n  input: 'Hello world'\n})\nconsole.log(embedding.data[0].embedding)\n```\n\n```python\n# 中文 Embedding\nembeddings = HuggingFaceEmbeddings(\n    model_name=\"BAAI/bge-small-zh-v1.5\"\n)\n\n# 文本\nvector = embeddings.embed_query(\"你好世界\")\n```",
+      "latency": 2.458,
+      "top_k": 8,
+      "use_dynamic": true,
+      "ttft_ms": 1197.281,
+      "total_ms": 2458.026,
+      "strategy": "passthrough",
+      "judge_a": {
+        "faithfulness": 10.0,
+        "relevance": 10.0
+      },
+      "judge_b": {
+        "faithfulness": 3.0,
+        "relevance": 5.0
+      },
+      "faith_a": 10.0,
+      "rel_a": 10.0,
+      "faith_b": 3.0,
+      "rel_b": 5.0,
+      "faith_m": 6.5,
+      "rel_m": 7.5,
+      "gap_f": 7.0,
+      "gap_r": 5.0
+    }
+  ]
+}

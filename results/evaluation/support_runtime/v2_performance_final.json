@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "mode": "smoke",
+    "timestamp": 1774585018.9600809,
+    "seed": 42,
+    "model_path": "/Users/delete/Desktop/rag_system_副本/multihoprag-merged",
+    "index_path": "/Users/delete/Desktop/rag_system_副本/experiments/results/turbo_index.json",
+    "device": "mps",
+    "use_v2": true
+  },
+  "retrieval": {
+    "queries": [
+      "What is the core bottleneck in local RAG systems?",
+      "Explain TurboQuant retrieval and KV compression."
+    ],
+    "top_k": 5,
+    "latency_ms": [
+      5463.045333999617,
+      25.44945799945708
+    ],
+    "avg_latency_ms": 2744.247395999537,
+    "rss_mb": 119.71875,
+    "sample_hits": [
+      [
+        "# RAG System Architecture & Design Patterns",
+        "### List Local Models\n`GET /api/tags`",
+        "## 4. Environment Standardization\nUse the provided `experiments/hardware.md` as a template for recording the specific environment of any research run.",
+        "This document defines the standards for implementing and describing \"Skills\" (Tools) within the MemoraRAG RAG system to ensure stable intent routing and neutral semantics.",
+        "```python\n# FastAPI\nfrom fastapi.middleware.cors import CORSMiddleware"
+      ],
+      [
+        "Generate a response for a given prompt with a provided model. This is a streaming endpoint.",
+        "vLLM is a high-throughput and memory-efficient inference and serving engine for LLMs.",
+        "volumes:\n  vllm-cache:\n  qdrant:\n```",
+        "Generate the next message in a chat with a provided model.",
+        "Retrieval-Augmented Generation (RAG) systems integrate retrieval mechanisms with LLMs to enhance accuracy by grounding responses in external information."
+      ]
+    ]
+  },
+  "scaling": {
+    "16": {
+      "ttft": 77.5732898340002,
+      "tps": 0.01071349689244226,
+      "tokens": 3.0,
+      "rss": 85.140625,
+      "total_time": 264.25370054199993,
+      "decode_step_ms": [
+        93563.29245799952,
+        92947.61199999994
+      ]
+    }
+  },
+  "concurrency": {
+    "status": "skipped",
+    "reason": "Smoke mode skips concurrency to isolate single-request generation latency."
+  },
+  "kv_compression_events": [],
+  "summary": {
+    "retrieval_avg_latency_ms": 2744.247395999537,
+    "successful_scaling_points": 1,
+    "peak_rss_mb": 85.140625,
+    "best_system_tps": 0.0
+  }
+}

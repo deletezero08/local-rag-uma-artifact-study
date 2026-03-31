@@ -1,0 +1,170 @@
+{
+  "vector_only": {
+    "faithfulness": {
+      "mean": 7.167,
+      "std": 2.847,
+      "ci_lower": 6.446,
+      "ci_upper": 7.887,
+      "n": 60
+    },
+    "relevance": {
+      "mean": 7.7,
+      "std": 2.976,
+      "ci_lower": 6.947,
+      "ci_upper": 8.453,
+      "n": 60
+    },
+    "latency": {
+      "mean": 103.609,
+      "std": 31.502,
+      "ci_lower": 95.638,
+      "ci_upper": 111.58,
+      "n": 60
+    },
+    "source_file": "2026-03-13 18:24:39",
+    "config_version": "1.2.0"
+  },
+  "bm25_only": {
+    "faithfulness": {
+      "mean": 6.983,
+      "std": 3.022,
+      "ci_lower": 6.219,
+      "ci_upper": 7.748,
+      "n": 60
+    },
+    "relevance": {
+      "mean": 6.75,
+      "std": 3.343,
+      "ci_lower": 5.904,
+      "ci_upper": 7.596,
+      "n": 60
+    },
+    "latency": {
+      "mean": 73.549,
+      "std": 21.337,
+      "ci_lower": 68.15,
+      "ci_upper": 78.948,
+      "n": 60
+    },
+    "source_file": "2026-03-13 20:24:31",
+    "config_version": "1.2.0"
+  },
+  "ensemble": {
+    "faithfulness": {
+      "mean": 7.333,
+      "std": 2.628,
+      "ci_lower": 6.668,
+      "ci_upper": 7.998,
+      "n": 60
+    },
+    "relevance": {
+      "mean": 7.817,
+      "std": 2.831,
+      "ci_lower": 7.1,
+      "ci_upper": 8.533,
+      "n": 60
+    },
+    "latency": {
+      "mean": 90.42,
+      "std": 24.114,
+      "ci_lower": 84.318,
+      "ci_upper": 96.522,
+      "n": 60
+    },
+    "source_file": "2026-03-13 22:41:42",
+    "config_version": "1.2.0"
+  },
+  "rrf": {
+    "faithfulness": {
+      "mean": 7.25,
+      "std": 2.903,
+      "ci_lower": 6.515,
+      "ci_upper": 7.985,
+      "n": 60
+    },
+    "relevance": {
+      "mean": 7.65,
+      "std": 3.134,
+      "ci_lower": 6.857,
+      "ci_upper": 8.443,
+      "n": 60
+    },
+    "latency": {
+      "mean": 157.174,
+      "std": 224.997,
+      "ci_lower": 100.242,
+      "ci_upper": 214.106,
+      "n": 60
+    },
+    "source_file": "2026-03-14 12:40:57",
+    "config_version": "1.2.0"
+  },
+  "significance_tests": [
+    {
+      "available": true,
+      "metric": "faithfulness",
+      "mode_a": "vector_only",
+      "mode_b": "ensemble",
+      "n_pairs": 60,
+      "p_value": 0.868771883250669,
+      "statistic": 572.0,
+      "direction": "ensemble_higher",
+      "mean_diff_b_minus_a": 0.1667
+    },
+    {
+      "available": true,
+      "metric": "relevance",
+      "mode_a": "vector_only",
+      "mode_b": "ensemble",
+      "n_pairs": 60,
+      "p_value": 0.9646115631221029,
+      "statistic": 448.0,
+      "direction": "ensemble_higher",
+      "mean_diff_b_minus_a": 0.1167
+    },
+    {
+      "available": true,
+      "metric": "faithfulness",
+      "mode_a": "vector_only",
+      "mode_b": "rrf",
+      "n_pairs": 60,
+      "p_value": 0.9239324411271671,
+      "statistic": 403.0,
+      "direction": "rrf_higher",
+      "mean_diff_b_minus_a": 0.0833
+    },
+    {
+      "available": true,
+      "metric": "relevance",
+      "mode_a": "vector_only",
+      "mode_b": "rrf",
+      "n_pairs": 60,
+      "p_value": 0.712552834504006,
+      "statistic": 345.5,
+      "direction": "vector_only_higher",
+      "mean_diff_b_minus_a": -0.05
+    },
+    {
+      "available": true,
+      "metric": "faithfulness",
+      "mode_a": "ensemble",
+      "mode_b": "rrf",
+      "n_pairs": 60,
+      "p_value": 0.9187448844567268,
+      "statistic": 402.5,
+      "direction": "ensemble_higher",
+      "mean_diff_b_minus_a": -0.0833
+    },
+    {
+      "available": true,
+      "metric": "relevance",
+      "mode_a": "ensemble",
+      "mode_b": "rrf",
+      "n_pairs": 60,
+      "p_value": 0.8858012945009057,
+      "statistic": 324.0,
+      "direction": "ensemble_higher",
+      "mean_diff_b_minus_a": -0.1667
+    }
+  ]
+}

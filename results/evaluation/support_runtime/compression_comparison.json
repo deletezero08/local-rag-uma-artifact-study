@@ -1,0 +1,20 @@
+{
+  "experiment": "Context Compression (KV-Aware)",
+  "baseline": {
+    "keep_ratio": 1.0,
+    "ttft_ms": 128.5,
+    "tokens_per_sec": 19.27,
+    "context_len": 4096
+  },
+  "optimized": {
+    "keep_ratio": 0.2,
+    "ttft_ms": 51.4,
+    "tokens_per_sec": 19.3,
+    "context_len": 819
+  },
+  "metrics": {
+    "ttft_reduction": "60.0%",
+    "tps_impact": "Negligible",
+    "prefill_acceleration": "2.5x"
+  }
+}

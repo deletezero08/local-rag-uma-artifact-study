@@ -1,0 +1,13 @@
+{
+    "n_queries": 200,
+    "database_size": 468,
+    "dim": 512,
+    "bitrate": 3.5,
+    "metrics": {
+        "recall_at_1": 0.475,
+        "recall_at_5": 0.562,
+        "recall_at_10": 0.631,
+        "mae": 0.014385731692907754,
+        "max_error": 0.017177428124727584
+    }
+}

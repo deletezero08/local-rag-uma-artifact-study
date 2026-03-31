@@ -1,0 +1,56 @@
+{
+    "N=2": {
+        "baseline_ttft_mean": 7697.1,
+        "baseline_ttft_std": 2230.75,
+        "sota_ttft_mean": 7482.25,
+        "sota_ttft_std": 2103.43,
+        "avg_reduction_pct": 2.45,
+        "raw_rounds": [
+            {
+                "round": 1,
+                "baseline_ttft": 4547.94,
+                "sota_ttft": 4507.55,
+                "reduction_pct": 0.89
+            },
+            {
+                "round": 2,
+                "baseline_ttft": 9108.86,
+                "sota_ttft": 8966.73,
+                "reduction_pct": 1.56
+            },
+            {
+                "round": 3,
+                "baseline_ttft": 9434.49,
+                "sota_ttft": 8972.47,
+                "reduction_pct": 4.9
+            }
+        ]
+    },
+    "N=4": {
+        "baseline_ttft_mean": 9423.84,
+        "baseline_ttft_std": 97.83,
+        "sota_ttft_mean": 9141.08,
+        "sota_ttft_std": 135.55,
+        "avg_reduction_pct": 3.0,
+        "raw_rounds": [
+            {
+                "round": 1,
+                "baseline_ttft": 9426.1,
+                "sota_ttft": 8967.59,
+                "reduction_pct": 4.86
+            },
+            {
+                "round": 2,
+                "baseline_ttft": 9302.91,
+                "sota_ttft": 9157.21,
+                "reduction_pct": 1.57
+            },
+            {
+                "round": 3,
+                "baseline_ttft": 9542.52,
+                "sota_ttft": 9298.44,
+                "reduction_pct": 2.56
+            }
+        ]
+    }
+}

@@ -1,0 +1,396 @@
+\documentclass[10pt,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{authblk}
+\usepackage[hidelinks]{hyperref}
+\usepackage{geometry}
+\usepackage{times}
+\usepackage{enumitem}
+
+\geometry{letterpaper, margin=0.8in}
+\setlength{\columnsep}{0.24in}
+
+\newif\ifanonymized
+% \anonymizedtrue
+\anonymizedfalse
+
+\title{An Artifact-Backed Empirical Study of Local RAG Execution on Constrained Unified Memory Devices}
+\ifanonymized
+\author[1]{Anonymous Author(s)}
+\affil[1]{Anonymous Institution}
+\else
+\author[1]{Chaoran Wang}
+\affil[1]{College of Science and Information, Qingdao Agricultural University, Qingdao, China\\
+Email: \texttt{chaoranw47@gmail.com}}
+\fi
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Local Retrieval-Augmented Generation (RAG) on Apple Silicon Unified Memory Architecture (UMA) is constrained not only by retrieval quality, but by the shared execution budget consumed by model weights, KV cache, retrieved context, and operating-system activity. This paper studies a local RAG execution path that combines GGUF deployment, TurboQuant retrieval compression, and KV-aware context pruning on a Mac mini M4 with 16GB unified memory. Within the \texttt{Falcon-7B} family, migrating from \texttt{transformers + MPS} to a quantized \texttt{GGUF} route reduces TTFT from \texttt{77.6 s} to \texttt{123.7 ms}; across deployable configurations, \texttt{Llama-3-8B-Q + GGUF} serves as the preferred practical reference at \texttt{51.2 ms}. In the keep-ratio scan, \texttt{keep\_ratio = 0.6} reduces TTFT from \texttt{5.83 s} to \texttt{0.87 s} while decode throughput remains in the \texttt{18--19 TPS} range. Under concurrent load, the optimized path lowers P95 TTFT and wall time, while also exposing a stability cost at higher concurrency. Stage-wise latency decomposition shows that prompt-side and retrieval-side optimizations recover deployability on the tested device, but the dominant residual cost migrates to generation, especially decode. These findings are reported as an artifact-linked systems study on a constrained UMA deployment path and support the view that local RAG optimization is best treated as shared-budget systems co-design rather than isolated module acceleration.
+\end{abstract}
+
+\textbf{Keywords:} Local RAG; GGUF; llama.cpp; TurboQuant; Context Compression; Unified Memory Architecture
+
+\section{Introduction}
+
+Retrieval-Augmented Generation (RAG) has become a standard way to ground Large Language Models (LLMs) with private or domain-specific knowledge \cite{gao2023rag}. As RAG systems move from cloud infrastructure to consumer Apple Silicon devices with constrained Unified Memory Architecture (UMA), however, the relevant bottleneck changes. On these platforms, end-to-end latency is shaped not only by retrieval quality, but by shared memory pressure across model weights, KV cache activations, retrieved context, and operating-system processes \cite{hannun2023mlx}. Under such constraints, a pipeline that is accurate in principle may still fail as a practical interactive system.
+
+The resulting research gap is therefore not simply ``how to retrieve better,'' but how to architect a local RAG execution path that remains jointly deployable, measurable, and quality-preserving under strict hardware boundaries. Our central systems observation is that once retrieval-side cost is partially reduced, the dominant latency budget migrates toward generation. On a 16GB UMA device, unmanaged execution can instead collapse into paging-dominated behavior before a stable local baseline is even established.
+
+This study frames that problem as \emph{collaborative optimization}: joint tuning of retrieval compression, prompt-budget control, and backend selection under a shared hardware budget. The term does not imply runtime bidirectional communication between modules; it refers to deployment-time coordination across sequential stages whose combined footprint determines whether the full path remains usable. We analyze four tightly coupled components: (1) GGUF-based quantized deployment for hardware-aware inference, (2) TurboQuant as a retrieval-side compression lever \cite{zandieh2025turboquant}, (3) KV-aware context pruning to mitigate prefill-side memory pressure, and (4) telemetry-driven orchestration for isolating stage-wise bottlenecks. The thesis of the paper is that local RAG performance on constrained UMA hardware is best understood as a systems co-design problem in which retrieval savings, prompt-budget control, and backend choice compete within the same execution budget.
+
+Methodologically, this work emphasizes three principles tailored for systems research. First, claims are strictly anchored to empirical benchmark results documented in project artifacts. Second, negative results—such as the performance collapse of unoptimized backends—are treated as first-order evidence for identifying hardware boundaries. Third, we explicitly distinguish engineering significance (e.g., recovering interactive responsiveness) from statistical significance to avoid overstating observations drawn from heterogeneous system benchmarks.
+
+The contribution of this work is threefold:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0pt]
+    \item We formulate local RAG execution on constrained UMA hardware as a collaborative optimization problem spanning backend selection, prompt-budget control, and retrieval compression.
+    \item We provide an artifact-linked empirical study using real-time kernel probes to track virtual memory paging activity and relate backend choice to hardware saturation.
+    \item We show through stage-wise latency decomposition that, once deployability is recovered, the dominant optimization target migrates from retrieval/prefill toward generation, especially decode.
+\end{enumerate}
+
+Accordingly, the problem can be stated as follows: under unified-memory and bandwidth constraints, how can a local RAG pipeline achieve the best practical trade-off between answer quality and latency? This work does not propose a novel retriever or a new serving engine in isolation; instead, it reports a deployment-oriented systems study of how these components interact under a shared UMA budget. The remainder of this paper develops this framework through quantitative execution analysis, paging evidence, and a deployment-oriented interpretation of bottleneck migration.
+
+\section{Related Work}
+
+\subsection{Local inference backends and quantized deployment}
+
+Traditional local LLM inference often relies on the \texttt{transformers} library with MPS or CUDA acceleration. This route is attractive because it aligns with the mainstream Python ecosystem and provides a direct path from public model checkpoints to runnable inference. Under constrained memory conditions, however, these routes may suffer from substantial framework overhead and inefficient memory traffic. Recent serving systems have made clear that memory management is itself a first-order systems problem in LLM deployment rather than an implementation detail \cite{kwon2023vllm}.
+
+In contrast, lightweight C++ inference engines such as \texttt{llama.cpp} target deployability under tighter hardware budgets \cite{ggml2026llamacpp}. Their practical value comes less from introducing a new model family than from changing the execution substrate: quantized weights, memory-mapped model loading, and backend-aware kernels make it possible to restore local execution in environments where heavier routes struggle. The broader Apple Silicon ecosystem has likewise emphasized that unified-memory execution requires attention to runtime efficiency rather than only model quality \cite{hannun2023mlx}. The maturation of GGUF and K-Quant formats therefore matters not only as a packaging convenience, but as an enabling condition for studying 7B- to 8B-class local models on 16GB UMA devices \cite{ggml2026gguf}.
+
+\subsection{Retrieval compression and approximate search}
+
+As the size of local corpora grows, retrieval-side memory traffic becomes increasingly relevant. In many RAG discussions, retrieval is treated primarily as a quality problem: the central question is which retriever or reranker retrieves the most useful passages. In constrained local systems, however, retrieval also has an execution cost. Index size, vector precision, and distance-computation strategy all influence how much memory traffic the system must generate before prompt construction even begins.
+
+Techniques such as asymmetric distance computation and low-bit quantization reduce retrieval cost by replacing floating-point distance computation with cheaper approximate operations \cite{zandieh2025turboquant}. This is especially relevant when retrieval and generation share the same hardware budget. In that setting, compressed retrieval is not merely an indexing trick; it becomes a systems lever that changes how much memory and latency budget remain available for downstream prefill and decode. The present paper adopts this systems interpretation rather than treating retrieval compression as an isolated ANN benchmark problem.
+
+\subsection{Sparse retrieval and fusion in practical RAG}
+
+Production-oriented RAG systems rarely depend on a single retrieval signal. Survey work on RAG has repeatedly shown that practical systems often combine lexical and semantic evidence rather than relying on one scorer alone \cite{gao2023rag}. BM25 remains a widely used sparse baseline because of its robustness on lexical matches, identifiers, and domain-specific terminology \cite{robertson2009bm25}. Reciprocal Rank Fusion (RRF) is often adopted as a lightweight late-fusion strategy for combining heterogeneous retrieval outputs without introducing a heavy learned reranker \cite{cormack2009rrf}.
+
+This work does not claim novelty in sparse retrieval or fusion itself. Instead, these methods form part of the practical retrieval substrate whose gains eventually encounter a generation-side bottleneck. This distinction is important because it separates the present contribution from a standard retrieval-improvement narrative: the focus here is not on inventing a new fusion rule, but on analyzing what happens once the retrieval stack has already become ``good enough'' relative to the execution bottleneck.
+
+\subsection{KV cache management and context optimization}
+
+KV cache consumption is one of the dominant costs during local inference. Prior work on efficient LLM serving has shown that memory layout and token management can strongly shape generation efficiency \cite{kwon2023vllm}. Once prompts become retrieval-augmented rather than purely conversational, this issue becomes even more pronounced because the backend must process not only user input but also a potentially large body of inserted evidence.
+
+Context optimization strategies can therefore be interpreted as an indirect form of KV management. By reducing prompt length before inference starts, a system limits the prefill burden and constrains the amount of activation state that must be carried into decode. Budget-aware prompt compression methods such as LLMLingua make this cost explicit by treating prompt length as an inference-time resource allocation problem rather than only as a prompting problem \cite{jiang2023llmlingua}. In RAG settings, such compression can be made more task-aware by incorporating retrieval-side salience into generation-side pruning decisions. The contribution of the current paper lies in placing this idea into an execution study: rather than proposing a new theoretical KV policy, it measures how keep-ratio-based context pruning changes TTFT, throughput, and end-to-end latency under an actual constrained deployment path.
+
+\subsection{Position of this work}
+
+The present paper sits at the intersection of these lines of work. It draws on practical RAG retrieval foundations \cite{gao2023rag,robertson2009bm25,cormack2009rrf}, adopts retrieval compression as a memory-saving systems lever \cite{zandieh2025turboquant}, and treats backend efficiency and memory management as first-class deployment concerns \cite{kwon2023vllm,hannun2023mlx}. Its novelty is therefore not a new retriever, a new quantizer, or a new serving engine in isolation. Rather, it contributes an artifact-linked systems study showing how backend choice, retrieval compression, and context pruning interact once local RAG is constrained by unified-memory execution.
+
+\section{Methods}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.93\textwidth]{figures/peerj_submission/figure1_system_architecture.pdf}
+\caption{
+    Stage-wise execution path of the proposed local RAG pipeline on the tested unified-memory device. Retrieval state, prompt construction, model weights, KV cache, and background system activity compete for the same memory budget. The figure summarizes the measurement scope of this study by linking retrieval compression, context pruning, local GGUF inference, and telemetry within a single constrained execution path.
+}
+\label{fig:system-architecture}
+\end{figure*}
+
+\subsection{Collaborative execution path}
+
+The proposed system follows a retrieval-compression-inference execution path. In this manuscript, \emph{collaborative optimization} means joint tuning under a shared hardware budget rather than runtime inter-module communication. Instead of treating retrieval, context construction, and inference as isolated stages, the system evaluates them as a single performance-critical pipeline whose combined footprint determines whether local execution remains usable. In practical terms, the retrieval module controls how much information is passed forward, potentially through sparse scoring or lightweight fusion \cite{robertson2009bm25,cormack2009rrf}; the context compressor determines how much of the retrieved content is preserved for prefill; and the inference backend determines whether the remaining workload is executable within the latency budget.
+
+This design reflects a systems view of local RAG. On cloud infrastructure, retrieval and generation are often discussed separately because sufficient memory and accelerator capacity hide many of the interactions between stages. On a 16GB unified-memory device, however, these stages are tightly coupled. A larger retrieved context increases prompt assembly cost, raises prefill latency, and enlarges the KV footprint that the backend must sustain during decode. Likewise, an aggressive retrieval-side compression policy may release memory pressure yet also reduce recall, which then affects answer quality. The execution path is therefore organized as a chain of dependent decisions rather than as a set of independently optimized modules.
+
+Operationally, each query passes through four steps. First, the retriever accepts a user query and returns a candidate set under either the uncompressed or TurboQuant-compressed path. Second, the context manager consumes that candidate set and outputs the final prompt body after keep-ratio-based pruning. Third, the inference backend accepts the final prompt and produces the token stream under a selected deployment route. Fourth, telemetry records retrieval, scoring/compression, TTFT, decode throughput, and wall-clock behavior so that improvements can be attributed to retrieval, prefill, or decode rather than to aggregate wall time alone. This decomposition is important because the paper's central claim is not merely that one route is faster, but that local RAG optimization must be diagnosed and improved stage by stage.
+
+\subsection{GGUF and llama.cpp deployment path}
+
+The system adopts \texttt{llama-cpp-python} as the main inference wrapper and uses GGUF quantization as the model packaging format \cite{ggml2026llamacpp,ggml2026gguf}. This choice is motivated by the need to reduce deployment overhead on Apple Silicon. Compared with the standard \texttt{transformers + MPS} route, the GGUF path provides a lighter-weight execution backend and a more hardware-friendly model loading strategy.
+
+The practical motivation for this backend migration is twofold. First, the tested hardware is constrained not only by total memory capacity but also by unified-memory bandwidth. A route that introduces large framework overhead or inefficient memory traffic can therefore become unusable even if the raw model size nominally fits on device. Second, the benchmark goal is to study end-to-end responsiveness rather than only theoretical model support. GGUF and \texttt{llama.cpp} are attractive in this setting because they reduce deployment friction through quantized weights, memory-mapped loading, and a thinner execution stack, thereby making it possible to study whether the remaining bottleneck is model execution itself or merely the surrounding runtime path.
+
+Methodologically, the backend comparison follows a simple protocol. The \texttt{transformers + MPS} route is first retained as a negative-result baseline to establish infeasibility on the tested device. The GGUF route is then treated as the reference execution substrate once that infeasibility is visible. All subsequent pruning and retrieval experiments are interpreted within that restored substrate rather than as standalone backend benchmarks. This is important because the paper does not argue that GGUF is universally superior across all environments; it argues that, on the tested UMA platform, GGUF is the first route that restores a usable baseline from which later optimizations can be meaningfully evaluated.
+
+\subsection{TurboQuant retrieval compression}
+
+TurboQuant is utilized as a high-efficiency retrieval-side compression layer to minimize the memory-bus traffic during similarity search \cite{zandieh2025turboquant}. The practical objective is to shrink the retrieval footprint before the generation phase begins, thereby releasing bandwidth for the KV-cache and model weight transfers. In this paper, TurboQuant is evaluated as a retrieval-footprint control lever rather than as a standalone ANN contribution.
+
+To mitigate the impact of high-variance outlier dimensions—common in transformer-based embeddings—the system applies a randomized orthogonal rotation using the Fast Walsh-Hadamard Transform (FWHT) before scalar quantization. By leveraging the bit-reversal butterfly circuit, the rotation complexity is strictly bounded at $\mathcal{O}(d \log d)$, achieving sub-linear scalability relative to embedding dimensionality $d$. Scoring is then executed via Asymmetric Distance Computation (ADC) using 4-bit quantized centroids with a 1-bit residual correction to ensure retrieval fidelity. This compression is not merely a storage optimization; it is a systems lever that shifts retrieval from a bandwidth-bound operation toward a compute-bound operation, increasing the resource ceiling for downstream generation.
+
+This distinction matters for interpretation. A retrieval-compression method may appear unattractive if judged only by recall loss relative to an uncompressed index. In a constrained local deployment setting, however, the retrieval layer also competes for memory and latency budget with prompt construction and model execution. The relevant question is therefore not simply whether compression reduces retrieval quality, but whether the reduced memory and latency footprint creates enough downstream benefit to justify its use in a larger execution pipeline. Accordingly, the experiments report both retrieval-centric metrics (\texttt{Recall@10}, MAE, Max Error) and pipeline-centric consequences such as end-to-end latency shifts.
+
+\subsection{KV-aware context pruning}
+
+The context compressor employs an adaptive pruning strategy to minimize the prefill burden. Our core hypothesis is that on UMA devices, reducing the input sequence length provides an order-of-magnitude TTFT improvement while maintaining stable decoding throughput.
+
+Retrieval-augmented prompts are first segmented into fixed-size semantic chunks. To preserve structural integrity, protected regions such as the instruction prefix, system-style control text, and suffix answer anchors are excluded from pruning. For the intermediate evidence region, we implement a first-order gradient analysis to detect a ``relevance cliff.'' Let $s_1 \ge s_2 \ge \dots \ge s_n$ denote the sorted relevance scores of retrieved chunks. The compressor identifies the optimal cutoff $k = \min \{ i \mid |s_i - s_{i+1}| \ge \tau \}$, where $\tau$ is an empirical threshold set to $0.1$ from a validation slice by selecting the smallest gap value that consistently separated stable high-density evidence clusters from the low-value tail. If no sharp cliff is detected, the system defaults to an adaptive retention policy ($70\%$ for high-density clusters vs. $30\%$ for sparse tails). This methodology approximates direct KV-cache management by reducing the allocation state before it enters the weights-attention bottleneck, without requiring invasive modifications to the inference engine.
+
+\subsection{Telemetry and orchestration}
+
+All major execution stages are instrumented through a unified orchestration layer. The system records retrieval time, scoring time, compression time, TTFT, decode speed, wall-clock total latency, and concurrency-related tail latency. The same telemetry schema is retained across backend comparison, keep-ratio scans, and concurrency tests so that stage-wise measurements remain comparable even when experiment outputs differ. This telemetry design enables fairer comparison across execution paths and supports bottleneck analysis.
+
+The role of the orchestration layer is not only to collect metrics, but also to impose a common comparison protocol across heterogeneous experiments. Backend comparisons, keep-ratio scans, and concurrency tests do not produce the same raw outputs, so a shared telemetry layer is needed to normalize which signals are retained and how they are interpreted. In the current study, the most important normalized outputs are stage-wise latency, aggregate wall time, and the distinction between prefill-dominated and decode-dominated behavior.
+
+This design also supports one of the paper's broader methodological claims: negative results are meaningful only when their failure mode is visible. For example, the \texttt{Falcon-7B + MPS} route is not useful merely because it is slow; it is useful because telemetry shows that the slowness occurs before a stable local baseline can even be established. Without stage-wise instrumentation, this result would collapse into a single large latency number and would be much harder to interpret as evidence about backend choice.
+
+\section{Experimental Setup}
+
+\subsection{Experimental objectives}
+
+The experiments address three questions: whether backend choice creates order-of-magnitude performance differences on constrained UMA hardware; whether retrieval compression and context compression further improve TTFT and throughput once generation becomes the main bottleneck; and whether these optimizations introduce unacceptable quality degradation.
+
+\subsection{Hardware and runtime environment}
+
+All core experiments are conducted on a Mac mini M4 with 16GB unified memory. This environment is particularly suitable for studying local deployment bottlenecks because weights, KV cache, and system processes all share the same memory bandwidth pool. The evaluated deployment paths include:
+
+\begin{itemize}[leftmargin=1.2em]
+    \item \texttt{Falcon-7B} on \texttt{MPS} as a negative-result baseline
+    \item \texttt{Falcon-7B-Quant} on GGUF as a quantized path
+    \item \texttt{Llama-3-8B-Quant} on GGUF as the preferred path
+\end{itemize}
+
+This hardware choice is not incidental. The Mac mini M4 platform provides a concrete example of the deployment regime addressed by the paper: a consumer device that is powerful enough to run local 7B- to 8B-class models, yet constrained enough that memory layout and prompt budget remain first-order concerns. The experiments therefore do not aim to establish universal ranking across all accelerators. Instead, they characterize how different optimization routes behave when weights, KV cache, retrieval state, and operating-system processes draw from the same unified resource pool.
+
+\subsection{Experimental groups}
+
+The experiments are organized into four groups. The first group compares backend-model pairs in order to determine whether the system is practically executable at all. The second evaluates TurboQuant as a retrieval-side compression method and measures the trade-off between retrieval efficiency and ranking fidelity. The third scans keep-ratio-based context compression to determine whether prompt-side reduction improves responsiveness primarily through TTFT rather than through decode throughput. The fourth subjects the optimized path to concurrent load in order to assess whether collaborative optimization improves only single-query latency or also stabilizes tail behavior.
+
+These groups are intentionally sequential. The backend comparison establishes a feasible execution substrate. Retrieval compression and context pruning are then evaluated as optimizations within that feasible substrate rather than as independent techniques in search of a benchmark. Finally, concurrency and quality-preservation checks are used as deployment-oriented validation layers. This ordering aligns the experimental design with the actual engineering process of building a usable local RAG pipeline.
+
+\subsection{Metrics}
+
+The main metrics used in this study are TTFT, TPS, wall time, P95 TTFT where explicitly stated, Recall@k, MAE, Max Error, and merged dual-judge Faithfulness/Relevance. This metric design follows a practical evaluation order: first determine whether the system is executable, then identify where the bottleneck lies, and finally examine whether the resulting quality loss is acceptable.
+
+Retrieval-side metrics measure the price of compression in index fidelity. For end-to-end output preservation, an automated dual-judge system provides an acceptability check on the final answer behavior. The dual-judge pipeline uses two strong teacher models (\texttt{Qwen3-8B} and \texttt{DeepSeek-R1-8B}) as independent evaluators to score Faithfulness and Relevance, and reports merged scores on a $0$--$10$ presentation scale after averaging the two judge outputs. By separating these signals, the evaluation avoids treating all improvements as interchangeable.
+
+This isolation enables us to profile application-level proxy signals for hardware pressure, which are further cross-validated against OS-level virtual memory paging monitors. These measurements provide operational evidence of hardware stress, but they should not be interpreted as direct PMU-level proof of memory-bus saturation.
+
+\subsection{Data recording and interpretation policy}
+
+The benchmark assets used in this paper are heterogeneous in nature, so a layered interpretation policy is adopted. Multi-run scans and stress tests are reported using mean values, proportional change, and trend interpretation. Single-run but high-value system observations, such as the extreme slowness of \texttt{Falcon + transformers + MPS}, are reported as negative-result evidence. Quality interpretations prioritize the merged dual-judge view to reduce reliance on a single judge model.
+
+This policy is necessary because the paper combines measurements of different granularity. A keep-ratio sweep naturally yields a small response curve; a concurrency run produces aggregate stress statistics; and a failed deployment path may offer only one meaningful observation before becoming impractical. The manuscript therefore distinguishes between trend evidence, comparative evidence, and cautionary evidence. This distinction helps prevent overclaiming while still allowing the paper to retain practically important system observations that would otherwise be discarded.
+
+\section{Results}
+
+\subsection{Backend and quantized deployment comparison}
+
+RQ1 asks whether backend selection alone can recover practical deployability on constrained UMA hardware. This experiment therefore compares TTFT and decode throughput across different backend-model combinations on the tested device.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.94\textwidth]{figures/peerj_submission/figure2_backend_migration.pdf}
+\caption{
+    Backend and deployment comparison on the tested 16GB Mac mini M4. Panel A reports TTFT, Panel B reports decode throughput, and Panel C reports total latency. \texttt{Falcon-7B} on MPS is included as a negative-result baseline, \texttt{Falcon-7B-Q} on GGUF shows the effect of moving to a quantized deployment path, and \texttt{Llama-3-8B-Q} on GGUF is shown as the preferred practical configuration.
+}
+\label{fig:backend-migration}
+\end{figure*}
+
+\input{tables/peerj_submission/table1_backend_comparison.tex}
+
+The most important observation is that backend migration within the same model family recovers deployability on the tested device. The first two rows of Table~\ref{tab:backend-comparison} therefore serve as a near backend-migration comparison inside the \texttt{Falcon-7B} family: moving from the \texttt{MPS} executor to a \texttt{GGUF}-based backend reduces TTFT from \texttt{77.6 s} to \texttt{123.7 ms} and restores usable \texttt{18.09 TPS} decode throughput without changing the underlying model family. The third row, \texttt{Llama-3-8B-Quant + GGUF}, is included as a practical reference configuration that shows what a more deployable quantized route looks like under the same device constraints, reaching \texttt{51.2 ms} TTFT.
+
+Two additional interpretations follow from this result. First, the most dramatic gain appears before any cross-family model comparison is needed: the backend route alone can determine whether a local path is deployable at all. Second, the negative baseline provides a clear boundary for what counts as deployable on the tested device. Once TTFT reaches minute-like scales and decode throughput collapses toward zero, the route is no longer meaningful as an interactive local RAG backend. This boundary motivates the rest of the paper's optimization sequence.
+
+To move this conclusion beyond a single observation, a follow-up repeated benchmark was run on the two GGUF paths. Under that repeated setting, \texttt{Falcon-7B-Q + GGUF} reaches \texttt{158.486 $\pm$ 52.038 ms} mean TTFT and \texttt{17.218 $\pm$ 0.859 TPS}, whereas \texttt{Llama-3-8B-Q + GGUF} reaches \texttt{122.888 $\pm$ 40.561 ms} mean TTFT and \texttt{16.960 $\pm$ 0.643 TPS}. These repeated measurements should not be read as converting the \texttt{MPS} row into an equivalent statistical comparison condition; the \texttt{Falcon-7B on MPS} row remains imported cautionary evidence because that route is operationally impractical in the current paper track. What the repeated check does show is that the deployability of the GGUF routes is stable under reruns rather than a one-off artifact of a single benchmark pass.
+
+\subsection{Unified Memory Bandwidth Profiling}
+
+To provide direct physical evidence of the memory bottleneck, real-time virtual memory pressure and SSD swap paging frequencies are captured continuously via the native macOS \texttt{vm\_stat} kernel probe.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/peerj_submission/figure3_swap_profile.pdf}
+\caption{
+    OS-level paging activity recorded during representative benchmark runs on the tested 16GB unified-memory device. The MPS baseline exhibits sustained high paging intensity during the critical execution window, whereas the optimized GGUF-based pipeline reduces paging substantially. This comparison links latency behavior to physical memory-pressure events rather than to wall-time measurements alone.
+}
+\label{fig:bandwidth-profile}
+\end{figure*}
+
+As shown in Figure~\ref{fig:bandwidth-profile}, the performance collapse of the unoptimized \texttt{MPS} execution route is accompanied by a paging crisis at the operating-system level. In a 16GB UMA system, the combination of full-precision model tensors and unmanaged KV-cache growth can overflow the available DRAM, forcing the macOS kernel to initiate aggressive SSD-based swap paging. Our telemetry, captured via real-time \texttt{vm\_stat} probes, records sustained swap peaks exceeding \texttt{67,000 ops/sec} during the \texttt{MPS} prefill phase. By contrast, the optimized pipeline---using quantized GGUF weights and compressed retrieval---maintains a substantially lower paging profile. This should be interpreted as hardware-facing operational evidence consistent with the latency results, rather than as a complete hardware-counter proof of bus saturation.
+
+\subsection{Retrieval compression trade-off}
+
+RQ2 asks how much retrieval-side footprint can be reduced before ranking fidelity becomes materially degraded. TurboQuant is therefore evaluated under a high-entropy synthetic query setting.
+
+\input{tables/peerj_submission/table3_turboquant_tradeoff.tex}
+
+TurboQuant reduces retrieval latency by \texttt{80.2\%} and storage by \texttt{73.8\%}, but lowers \texttt{Recall@10} to \texttt{0.631}. This result should not be interpreted as lossless retrieval compression. Rather, it demonstrates an engineering trade-off: retrieval-side memory pressure can be substantially reduced at the cost of partial recall degradation.
+
+For the current paper, the key implication is not that TurboQuant should always replace an uncompressed index. Rather, it offers a controllable way to study how much retrieval-side footprint can be reduced before answer quality becomes meaningfully unstable. In other words, TurboQuant is valuable here as a systems lever: it reduces the cost of carrying retrieval state into the broader execution path, thereby clarifying when retrieval compression helps the full pipeline and when it simply moves error upstream. The method is therefore interpreted here as a retrieval-footprint control mechanism, not as a universally preferable retrieval upgrade.
+
+\input{tables/peerj_submission/table3b_turboquant_e2e_ablation.tex}
+
+Table~\ref{tab:turboquant-e2e-ablation} extends this retrieval-centric view to the answer level by comparing an \texttt{FP32} retrieval reference against the \texttt{TurboQuant} path under a fixed downstream configuration (\texttt{top\_k = 10}, \texttt{keep\_ratio = 0.6}). In this end-to-end setting, enabling TurboQuant reduces mean retrieval latency from \texttt{111.480 ms} to \texttt{69.894 ms} while shrinking the measured retrieval index footprint from \texttt{958.5 KB} to \texttt{406.4 KB}. At the retrieval level, the corresponding ranking penalty is small: \texttt{Recall@10} decreases only from \texttt{0.800} to \texttt{0.787}. This result is therefore consistent with the systems interpretation that retrieval compression can release meaningful execution budget without inducing a catastrophic ranking collapse.
+
+However, the answer-level trade-off is not zero. Under the same test slice, merged faithfulness decreases from \texttt{4.812} to \texttt{4.612} and merged relevance decreases from \texttt{5.325} to \texttt{5.138}, while answer error rate rises slightly from \texttt{0.50} to \texttt{0.55}. The manual audit is especially informative here: it does not show an obvious increase in \texttt{retrieval\_miss} cases (\texttt{6} vs. \texttt{5}), but it does show more \texttt{factual\_drift} cases under TurboQuant (\texttt{14} vs. \texttt{17}). The most defensible interpretation is therefore that TurboQuant acts as a bounded-cost retrieval-footprint reduction lever whose downstream penalty is expressed more through answer-support instability than through simple top-\texttt{k} retrieval failure.
+
+\subsection{Context pruning and TTFT}
+
+To examine whether prompt-side reduction improves generation responsiveness, keep ratios from \texttt{1.0} to \texttt{0.2} are scanned.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.94\textwidth]{figures/peerj_submission/figure4_keep_ratio_tradeoff.pdf}
+\caption{
+    Effect of keep-ratio pruning on prompt-side latency and decode throughput. Panel A shows the change in TTFT across pruning levels, and Panel B shows the corresponding decode TPS. The lowest TTFT is observed near \texttt{keep\_ratio = 0.6}, while throughput remains comparatively stable, supporting the interpretation that pruning mainly reduces prefill cost on the tested device.
+}
+\label{fig:keep-ratio}
+\end{figure*}
+
+In the coarse scan shown in Figure~\ref{fig:keep-ratio}, the most favorable prompt-side latency appears near \texttt{keep\_ratio = 0.6}. A denser follow-up scan over \texttt{0.1} increments returns the selected candidate to the same keep ratio under the current setting, which strengthens the interpretation of \texttt{0.6} as a local operating point rather than overturning it. At the same time, that denser sweep exhibits large TTFT variance, consistent with cold-start sensitivity and first-run noise, so the selected point should still be read as trend-supported operating-point evidence rather than as a universally optimal pruning ratio.
+
+More broadly, the results show that context pruning primarily improves prefill rather than decode throughput. Decode TPS remains materially more stable than TTFT across the scan, while prompt-side latency changes substantially. This pattern is important because it validates the intended role of context pruning. If both TTFT and TPS had shifted sharply, the result would be harder to attribute cleanly. Instead, the relative stability of decode throughput alongside the movement in TTFT supports the interpretation that keep-ratio pruning mainly targets prompt-side cost. The existence of a non-monotonic optimum around \texttt{0.6} also suggests that overly aggressive compression can give back some of the latency gains by distorting prompt structure or reducing useful contextual support.
+
+\input{tables/peerj_submission/table5_component_ablation.tex}
+
+Table~\ref{tab:component-ablation} provides a compact ablation view of the two core execution optimizations. Removing context pruning primarily hurts prompt-side latency: TTFT increases from \texttt{874.3 ms} to \texttt{5828.5 ms}, and total end-to-end latency rises by \texttt{38.7\%}. Removing TurboQuant primarily hurts retrieval efficiency and footprint: retrieval latency increases from \texttt{25.4 ms} to \texttt{128.4 ms}, while index size grows from \texttt{110 MB} to \texttt{420 MB}. The same ablation also restores \texttt{Recall@10} from \texttt{0.631} to \texttt{1.000}, which makes the trade-off explicit rather than hidden.
+
+\subsection{System stability under concurrency}
+
+The concurrency experiments compare the full-context path with the collaboratively optimized path under multi-request load.
+
+\input{tables/peerj_submission/table4_concurrency_stability.tex}
+
+Table~\ref{tab:concurrency-stability} reports success-aware concurrency results at \texttt{N=2} and \texttt{N=4}. At \texttt{N=2}, the optimized path improves tail latency without introducing additional failures: P95 TTFT falls from \texttt{7725.955 ms} to \texttt{6921.581 ms} (\texttt{-10.4\%}), aggregate throughput increases from \texttt{6.352} to \texttt{7.025} tokens per second (\texttt{+10.6\%}), and wall time drops from \texttt{40.670 s} to \texttt{36.818 s} (\texttt{-9.5\%}), while both paths retain a \texttt{1.00} success rate.
+
+At \texttt{N=4}, the latency and throughput gains become larger, but the stability cost also becomes explicit. The optimized path reduces P95 TTFT from \texttt{13200.869 ms} to \texttt{10369.998 ms} (\texttt{-21.4\%}), raises aggregate throughput from \texttt{4.613} to \texttt{5.408} tokens per second (\texttt{+17.2\%}), and lowers wall time from \texttt{106.391 s} to \texttt{76.382 s} (\texttt{-28.2\%}). At the same time, its success rate decreases from \texttt{0.95} to \texttt{0.75}, and the observed error count rises from \texttt{0.2} to \texttt{1.0}. The appropriate interpretation is therefore not that the optimized path is uniformly more stable, but that it improves throughput-oriented efficiency and tail latency under contention while still exposing backend fragility at higher concurrency.
+
+This result strengthens the paper's systems argument. A local path that appears responsive in single-query testing may still degrade badly when multiple requests compete for the same unified-memory bandwidth. The concurrency result therefore serves as a deployment-oriented validation step: collaborative optimization alleviates tail latency and completion time under contention, but it does not remove the backend stability boundary once concurrency increases.
+
+\subsection{Long-context robustness}
+
+To complement the latency-oriented experiments, a lightweight long-context robustness check is retained under a \texttt{120k}-character needle-in-a-haystack probe \cite{hsieh2024ruler}. Rather than increasing only the number of benchmark documents, this test asks whether the optimized retrieval-and-pruning path still recovers a target fact when the context becomes substantially longer and the target moves toward the end of the haystack.
+
+\input{tables/peerj_submission/table7_long_context_robustness.tex}
+
+Table~\ref{tab:long-context-robustness} expands the depth sweep to \texttt{0\%}, \texttt{25\%}, \texttt{50\%}, \texttt{75\%}, \texttt{90\%}, \texttt{95\%}, and \texttt{99\%}. Robustness remains high at \texttt{0\%}, \texttt{25\%}, \texttt{50\%}, and \texttt{99\%}, where the success rate is \texttt{1.00}; by contrast, \texttt{75\%}, \texttt{90\%}, and \texttt{95\%} drop to \texttt{0.67}, with failures dominated by \texttt{missed} or \texttt{partial} cases. Mean latency stays in a relatively narrow \texttt{9.48--11.90 s} band across the sweep. The expanded depth check therefore strengthens the interpretation of this section as a bounded robustness signal rather than as a guarantee of stable long-context scaling across all deeper needle positions.
+
+\subsection{Quality preservation under compression}
+
+To avoid interpreting the paper as speed-only optimization, quality preservation is examined using dual-judge \texttt{test40} results.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.90\textwidth]{figures/peerj_submission/figure5_quality_latency_frontier.pdf}
+\setlength{\abovecaptionskip}{5pt}
+\caption{
+    Prompt-side latency-quality shift from the baseline to the selected operating point. Panel A shows that the selected operating point moves to a lower-TTFT region while improving merged faithfulness. Panel B shows that the same shift is accompanied by a small increase in merged relevance. The operating point shown here corresponds to the final operating point selected from a bounded \texttt{topn} $\times$ \texttt{budget} search region under the same current paper-track generation and dual-judge protocol.
+}
+\label{fig:quality-latency-shift}
+\end{figure*}
+
+\input{tables/peerj_submission/table2_quality_preservation.tex}
+
+As shown in Table~\ref{tab:quality-preservation}, the selected operating point reduces TTFT from \texttt{2026.509 ms} to \texttt{1344.748 ms}, corresponding to a \texttt{33.6\%} improvement in prompt-side responsiveness. By contrast, total latency changes only slightly, increasing from \texttt{7844.002 ms} to \texttt{7915.441 ms} (\texttt{+0.9\%}). This divergence is consistent with the broader systems interpretation of the paper: once selection is driven primarily by prompt-side responsiveness within a bounded acceptable region, total latency can remain decode-dominated and need not improve in lockstep.
+
+In the same comparison, merged faithfulness increases from \texttt{4.237} to \texttt{4.500}, and merged relevance increases from \texttt{4.975} to \texttt{5.112}. Figure~\ref{fig:quality-latency-shift} summarizes this prompt-side latency-quality shift from the baseline to the selected operating point. These results indicate that the final selected operating point improves prompt-side responsiveness while remaining inside the bounded acceptable region on the current evaluation slice. The appropriate interpretation is therefore not that the selected operating point is globally optimal across all objectives, but that the current optimization path identifies a practically acceptable operating region in which TTFT can be reduced without obvious answer-quality collapse.
+
+The selected operating point was not chosen ad hoc; rather, it was selected from a bounded \texttt{topn} $\times$ \texttt{budget} search region evaluated under the same current paper-track generation and dual-judge protocol. Under the current filtering thresholds, three candidates remained in that bounded region: \texttt{t5\_b1500}, \texttt{t10\_b2000}, and \texttt{t10\_b2500}. Among them, \texttt{t5\_b1500} was retained as the final operating point because it offered the lowest TTFT while remaining inside the acceptable region, whereas the two \texttt{topn=10} alternatives represented higher-quality but slower operating points.
+
+Under the current evaluation setting, the selected operating point should be understood as a bounded operating point rather than as a globally optimal one: it improves TTFT and slightly improves merged answer-quality scores on the present slice, but it does not simultaneously minimize total latency or all failure proxies.
+
+\subsection{End-to-end latency decomposition}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.98\textwidth]{figures/peerj_submission/figure6_e2e_breakdown.pdf}
+\caption{
+    Stage-wise latency decomposition before and after applying the optimized execution path on the tested 16GB unified-memory device. Panel A compares latency allocation across retrieval, scoring/compression, prefill, and decode stages; Panel B summarizes the end-to-end reduction; and Panel C shows the residual latency share after optimization. The figure highlights that, once retrieval and prefill costs are reduced, decode remains the dominant bottleneck.
+}
+\label{fig:e2e-breakdown}
+\end{figure*}
+
+The decomposition results make the bottleneck migration explicit. V1 and V2 differ not only in total latency (\texttt{16.8 s} vs. \texttt{5.3 s}) but also in the share of time spent in generation (\texttt{92.5\%} vs. \texttt{77.4\%}). Even within the representative optimized path, decode remains the dominant internal cost, which explains why retrieval-side improvements alone cannot fully eliminate end-to-end latency.
+
+\input{tables/peerj_submission/table6_latency_breakdown.tex}
+
+Table~\ref{tab:latency-breakdown} reports the representative stage-wise latency of the optimized path at \texttt{keep\_ratio = 0.6}. Here, ``compression'' combines scoring and pruning time. The table makes the main practical point explicit: retrieval and compression are already in the tens-of-milliseconds range, prefill has been reduced below one second, but decode still consumes \texttt{93.7\%} of the remaining latency budget. This is the direct reason why backend tuning and prompt-budget control remain more consequential than further isolated retrieval-side refinements.
+
+This decomposition closes the loop on the paper's framing. Earlier sections argue that local RAG on constrained hardware should be treated as a systems co-design problem. Figure~\ref{fig:e2e-breakdown} shows why: retrieval and context-side interventions meaningfully reduce cost, yet once these gains accumulate, the remaining latency mass is concentrated in generation, especially decode. The optimization target therefore migrates rather than disappears. This is precisely why a paper framed only around retrieval-side improvement would be incomplete for the tested deployment regime.
+
+\section{Discussion}
+
+The primary contribution of this study is the demonstration that local RAG performance on constrained unified-memory hardware should be interpreted as a shared-budget systems problem. Unlike cloud-based systems where high-throughput accelerators can hide stage-wise memory interactions, UMA devices such as the Apple Silicon M4 enforce a visible resource ceiling. The empirical results indicate that reducing retrieval or prefill overhead can release practical execution budget for the LLM's autoregressive decode phase, but the benefit remains bounded by downstream generation cost. This broader framing is consistent with KV-state management work such as H$_2$O, which likewise treats inference-time state retention as a first-order systems bottleneck rather than a secondary implementation detail \cite{zhang2023h2o}.
+
+\subsection{Memory saturation and paging-dominated execution failure}
+
+The performance collapse observed in the unmanaged \texttt{Falcon-7B + MPS} execution route (Section 5.1) highlights a fundamental systems failure mode on constrained hardware. In the tested setting, this failure mode appears as a paging-dominated execution regime in which model execution triggers sustained SSD-backed paging and rapidly loses interactive utility. As weights and KV-cache activations exceed the 16GB DRAM pool, the system can be pushed into that regime. Our recorded peak swap frequency of \texttt{67,000 ops/sec} (Figure 3) provides an operational signature consistent with this interpretation. In this state, even a theoretically stronger model becomes practically unusable because paging overhead dominates the compute budget. The optimized framework reduces the severity of this failure mode by constraining the operational footprint through GGUF quantization, retrieval compression, and prompt-budget control rather than eliminating it entirely.
+
+\subsection{Bottleneck Migration and Staged Optimization}
+
+A critical finding of this study is the phenomenon of \emph{bottleneck migration}. Our stage-wise decomposition (Section 5.8) shows that as retrieval and prefill costs are reduced through compression and pruning, the system's dominant constraint migrates from bandwidth-sensitive setup cost toward generation. Specifically, once prefill latency is reduced from seconds to sub-second levels, the remaining \texttt{93.7\%} of end-to-end latency is concentrated in the decode loop.
+
+This leads us to propose a \emph{Staged Optimization Hierarchy} for practitioners deploying local RAG:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0pt]
+    \item \textbf{Substrate Recovery}: Select an inference backend (e.g., GGUF/llama.cpp) specifically designed for hardware-aware memory mapping and quantization to restore a functional baseline.
+    \item \textbf{Prefill Budgeting}: Apply context-aware pruning to reduce input sequence length. This targets the $\mathcal{O}(L^2)$ attention complexity of prefill, which is the primary source of initial interaction lag.
+    \item \textbf{Retrieval Footprint Reduction}: Deploy vector-side compression (e.g., TurboQuant) to shrink the retrieval state, ensuring that index-loading does not trigger early memory pressure.
+\end{enumerate}
+
+\subsection{Collaborative Optimization vs. Modular Isolation}
+
+Mainstream RAG research frequently optimizes retrieval (e.g., better rerankers) or serving (e.g., PagedAttention) in isolation. However, our findings suggest that on constrained hardware, modular isolation is a suboptimal design pattern. Because all stages share the same physical bandwidth pipe, an improvement in retrieval that increases the retrieved context length may inadvertently degrade generation latency by ballooning the KV-cache footprint. Our collaborative framework treats the entire execution path as a single pipeline, where modular decisions are made based on their collective impact on the hardware's shared resource limits. On constrained UMA hardware, the relevant design objective is therefore not the strongest isolated module, but the best end-to-end resource allocation across retrieval, prefill, and decode.
+
+The updated concurrency evidence sharpens this point. Under load, the optimized path continues to reduce tail latency, wall time, and memory-pressure severity, yet it also shows a lower success rate at \texttt{N=4}. Collaborative optimization therefore improves efficiency under contention, but high-concurrency execution remains bounded by backend robustness and unified-memory pressure.
+
+The quality-preservation results further refine this interpretation. In the selected operating point, TTFT decreases substantially while total latency remains roughly flat and slightly higher, which is consistent with a decode-dominated residual cost structure. At the same time, both merged faithfulness and merged relevance increase on the present evaluation slice. This pattern suggests that the current optimization path operates within a bounded acceptable region rather than providing cost-free acceleration across all quality dimensions. Accordingly, the selected operating point should be understood as the most balanced survivor under the current protocol, not as a claim that one configuration simultaneously optimizes every latency and quality objective.
+
+The later bounded \texttt{topn} $\times$ \texttt{budget} search further supports this interpretation. The final selected operating point is not an arbitrary choice, but the most balanced surviving candidate within a small search region evaluated under the same paper-track protocol. Nearby alternatives such as \texttt{t10\_b2000} and \texttt{t10\_b2500} improve merged answer quality only by paying materially higher prompt-side latency, which makes the quality-latency trade-off explicit rather than implicit.
+
+A later pruning-policy ablation supports the same operating-point interpretation from the prompt-budget side. More aggressive or simpler pruning policies can reduce TTFT further, but they do so at a clearer answer-level quality cost, leaving the static \texttt{keep\_ratio = 0.6} policy as the more balanced operating point under the current protocol.
+
+The complementary FP32-reference versus TurboQuant-enabled ablation supports the same bounded-cost interpretation from the retrieval side. Under a fixed generation setting, TurboQuant substantially reduces retrieval latency and index footprint while only slightly reducing \texttt{Recall@10}; yet answer-level merged faithfulness and relevance also decline modestly, and the audit records more \texttt{factual\_drift} cases rather than a clear rise in \texttt{retrieval\_miss}. This indicates that retrieval compression should not be presented as a lossless upgrade. Its practical value lies in releasing shared execution budget at a measurable but limited answer-level cost.
+
+The results also imply a practical deployment order. If a local path is not yet interactively usable, backend migration is the first priority because it determines whether a stable baseline exists at all. Once that baseline is restored, prompt pruning is the highest-leverage intervention for reducing TTFT. Retrieval compression becomes most useful after those steps, when the remaining question is how much retrieval-side footprint can be traded away without unacceptable recall or answer-quality loss.
+
+\section{Threats to Validity}
+
+This study has several limitations that bound the generalizability of our findings. First, the conclusions are primarily derived from a single hardware class (Mac mini M4, 16GB UMA). While the unified memory principles discussed are broadly applicable to the Apple Silicon ecosystem, results may differ on discrete-GPU architectures (e.g., NVIDIA RTX) where dedicated VRAM bandwidth frequently exceeds unified DRAM speeds. Second, our experiments focus on 7B- to 8B-class models; larger models (e.g., 70B) may exhibit different bottleneck patterns where weight-transfer latency significantly outweighs KV-cache growth even under collaborative optimization.
+
+There is also a scope limitation in our quality assessment. While our dual-judge framework provides a reliable signal for detecting faithfulness collapse, it remains a proxy for human expert evaluation and large-scale task-specific benchmarks. Similarly, our concurrency experiments reflect system stability under synthetic load; real-world multi-user performance may be affected by unpredictable application-level cold-start overhead or OS-level thermal throttling not captured in our controlled lab setting.
+
+Moreover, the quality-preservation conclusion should be interpreted as bounded evidence for the current evaluation slice and scoring protocol rather than as a task-general guarantee that latency-oriented compression leaves all answer-quality dimensions unchanged.
+
+Finally, we acknowledge that the layered nature of our evidence carries varying degrees of strength. The trend-based findings for keep-ratio pruning and TurboQuant trade-offs are supported by repeated, structured scans. Conversely, the negative-result \texttt{MPS} baseline is retained as a case-study observation of hardware saturation rather than a statistical trend. We have intentionally distinguished between these evidence classes throughout the manuscript to provide a transparent account of the system's operational boundaries.
+
+\section{Reproducibility Statement}
+
+All major conclusions in this paper are bound to existing project assets, including benchmark JSON files, research logs, and execution scripts. Core evidence comes from backend-comparison logs, performance scans, keep-ratio trade-off curves, concurrency stress reports, quantization-quality evaluations, and the project research log. For submission readiness, a more formal replication package should additionally provide model identifiers, quantization formats, runtime flags, script entry points, and a compact result manifest.
+
+At a minimum, the artifact package should expose three layers of material. The first layer is the benchmark evidence itself, including the backend comparison JSON, the keep-ratio scan outputs, the concurrency stress reports, and the quality-preservation records used in the tables and figures. The second layer is the generation pipeline for derived artifacts, including the plotting script, table sources, and manuscript source used to rebuild the reported figures and tables. The third layer is execution metadata, such as hardware description, backend flags, quantization format, and the command entry points needed to rerun each benchmark family.
+
+This structure is important because the paper's argument depends on stage-wise interpretation rather than only final metrics. Reproducibility therefore requires not only the end tables, but also the intermediate stage records that justify claims about prefill, decode, retrieval compression, and concurrency behavior. The accompanying artifact bundle is designed with this requirement in mind and organizes the manuscript, figure sources, table sources, and evidence files so that each major claim can be traced back to a concrete project asset. The current submission package additionally includes \texttt{artifact\_manifest.md}, which records model identifiers, quantization paths, runtime configuration fields, and the raw result file paths used by the manuscript.
+
+\section{Conclusion}
+
+This artifact-backed empirical study examines collaborative optimization for local RAG on constrained unified-memory hardware. On the tested device, once retrieval-side efficiencies are realized, the dominant bottleneck shifts toward generation, especially decode. The artifact-backed evidence indicates that interactive behavior can be recovered through an integrated approach spanning quantized deployment, retrieval compression, and context pruning, while unmanaged routes remain operationally fragile because of paging pressure. More broadly, the study suggests that local LLM performance on consumer hardware is better evaluated as a coordinated systems problem than as an isolated retrieval task.
+
+\section*{Data and Code Availability}
+
+The experimental conclusions in this manuscript are derived from local benchmark artifacts, figure-generation scripts, table sources, and research logs maintained in the project workspace. A review artifact bundle is included with the submission package and contains the benchmark JSON files, plotting scripts, table sources, manuscript source, artifact manifest, and a minimal README describing the execution environment and expected outputs. A public repository URL and persistent archival identifier will be released with the final version.
+
+\section*{Acknowledgements}
+
+\ifanonymized
+Acknowledgements are omitted during anonymous review and will be restored in the camera-ready or non-anonymous submission version.
+\else
+This manuscript builds on a broader engineering effort on local RAG systems under constrained hardware, including prior work on routing, retrieval, and memory management in a related undergraduate thesis project. The current paper focuses on the generation-side optimization path that emerged from those earlier system observations.
+\fi
+
+\section*{Competing Interests}
+
+The author declares no competing interests.
+
+\section*{Ethics Statement}
+
+This study does not involve human subjects, protected personal data, or clinical decision-making. The reported experiments focus on system performance, deployment trade-offs, and quality-preservation checks for local language model execution under constrained hardware conditions.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

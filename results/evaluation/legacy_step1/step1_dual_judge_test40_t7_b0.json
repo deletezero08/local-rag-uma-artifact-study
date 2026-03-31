@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-03-20 16:20:56",
+  "run_id": "test40_t7b0_v1",
+  "judge_a_provider": "ollama",
+  "judge_a_model": "qwen3:8b",
+  "judge_b_provider": "ollama",
+  "judge_b_model": "deepseek-r1:8b",
+  "sample_size": 40,
+  "iterations": 1,
+  "baseline": {
+    "name": "baseline",
+    "top_n": 10,
+    "context_char_budget": 0,
+    "latency_mean": 92.649,
+    "faithfulness_mean_judge_a": 8.65,
+    "relevance_mean_judge_a": 8.875,
+    "faithfulness_mean_judge_b": 7.65,
+    "relevance_mean_judge_b": 7.825,
+    "faithfulness_mean_merged": 8.15,
+    "relevance_mean_merged": 8.35,
+    "judge_gap_faithfulness_mean": 1.9,
+    "judge_gap_relevance_mean": 2.1,
+    "judge_agreement_rate_gap_le_1": 0.65,
+    "n": 40
+  },
+  "optimized": {
+    "name": "optimized",
+    "top_n": 7,
+    "context_char_budget": 0,
+    "latency_mean": 89.644,
+    "faithfulness_mean_judge_a": 8.625,
+    "relevance_mean_judge_a": 8.3,
+    "faithfulness_mean_judge_b": 7.7,
+    "relevance_mean_judge_b": 7.925,
+    "faithfulness_mean_merged": 8.162,
+    "relevance_mean_merged": 8.113,
+    "judge_gap_faithfulness_mean": 1.825,
+    "judge_gap_relevance_mean": 1.675,
+    "judge_agreement_rate_gap_le_1": 0.575,
+    "n": 40
+  },
+  "acceptance_by_merged_judge": {
+    "faithfulness_drop_le_0_2": true,
+    "latency_drop_ge_10_percent": false,
+    "faithfulness_drop": -0.012,
+    "latency_drop_percent": 3.24
+  }
+}

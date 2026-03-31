@@ -1,0 +1,2239 @@
+{
+  "timestamp": "2026-03-29 17:37:09",
+  "script": "scripts/benchmarking/paper_concurrency_suite.py",
+  "output_schema_version": "1.0",
+  "experiment": "E3_concurrency_tail_latency",
+  "config": {
+    "model_path": "/Users/delete/Desktop/rag_system_副本/models/Llama-3-8B-Instruct.Q4_K_M.gguf",
+    "index_path": "/Users/delete/Desktop/rag_system_副本/models/vector_indices/turbo_index.json",
+    "rounds": 5,
+    "concurrency_levels": [
+      2,
+      4
+    ],
+    "n_ctx": 2048,
+    "top_k": 15,
+    "num_docs": 25,
+    "doc_repeat": 2,
+    "query": "Explain the hardware bandwidth limitations when processing large contexts in local LLMs.",
+    "vmstat_dir": "/Users/delete/Desktop/rag_system_副本/results/hardware/concurrency_vmstat"
+  },
+  "modes": {
+    "full_context": {
+      "N=2": {
+        "mode": "full_context",
+        "concurrency": 2,
+        "round_count": 5,
+        "successful_rounds": 5,
+        "summary": {
+          "rounds": [
+            {
+              "mode": "full_context",
+              "concurrency": 2,
+              "round": 1,
+              "successes": 2,
+              "wall_time_sec": 40.48,
+              "mean_ttft_ms": 7301.926,
+              "p50_ttft_ms": 7301.926,
+              "p95_ttft_ms": 7315.723,
+              "p99_ttft_ms": 7316.949,
+              "mean_total_ms": 21340.518,
+              "mean_decode_tps": 9.518,
+              "aggregate_tps": 6.373,
+              "strategies_used": [
+                "static_ratio_100.0% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 7286.597292,
+                  "total_ms": 21313.614791,
+                  "decode_tps": 9.51367471535463,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 7317.2555,
+                  "total_ms": 21367.420459,
+                  "decode_tps": 9.522804426778986,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 39,
+                "peak_total_ops": 64,
+                "mean_total_ops": 8.103,
+                "peak_pageouts": 64,
+                "peak_swapouts": 0
+              }
+            },
+            {
+              "mode": "full_context",
+              "concurrency": 2,
+              "round": 2,
+              "successes": 2,
+              "wall_time_sec": 39.26,
+              "mean_ttft_ms": 7633.193,
+              "p50_ttft_ms": 7633.193,
+              "p95_ttft_ms": 7673.08,
+              "p99_ttft_ms": 7676.626,
+              "mean_total_ms": 21470.916,
+              "mean_decode_tps": 9.55,
+              "aggregate_tps": 6.572,
+              "strategies_used": [
+                "static_ratio_100.0% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 7588.873125,
+                  "total_ms": 21440.900792,
+                  "decode_tps": 9.53859387460367,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 7677.512292,
+                  "total_ms": 21500.931875,
+                  "decode_tps": 9.56150570392768,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 38,
+                "peak_total_ops": 89,
+                "mean_total_ops": 6.763,
+                "peak_pageouts": 89,
+                "peak_swapouts": 0
+              }
+            },
+            {
+              "mode": "full_context",
+              "concurrency": 2,
+              "round": 3,
+              "successes": 2,
+              "wall_time_sec": 38.881,
+              "mean_ttft_ms": 7547.201,
+              "p50_ttft_ms": 7547.201,
+              "p95_ttft_ms": 7555.775,
+              "p99_ttft_ms": 7556.537,
+              "mean_total_ms": 21698.747,
+              "mean_decode_tps": 9.25,
+              "aggregate_tps": 6.636,
+              "strategies_used": [
+                "static_ratio_100.0% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 7556.727625,
+                  "total_ms": 21699.310623999998,
+                  "decode_tps": 9.25965701443276,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 7537.674875,
+                  "total_ms": 21698.182418,
+                  "decode_tps": 9.239580385531161,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 37,
+                "peak_total_ops": 56,
+                "mean_total_ops": 3.595,
+                "peak_pageouts": 56,
+                "peak_swapouts": 0
+              }
+            },
+            {
+              "mode": "full_context",
+              "concurrency": 2,
+              "round": 4,
+              "successes": 2,
+              "wall_time_sec": 42.379,
+              "mean_ttft_ms": 8011.694,
+              "p50_ttft_ms": 8011.694,
+              "p95_ttft_ms": 8020.676,
+              "p99_ttft_ms": 8021.474,
+              "mean_total_ms": 22689.389,
+              "mean_decode_tps": 9.051,
+              "aggregate_tps": 6.088,
+              "strategies_used": [
+                "static_ratio_100.0% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 8001.71525,
+                  "total_ms": 22613.550250999997,
+                  "decode_tps": 9.058547154145975,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 8021.673417,
+                  "total_ms": 22765.226876,
+                  "decode_tps": 9.042694186637256,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 40,
+                "peak_total_ops": 94,
+                "mean_total_ops": 4.375,
+                "peak_pageouts": 94,
+                "peak_swapouts": 0
+              }
+            },
+            {
+              "mode": "full_context",
+              "concurrency": 2,
+              "round": 5,
+              "successes": 2,
+              "wall_time_sec": 42.35,
+              "mean_ttft_ms": 8038.484,
+              "p50_ttft_ms": 8038.484,
+              "p95_ttft_ms": 8064.521,
+              "p99_ttft_ms": 8066.835,
+              "mean_total_ms": 22351.474,
+              "mean_decode_tps": 9.271,
+              "aggregate_tps": 6.092,
+              "strategies_used": [
+                "static_ratio_100.0% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 8067.414042,
+                  "total_ms": 22338.595584,
+                  "decode_tps": 9.274786221345236,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 8009.554917,
+                  "total_ms": 22364.352457999998,
+                  "decode_tps": 9.268196552189846,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 40,
+                "peak_total_ops": 43,
+                "mean_total_ops": 2.675,
+                "peak_pageouts": 43,
+                "peak_swapouts": 0
+              }
+            }
+          ],
+          "wall_time_sec_mean": 40.67,
+          "wall_time_sec_std": 1.481,
+          "mean_ttft_ms_mean": 7706.5,
+          "mean_ttft_ms_std": 282.059,
+          "p50_ttft_ms_mean": 7706.5,
+          "p50_ttft_ms_std": 282.059,
+          "p95_ttft_ms_mean": 7725.955,
+          "p95_ttft_ms_std": 283.385,
+          "p99_ttft_ms_mean": 7727.684,
+          "p99_ttft_ms_std": 283.527,
+          "mean_total_ms_mean": 21910.209,
+          "mean_total_ms_std": 522.318,
+          "mean_decode_tps_mean": 9.328,
+          "mean_decode_tps_std": 0.185,
+          "aggregate_tps_mean": 6.352,
+          "aggregate_tps_std": 0.231,
+          "success_rate_mean": 1.0,
+          "success_rate_std": 0.0,
+          "error_count_mean": 0.0,
+          "error_count_std": 0.0,
+          "vm_stat_summary": {
+            "available": true,
+            "samples_mean": 38.8,
+            "peak_total_ops_max": 94,
+            "mean_total_ops_mean": 5.102,
+            "peak_pageouts_max": 94,
+            "peak_swapouts_max": 0
+          }
+        },
+        "rounds": [
+          {
+            "mode": "full_context",
+            "concurrency": 2,
+            "round": 1,
+            "successes": 2,
+            "wall_time_sec": 40.48,
+            "mean_ttft_ms": 7301.926,
+            "p50_ttft_ms": 7301.926,
+            "p95_ttft_ms": 7315.723,
+            "p99_ttft_ms": 7316.949,
+            "mean_total_ms": 21340.518,
+            "mean_decode_tps": 9.518,
+            "aggregate_tps": 6.373,
+            "strategies_used": [
+              "static_ratio_100.0% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 7286.597292,
+                "total_ms": 21313.614791,
+                "decode_tps": 9.51367471535463,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 7317.2555,
+                "total_ms": 21367.420459,
+                "decode_tps": 9.522804426778986,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 39,
+              "peak_total_ops": 64,
+              "mean_total_ops": 8.103,
+              "peak_pageouts": 64,
+              "peak_swapouts": 0
+            }
+          },
+          {
+            "mode": "full_context",
+            "concurrency": 2,
+            "round": 2,
+            "successes": 2,
+            "wall_time_sec": 39.26,
+            "mean_ttft_ms": 7633.193,
+            "p50_ttft_ms": 7633.193,
+            "p95_ttft_ms": 7673.08,
+            "p99_ttft_ms": 7676.626,
+            "mean_total_ms": 21470.916,
+            "mean_decode_tps": 9.55,
+            "aggregate_tps": 6.572,
+            "strategies_used": [
+              "static_ratio_100.0% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 7588.873125,
+                "total_ms": 21440.900792,
+                "decode_tps": 9.53859387460367,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 7677.512292,
+                "total_ms": 21500.931875,
+                "decode_tps": 9.56150570392768,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 38,
+              "peak_total_ops": 89,
+              "mean_total_ops": 6.763,
+              "peak_pageouts": 89,
+              "peak_swapouts": 0
+            }
+          },
+          {
+            "mode": "full_context",
+            "concurrency": 2,
+            "round": 3,
+            "successes": 2,
+            "wall_time_sec": 38.881,
+            "mean_ttft_ms": 7547.201,
+            "p50_ttft_ms": 7547.201,
+            "p95_ttft_ms": 7555.775,
+            "p99_ttft_ms": 7556.537,
+            "mean_total_ms": 21698.747,
+            "mean_decode_tps": 9.25,
+            "aggregate_tps": 6.636,
+            "strategies_used": [
+              "static_ratio_100.0% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 7556.727625,
+                "total_ms": 21699.310623999998,
+                "decode_tps": 9.25965701443276,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 7537.674875,
+                "total_ms": 21698.182418,
+                "decode_tps": 9.239580385531161,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 37,
+              "peak_total_ops": 56,
+              "mean_total_ops": 3.595,
+              "peak_pageouts": 56,
+              "peak_swapouts": 0
+            }
+          },
+          {
+            "mode": "full_context",
+            "concurrency": 2,
+            "round": 4,
+            "successes": 2,
+            "wall_time_sec": 42.379,
+            "mean_ttft_ms": 8011.694,
+            "p50_ttft_ms": 8011.694,
+            "p95_ttft_ms": 8020.676,
+            "p99_ttft_ms": 8021.474,
+            "mean_total_ms": 22689.389,
+            "mean_decode_tps": 9.051,
+            "aggregate_tps": 6.088,
+            "strategies_used": [
+              "static_ratio_100.0% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 8001.71525,
+                "total_ms": 22613.550250999997,
+                "decode_tps": 9.058547154145975,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 8021.673417,
+                "total_ms": 22765.226876,
+                "decode_tps": 9.042694186637256,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 40,
+              "peak_total_ops": 94,
+              "mean_total_ops": 4.375,
+              "peak_pageouts": 94,
+              "peak_swapouts": 0
+            }
+          },
+          {
+            "mode": "full_context",
+            "concurrency": 2,
+            "round": 5,
+            "successes": 2,
+            "wall_time_sec": 42.35,
+            "mean_ttft_ms": 8038.484,
+            "p50_ttft_ms": 8038.484,
+            "p95_ttft_ms": 8064.521,
+            "p99_ttft_ms": 8066.835,
+            "mean_total_ms": 22351.474,
+            "mean_decode_tps": 9.271,
+            "aggregate_tps": 6.092,
+            "strategies_used": [
+              "static_ratio_100.0% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 8067.414042,
+                "total_ms": 22338.595584,
+                "decode_tps": 9.274786221345236,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 8009.554917,
+                "total_ms": 22364.352457999998,
+                "decode_tps": 9.268196552189846,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 40,
+              "peak_total_ops": 43,
+              "mean_total_ops": 2.675,
+              "peak_pageouts": 43,
+              "peak_swapouts": 0
+            }
+          }
+        ]
+      },
+      "N=4": {
+        "mode": "full_context",
+        "concurrency": 4,
+        "round_count": 5,
+        "successful_rounds": 5,
+        "summary": {
+          "rounds": [
+            {
+              "mode": "full_context",
+              "concurrency": 4,
+              "round": 1,
+              "successes": 3,
+              "wall_time_sec": 107.976,
+              "mean_ttft_ms": 14885.705,
+              "p50_ttft_ms": 15016.823,
+              "p95_ttft_ms": 15069.613,
+              "p99_ttft_ms": 15074.305,
+              "mean_total_ms": 86738.215,
+              "mean_decode_tps": 1.839,
+              "aggregate_tps": 3.584,
+              "strategies_used": [
+                "static_ratio_100.0% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 15016.82325,
+                  "total_ms": 86580.27837500001,
+                  "decode_tps": 1.8327145622812782,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 14564.814292,
+                  "total_ms": 86890.366418,
+                  "decode_tps": 1.837151729273214,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 15075.47825,
+                  "total_ms": 86744.001208,
+                  "decode_tps": 1.848066593967779,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                }
+              ],
+              "failures": [
+                "RuntimeError: llama_decode returned -3"
+              ],
+              "success_rate": 0.75,
+              "error_count": 1,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 102,
+                "peak_total_ops": 19534,
+                "mean_total_ops": 194.608,
+                "peak_pageouts": 258,
+                "peak_swapouts": 19276
+              }
+            },
+            {
+              "mode": "full_context",
+              "concurrency": 4,
+              "round": 2,
+              "successes": 4,
+              "wall_time_sec": 108.732,
+              "mean_ttft_ms": 9901.841,
+              "p50_ttft_ms": 10753.968,
+              "p95_ttft_ms": 12122.207,
+              "p99_ttft_ms": 12160.527,
+              "mean_total_ms": 89638.591,
+              "mean_decode_tps": 1.681,
+              "aggregate_tps": 4.746,
+              "strategies_used": [
+                "static_ratio_100.0% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 9657.167583,
+                  "total_ms": 89252.829793,
+                  "decode_tps": 1.6313052467584763,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 11850.767792,
+                  "total_ms": 89802.391666,
+                  "decode_tps": 1.6651463851557216,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 12170.107625,
+                  "total_ms": 89716.095083,
+                  "decode_tps": 1.6796470497687015,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 5929.321208,
+                  "total_ms": 89783.04687600001,
+                  "decode_tps": 1.7470594831719901,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 103,
+                "peak_total_ops": 55,
+                "mean_total_ops": 4.874,
+                "peak_pageouts": 55,
+                "peak_swapouts": 0
+              }
+            },
+            {
+              "mode": "full_context",
+              "concurrency": 4,
+              "round": 3,
+              "successes": 4,
+              "wall_time_sec": 107.614,
+              "mean_ttft_ms": 14280.689,
+              "p50_ttft_ms": 14279.072,
+              "p95_ttft_ms": 14380.495,
+              "p99_ttft_ms": 14389.458,
+              "mean_total_ms": 88338.186,
+              "mean_decode_tps": 1.781,
+              "aggregate_tps": 4.795,
+              "strategies_used": [
+                "static_ratio_100.0% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 14172.913125,
+                  "total_ms": 88265.16700100001,
+                  "decode_tps": 1.7828309512968767,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 14317.006959,
+                  "total_ms": 88258.94524999999,
+                  "decode_tps": 1.7804806435068374,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 14241.136916,
+                  "total_ms": 88481.844166,
+                  "decode_tps": 1.7788517721756485,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 14391.699084,
+                  "total_ms": 88346.78804200001,
+                  "decode_tps": 1.7801532791288126,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 101,
+                "peak_total_ops": 17451,
+                "mean_total_ops": 176.713,
+                "peak_pageouts": 62,
+                "peak_swapouts": 17428
+              }
+            },
+            {
+              "mode": "full_context",
+              "concurrency": 4,
+              "round": 4,
+              "successes": 4,
+              "wall_time_sec": 103.478,
+              "mean_ttft_ms": 14145.721,
+              "p50_ttft_ms": 14013.087,
+              "p95_ttft_ms": 14493.12,
+              "p99_ttft_ms": 14560.192,
+              "mean_total_ms": 84346.915,
+              "mean_decode_tps": 1.861,
+              "aggregate_tps": 4.987,
+              "strategies_used": [
+                "static_ratio_100.0% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 14008.143167,
+                  "total_ms": 84191.986166,
+                  "decode_tps": 1.8581861823160004,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 13979.748917,
+                  "total_ms": 84408.72779099998,
+                  "decode_tps": 1.8581153200495821,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 14018.030375,
+                  "total_ms": 84269.33795900001,
+                  "decode_tps": 1.8564093766326504,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 14576.959833,
+                  "total_ms": 84517.607958,
+                  "decode_tps": 1.8707999159452904,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 98,
+                "peak_total_ops": 11018,
+                "mean_total_ops": 115.745,
+                "peak_pageouts": 73,
+                "peak_swapouts": 11000
+              }
+            },
+            {
+              "mode": "full_context",
+              "concurrency": 4,
+              "round": 5,
+              "successes": 4,
+              "wall_time_sec": 104.156,
+              "mean_ttft_ms": 8846.168,
+              "p50_ttft_ms": 9671.916,
+              "p95_ttft_ms": 9938.911,
+              "p99_ttft_ms": 9965.27,
+              "mean_total_ms": 85071.26,
+              "mean_decode_tps": 1.786,
+              "aggregate_tps": 4.954,
+              "strategies_used": [
+                "static_ratio_100.0% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 9591.633875,
+                  "total_ms": 84791.185916,
+                  "decode_tps": 1.7383501341111864,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 9971.86025,
+                  "total_ms": 85102.255207,
+                  "decode_tps": 1.7397701663213414,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 9752.198083,
+                  "total_ms": 84998.270082,
+                  "decode_tps": 1.793008060822169,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 6068.978541,
+                  "total_ms": 85393.329249,
+                  "decode_tps": 1.8736067976952764,
+                  "generated_tokens": 129,
+                  "strategy": "static_ratio_100.0% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 99,
+                "peak_total_ops": 153,
+                "mean_total_ops": 5.273,
+                "peak_pageouts": 153,
+                "peak_swapouts": 0
+              }
+            }
+          ],
+          "wall_time_sec_mean": 106.391,
+          "wall_time_sec_std": 2.143,
+          "mean_ttft_ms_mean": 12412.025,
+          "mean_ttft_ms_std": 2515.276,
+          "p50_ttft_ms_mean": 12746.973,
+          "p50_ttft_ms_std": 2122.764,
+          "p95_ttft_ms_mean": 13200.869,
+          "p95_ttft_ms_std": 1916.117,
+          "p99_ttft_ms_mean": 13229.95,
+          "p99_ttft_ms_std": 1914.025,
+          "mean_total_ms_mean": 86826.633,
+          "mean_total_ms_std": 1971.297,
+          "mean_decode_tps_mean": 1.79,
+          "mean_decode_tps_std": 0.062,
+          "aggregate_tps_mean": 4.613,
+          "aggregate_tps_std": 0.523,
+          "success_rate_mean": 0.95,
+          "success_rate_std": 0.1,
+          "error_count_mean": 0.2,
+          "error_count_std": 0.4,
+          "vm_stat_summary": {
+            "available": true,
+            "samples_mean": 100.6,
+            "peak_total_ops_max": 19534,
+            "mean_total_ops_mean": 99.443,
+            "peak_pageouts_max": 258,
+            "peak_swapouts_max": 19276
+          }
+        },
+        "rounds": [
+          {
+            "mode": "full_context",
+            "concurrency": 4,
+            "round": 1,
+            "successes": 3,
+            "wall_time_sec": 107.976,
+            "mean_ttft_ms": 14885.705,
+            "p50_ttft_ms": 15016.823,
+            "p95_ttft_ms": 15069.613,
+            "p99_ttft_ms": 15074.305,
+            "mean_total_ms": 86738.215,
+            "mean_decode_tps": 1.839,
+            "aggregate_tps": 3.584,
+            "strategies_used": [
+              "static_ratio_100.0% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 15016.82325,
+                "total_ms": 86580.27837500001,
+                "decode_tps": 1.8327145622812782,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 14564.814292,
+                "total_ms": 86890.366418,
+                "decode_tps": 1.837151729273214,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 15075.47825,
+                "total_ms": 86744.001208,
+                "decode_tps": 1.848066593967779,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              }
+            ],
+            "failures": [
+              "RuntimeError: llama_decode returned -3"
+            ],
+            "success_rate": 0.75,
+            "error_count": 1,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 102,
+              "peak_total_ops": 19534,
+              "mean_total_ops": 194.608,
+              "peak_pageouts": 258,
+              "peak_swapouts": 19276
+            }
+          },
+          {
+            "mode": "full_context",
+            "concurrency": 4,
+            "round": 2,
+            "successes": 4,
+            "wall_time_sec": 108.732,
+            "mean_ttft_ms": 9901.841,
+            "p50_ttft_ms": 10753.968,
+            "p95_ttft_ms": 12122.207,
+            "p99_ttft_ms": 12160.527,
+            "mean_total_ms": 89638.591,
+            "mean_decode_tps": 1.681,
+            "aggregate_tps": 4.746,
+            "strategies_used": [
+              "static_ratio_100.0% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 9657.167583,
+                "total_ms": 89252.829793,
+                "decode_tps": 1.6313052467584763,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 11850.767792,
+                "total_ms": 89802.391666,
+                "decode_tps": 1.6651463851557216,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 12170.107625,
+                "total_ms": 89716.095083,
+                "decode_tps": 1.6796470497687015,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 5929.321208,
+                "total_ms": 89783.04687600001,
+                "decode_tps": 1.7470594831719901,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 103,
+              "peak_total_ops": 55,
+              "mean_total_ops": 4.874,
+              "peak_pageouts": 55,
+              "peak_swapouts": 0
+            }
+          },
+          {
+            "mode": "full_context",
+            "concurrency": 4,
+            "round": 3,
+            "successes": 4,
+            "wall_time_sec": 107.614,
+            "mean_ttft_ms": 14280.689,
+            "p50_ttft_ms": 14279.072,
+            "p95_ttft_ms": 14380.495,
+            "p99_ttft_ms": 14389.458,
+            "mean_total_ms": 88338.186,
+            "mean_decode_tps": 1.781,
+            "aggregate_tps": 4.795,
+            "strategies_used": [
+              "static_ratio_100.0% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 14172.913125,
+                "total_ms": 88265.16700100001,
+                "decode_tps": 1.7828309512968767,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 14317.006959,
+                "total_ms": 88258.94524999999,
+                "decode_tps": 1.7804806435068374,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 14241.136916,
+                "total_ms": 88481.844166,
+                "decode_tps": 1.7788517721756485,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 14391.699084,
+                "total_ms": 88346.78804200001,
+                "decode_tps": 1.7801532791288126,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 101,
+              "peak_total_ops": 17451,
+              "mean_total_ops": 176.713,
+              "peak_pageouts": 62,
+              "peak_swapouts": 17428
+            }
+          },
+          {
+            "mode": "full_context",
+            "concurrency": 4,
+            "round": 4,
+            "successes": 4,
+            "wall_time_sec": 103.478,
+            "mean_ttft_ms": 14145.721,
+            "p50_ttft_ms": 14013.087,
+            "p95_ttft_ms": 14493.12,
+            "p99_ttft_ms": 14560.192,
+            "mean_total_ms": 84346.915,
+            "mean_decode_tps": 1.861,
+            "aggregate_tps": 4.987,
+            "strategies_used": [
+              "static_ratio_100.0% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 14008.143167,
+                "total_ms": 84191.986166,
+                "decode_tps": 1.8581861823160004,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 13979.748917,
+                "total_ms": 84408.72779099998,
+                "decode_tps": 1.8581153200495821,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 14018.030375,
+                "total_ms": 84269.33795900001,
+                "decode_tps": 1.8564093766326504,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 14576.959833,
+                "total_ms": 84517.607958,
+                "decode_tps": 1.8707999159452904,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 98,
+              "peak_total_ops": 11018,
+              "mean_total_ops": 115.745,
+              "peak_pageouts": 73,
+              "peak_swapouts": 11000
+            }
+          },
+          {
+            "mode": "full_context",
+            "concurrency": 4,
+            "round": 5,
+            "successes": 4,
+            "wall_time_sec": 104.156,
+            "mean_ttft_ms": 8846.168,
+            "p50_ttft_ms": 9671.916,
+            "p95_ttft_ms": 9938.911,
+            "p99_ttft_ms": 9965.27,
+            "mean_total_ms": 85071.26,
+            "mean_decode_tps": 1.786,
+            "aggregate_tps": 4.954,
+            "strategies_used": [
+              "static_ratio_100.0% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 9591.633875,
+                "total_ms": 84791.185916,
+                "decode_tps": 1.7383501341111864,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 9971.86025,
+                "total_ms": 85102.255207,
+                "decode_tps": 1.7397701663213414,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 9752.198083,
+                "total_ms": 84998.270082,
+                "decode_tps": 1.793008060822169,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 6068.978541,
+                "total_ms": 85393.329249,
+                "decode_tps": 1.8736067976952764,
+                "generated_tokens": 129,
+                "strategy": "static_ratio_100.0% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 99,
+              "peak_total_ops": 153,
+              "mean_total_ops": 5.273,
+              "peak_pageouts": 153,
+              "peak_swapouts": 0
+            }
+          }
+        ]
+      }
+    },
+    "optimized_path": {
+      "N=2": {
+        "mode": "optimized_path",
+        "concurrency": 2,
+        "round_count": 5,
+        "successful_rounds": 5,
+        "summary": {
+          "rounds": [
+            {
+              "mode": "optimized_path",
+              "concurrency": 2,
+              "round": 1,
+              "successes": 2,
+              "wall_time_sec": 36.111,
+              "mean_ttft_ms": 6710.729,
+              "p50_ttft_ms": 6710.729,
+              "p95_ttft_ms": 6797.186,
+              "p99_ttft_ms": 6804.871,
+              "mean_total_ms": 19210.726,
+              "mean_decode_tps": 10.61,
+              "aggregate_tps": 7.145,
+              "strategies_used": [
+                "adaptive_high_70% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 6806.792625,
+                  "total_ms": 19201.183041,
+                  "decode_tps": 10.626616933058177,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 6614.664708,
+                  "total_ms": 19220.269708,
+                  "decode_tps": 10.593830495981486,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 34,
+                "peak_total_ops": 78,
+                "mean_total_ops": 6.118,
+                "peak_pageouts": 78,
+                "peak_swapouts": 0
+              }
+            },
+            {
+              "mode": "optimized_path",
+              "concurrency": 2,
+              "round": 2,
+              "successes": 2,
+              "wall_time_sec": 36.29,
+              "mean_ttft_ms": 6917.713,
+              "p50_ttft_ms": 6917.713,
+              "p95_ttft_ms": 6989.873,
+              "p99_ttft_ms": 6996.287,
+              "mean_total_ms": 19954.219,
+              "mean_decode_tps": 10.137,
+              "aggregate_tps": 7.109,
+              "strategies_used": [
+                "adaptive_high_70% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 6837.536,
+                  "total_ms": 19893.833459,
+                  "decode_tps": 10.222630399826427,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 6997.890708,
+                  "total_ms": 20014.604292,
+                  "decode_tps": 10.051878700512212,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 35,
+                "peak_total_ops": 67,
+                "mean_total_ops": 2.486,
+                "peak_pageouts": 67,
+                "peak_swapouts": 0
+              }
+            },
+            {
+              "mode": "optimized_path",
+              "concurrency": 2,
+              "round": 3,
+              "successes": 2,
+              "wall_time_sec": 35.797,
+              "mean_ttft_ms": 6836.758,
+              "p50_ttft_ms": 6836.758,
+              "p95_ttft_ms": 6935.14,
+              "p99_ttft_ms": 6943.885,
+              "mean_total_ms": 19668.929,
+              "mean_decode_tps": 10.261,
+              "aggregate_tps": 7.207,
+              "strategies_used": [
+                "adaptive_high_70% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 6946.07125,
+                  "total_ms": 19702.848501,
+                  "decode_tps": 10.227254111724255,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 6727.445375,
+                  "total_ms": 19635.008832,
+                  "decode_tps": 10.293996815579694,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 34,
+                "peak_total_ops": 37,
+                "mean_total_ops": 2.853,
+                "peak_pageouts": 37,
+                "peak_swapouts": 0
+              }
+            },
+            {
+              "mode": "optimized_path",
+              "concurrency": 2,
+              "round": 4,
+              "successes": 2,
+              "wall_time_sec": 35.276,
+              "mean_ttft_ms": 6824.663,
+              "p50_ttft_ms": 6824.663,
+              "p95_ttft_ms": 6943.364,
+              "p99_ttft_ms": 6953.915,
+              "mean_total_ms": 19696.844,
+              "mean_decode_tps": 10.226,
+              "aggregate_tps": 7.314,
+              "strategies_used": [
+                "adaptive_high_70% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 6692.773875,
+                  "total_ms": 19597.787583,
+                  "decode_tps": 10.292961659460348,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 6956.553,
+                  "total_ms": 19795.900624,
+                  "decode_tps": 10.158957730583552,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 34,
+                "peak_total_ops": 51,
+                "mean_total_ops": 2.059,
+                "peak_pageouts": 51,
+                "peak_swapouts": 0
+              }
+            },
+            {
+              "mode": "optimized_path",
+              "concurrency": 2,
+              "round": 5,
+              "successes": 2,
+              "wall_time_sec": 40.616,
+              "mean_ttft_ms": 6869.531,
+              "p50_ttft_ms": 6869.531,
+              "p95_ttft_ms": 6942.34,
+              "p99_ttft_ms": 6948.812,
+              "mean_total_ms": 19763.551,
+              "mean_decode_tps": 10.193,
+              "aggregate_tps": 6.352,
+              "strategies_used": [
+                "adaptive_high_70% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 6788.631667,
+                  "total_ms": 19712.992916,
+                  "decode_tps": 10.228706375081323,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 6950.429958,
+                  "total_ms": 19814.108125,
+                  "decode_tps": 10.156381172996642,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 39,
+                "peak_total_ops": 31,
+                "mean_total_ops": 1.308,
+                "peak_pageouts": 31,
+                "peak_swapouts": 0
+              }
+            }
+          ],
+          "wall_time_sec_mean": 36.818,
+          "wall_time_sec_std": 1.93,
+          "mean_ttft_ms_mean": 6831.879,
+          "mean_ttft_ms_std": 68.612,
+          "p50_ttft_ms_mean": 6831.879,
+          "p50_ttft_ms_std": 68.612,
+          "p95_ttft_ms_mean": 6921.581,
+          "p95_ttft_ms_std": 65.157,
+          "p99_ttft_ms_mean": 6929.554,
+          "p99_ttft_ms_std": 65.067,
+          "mean_total_ms_mean": 19658.854,
+          "mean_total_ms_std": 245.18,
+          "mean_decode_tps_mean": 10.285,
+          "mean_decode_tps_std": 0.167,
+          "aggregate_tps_mean": 7.025,
+          "aggregate_tps_std": 0.344,
+          "success_rate_mean": 1.0,
+          "success_rate_std": 0.0,
+          "error_count_mean": 0.0,
+          "error_count_std": 0.0,
+          "vm_stat_summary": {
+            "available": true,
+            "samples_mean": 35.2,
+            "peak_total_ops_max": 78,
+            "mean_total_ops_mean": 2.965,
+            "peak_pageouts_max": 78,
+            "peak_swapouts_max": 0
+          }
+        },
+        "rounds": [
+          {
+            "mode": "optimized_path",
+            "concurrency": 2,
+            "round": 1,
+            "successes": 2,
+            "wall_time_sec": 36.111,
+            "mean_ttft_ms": 6710.729,
+            "p50_ttft_ms": 6710.729,
+            "p95_ttft_ms": 6797.186,
+            "p99_ttft_ms": 6804.871,
+            "mean_total_ms": 19210.726,
+            "mean_decode_tps": 10.61,
+            "aggregate_tps": 7.145,
+            "strategies_used": [
+              "adaptive_high_70% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 6806.792625,
+                "total_ms": 19201.183041,
+                "decode_tps": 10.626616933058177,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 6614.664708,
+                "total_ms": 19220.269708,
+                "decode_tps": 10.593830495981486,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 34,
+              "peak_total_ops": 78,
+              "mean_total_ops": 6.118,
+              "peak_pageouts": 78,
+              "peak_swapouts": 0
+            }
+          },
+          {
+            "mode": "optimized_path",
+            "concurrency": 2,
+            "round": 2,
+            "successes": 2,
+            "wall_time_sec": 36.29,
+            "mean_ttft_ms": 6917.713,
+            "p50_ttft_ms": 6917.713,
+            "p95_ttft_ms": 6989.873,
+            "p99_ttft_ms": 6996.287,
+            "mean_total_ms": 19954.219,
+            "mean_decode_tps": 10.137,
+            "aggregate_tps": 7.109,
+            "strategies_used": [
+              "adaptive_high_70% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 6837.536,
+                "total_ms": 19893.833459,
+                "decode_tps": 10.222630399826427,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 6997.890708,
+                "total_ms": 20014.604292,
+                "decode_tps": 10.051878700512212,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 35,
+              "peak_total_ops": 67,
+              "mean_total_ops": 2.486,
+              "peak_pageouts": 67,
+              "peak_swapouts": 0
+            }
+          },
+          {
+            "mode": "optimized_path",
+            "concurrency": 2,
+            "round": 3,
+            "successes": 2,
+            "wall_time_sec": 35.797,
+            "mean_ttft_ms": 6836.758,
+            "p50_ttft_ms": 6836.758,
+            "p95_ttft_ms": 6935.14,
+            "p99_ttft_ms": 6943.885,
+            "mean_total_ms": 19668.929,
+            "mean_decode_tps": 10.261,
+            "aggregate_tps": 7.207,
+            "strategies_used": [
+              "adaptive_high_70% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 6946.07125,
+                "total_ms": 19702.848501,
+                "decode_tps": 10.227254111724255,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 6727.445375,
+                "total_ms": 19635.008832,
+                "decode_tps": 10.293996815579694,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 34,
+              "peak_total_ops": 37,
+              "mean_total_ops": 2.853,
+              "peak_pageouts": 37,
+              "peak_swapouts": 0
+            }
+          },
+          {
+            "mode": "optimized_path",
+            "concurrency": 2,
+            "round": 4,
+            "successes": 2,
+            "wall_time_sec": 35.276,
+            "mean_ttft_ms": 6824.663,
+            "p50_ttft_ms": 6824.663,
+            "p95_ttft_ms": 6943.364,
+            "p99_ttft_ms": 6953.915,
+            "mean_total_ms": 19696.844,
+            "mean_decode_tps": 10.226,
+            "aggregate_tps": 7.314,
+            "strategies_used": [
+              "adaptive_high_70% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 6692.773875,
+                "total_ms": 19597.787583,
+                "decode_tps": 10.292961659460348,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 6956.553,
+                "total_ms": 19795.900624,
+                "decode_tps": 10.158957730583552,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 34,
+              "peak_total_ops": 51,
+              "mean_total_ops": 2.059,
+              "peak_pageouts": 51,
+              "peak_swapouts": 0
+            }
+          },
+          {
+            "mode": "optimized_path",
+            "concurrency": 2,
+            "round": 5,
+            "successes": 2,
+            "wall_time_sec": 40.616,
+            "mean_ttft_ms": 6869.531,
+            "p50_ttft_ms": 6869.531,
+            "p95_ttft_ms": 6942.34,
+            "p99_ttft_ms": 6948.812,
+            "mean_total_ms": 19763.551,
+            "mean_decode_tps": 10.193,
+            "aggregate_tps": 6.352,
+            "strategies_used": [
+              "adaptive_high_70% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 6788.631667,
+                "total_ms": 19712.992916,
+                "decode_tps": 10.228706375081323,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 6950.429958,
+                "total_ms": 19814.108125,
+                "decode_tps": 10.156381172996642,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 39,
+              "peak_total_ops": 31,
+              "mean_total_ops": 1.308,
+              "peak_pageouts": 31,
+              "peak_swapouts": 0
+            }
+          }
+        ]
+      },
+      "N=4": {
+        "mode": "optimized_path",
+        "concurrency": 4,
+        "round_count": 5,
+        "successful_rounds": 5,
+        "summary": {
+          "rounds": [
+            {
+              "mode": "optimized_path",
+              "concurrency": 4,
+              "round": 1,
+              "successes": 2,
+              "wall_time_sec": 38.741,
+              "mean_ttft_ms": 7017.024,
+              "p50_ttft_ms": 7017.024,
+              "p95_ttft_ms": 7017.083,
+              "p99_ttft_ms": 7017.089,
+              "mean_total_ms": 19947.745,
+              "mean_decode_tps": 10.245,
+              "aggregate_tps": 6.66,
+              "strategies_used": [
+                "adaptive_high_70% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 7016.957166,
+                  "total_ms": 19939.630417,
+                  "decode_tps": 10.285481033694007,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 7017.09,
+                  "total_ms": 19955.859582999998,
+                  "decode_tps": 10.203847932895561,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                }
+              ],
+              "failures": [
+                "RuntimeError: llama_decode returned -3",
+                "RuntimeError: llama_decode returned -3"
+              ],
+              "success_rate": 0.5,
+              "error_count": 2,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 37,
+                "peak_total_ops": 18,
+                "mean_total_ops": 2.054,
+                "peak_pageouts": 18,
+                "peak_swapouts": 0
+              }
+            },
+            {
+              "mode": "optimized_path",
+              "concurrency": 4,
+              "round": 2,
+              "successes": 2,
+              "wall_time_sec": 40.633,
+              "mean_ttft_ms": 7685.408,
+              "p50_ttft_ms": 7685.408,
+              "p95_ttft_ms": 7694.666,
+              "p99_ttft_ms": 7695.489,
+              "mean_total_ms": 21658.976,
+              "mean_decode_tps": 9.566,
+              "aggregate_tps": 6.35,
+              "strategies_used": [
+                "adaptive_high_70% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 7675.121625,
+                  "total_ms": 21641.824791,
+                  "decode_tps": 9.570958566381004,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 7695.694834,
+                  "total_ms": 21676.127833,
+                  "decode_tps": 9.561288905957703,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                }
+              ],
+              "failures": [
+                "RuntimeError: llama_decode returned -3",
+                "RuntimeError: llama_decode returned -3"
+              ],
+              "success_rate": 0.5,
+              "error_count": 2,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 39,
+                "peak_total_ops": 64,
+                "mean_total_ops": 7.333,
+                "peak_pageouts": 64,
+                "peak_swapouts": 0
+              }
+            },
+            {
+              "mode": "optimized_path",
+              "concurrency": 4,
+              "round": 3,
+              "successes": 4,
+              "wall_time_sec": 108.701,
+              "mean_ttft_ms": 9916.99,
+              "p50_ttft_ms": 11182.72,
+              "p95_ttft_ms": 11834.568,
+              "p99_ttft_ms": 11906.503,
+              "mean_total_ms": 87330.363,
+              "mean_decode_tps": 1.766,
+              "aggregate_tps": 4.747,
+              "strategies_used": [
+                "adaptive_high_70% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 11325.029833,
+                  "total_ms": 87065.988875,
+                  "decode_tps": 1.7165174074051388,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 11924.48625,
+                  "total_ms": 87291.978165,
+                  "decode_tps": 1.7267031036721017,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 11040.409458,
+                  "total_ms": 87402.279333,
+                  "decode_tps": 1.7723139795519032,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 5378.035833,
+                  "total_ms": 87561.2065,
+                  "decode_tps": 1.8486449873030253,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 103,
+                "peak_total_ops": 108,
+                "mean_total_ops": 3.223,
+                "peak_pageouts": 108,
+                "peak_swapouts": 0
+              }
+            },
+            {
+              "mode": "optimized_path",
+              "concurrency": 4,
+              "round": 4,
+              "successes": 3,
+              "wall_time_sec": 86.112,
+              "mean_ttft_ms": 10486.217,
+              "p50_ttft_ms": 10513.507,
+              "p95_ttft_ms": 11603.793,
+              "p99_ttft_ms": 11700.707,
+              "mean_total_ms": 65279.827,
+              "mean_decode_tps": 2.398,
+              "aggregate_tps": 4.494,
+              "strategies_used": [
+                "adaptive_high_70% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 9220.208375,
+                  "total_ms": 65084.102043,
+                  "decode_tps": 2.352349064917565,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 10513.507375,
+                  "total_ms": 65312.173582999996,
+                  "decode_tps": 2.399058650314673,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 11724.935375,
+                  "total_ms": 65443.204166999996,
+                  "decode_tps": 2.442684867130547,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                }
+              ],
+              "failures": [
+                "RuntimeError: llama_decode returned -3"
+              ],
+              "success_rate": 0.75,
+              "error_count": 1,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 81,
+                "peak_total_ops": 35,
+                "mean_total_ops": 2.469,
+                "peak_pageouts": 35,
+                "peak_swapouts": 0
+              }
+            },
+            {
+              "mode": "optimized_path",
+              "concurrency": 4,
+              "round": 5,
+              "successes": 4,
+              "wall_time_sec": 107.724,
+              "mean_ttft_ms": 13495.888,
+              "p50_ttft_ms": 13518.073,
+              "p95_ttft_ms": 13699.879,
+              "p99_ttft_ms": 13709.236,
+              "mean_total_ms": 88777.982,
+              "mean_decode_tps": 1.765,
+              "aggregate_tps": 4.79,
+              "strategies_used": [
+                "adaptive_high_70% (capped_at_10)"
+              ],
+              "worker_rows": [
+                {
+                  "success": true,
+                  "ttft_ms": 13402.54775,
+                  "total_ms": 88586.4285,
+                  "decode_tps": 1.7661514507385365,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 13235.828834,
+                  "total_ms": 88738.193501,
+                  "decode_tps": 1.7596437171614165,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 13633.599042,
+                  "total_ms": 88833.982918,
+                  "decode_tps": 1.7678502131486038,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                },
+                {
+                  "success": true,
+                  "ttft_ms": 13711.575458,
+                  "total_ms": 88953.32475,
+                  "decode_tps": 1.7667836335859224,
+                  "generated_tokens": 129,
+                  "strategy": "adaptive_high_70% (capped_at_10)"
+                }
+              ],
+              "success_rate": 1.0,
+              "error_count": 0,
+              "vm_stat_summary": {
+                "available": true,
+                "samples": 102,
+                "peak_total_ops": 14959,
+                "mean_total_ops": 151.657,
+                "peak_pageouts": 38,
+                "peak_swapouts": 14952
+              }
+            }
+          ],
+          "wall_time_sec_mean": 76.382,
+          "wall_time_sec_std": 31.037,
+          "mean_ttft_ms_mean": 9720.305,
+          "mean_ttft_ms_std": 2294.727,
+          "p50_ttft_ms_mean": 9983.346,
+          "p50_ttft_ms_std": 2378.8,
+          "p95_ttft_ms_mean": 10369.998,
+          "p95_ttft_ms_std": 2575.064,
+          "p99_ttft_ms_mean": 10405.805,
+          "p99_ttft_ms_std": 2595.023,
+          "mean_total_ms_mean": 56598.979,
+          "mean_total_ms_std": 30395.329,
+          "mean_decode_tps_mean": 5.148,
+          "mean_decode_tps_std": 3.897,
+          "aggregate_tps_mean": 5.408,
+          "aggregate_tps_std": 0.907,
+          "success_rate_mean": 0.75,
+          "success_rate_std": 0.224,
+          "error_count_mean": 1.0,
+          "error_count_std": 0.894,
+          "vm_stat_summary": {
+            "available": true,
+            "samples_mean": 72.4,
+            "peak_total_ops_max": 14959,
+            "mean_total_ops_mean": 33.347,
+            "peak_pageouts_max": 108,
+            "peak_swapouts_max": 14952
+          }
+        },
+        "rounds": [
+          {
+            "mode": "optimized_path",
+            "concurrency": 4,
+            "round": 1,
+            "successes": 2,
+            "wall_time_sec": 38.741,
+            "mean_ttft_ms": 7017.024,
+            "p50_ttft_ms": 7017.024,
+            "p95_ttft_ms": 7017.083,
+            "p99_ttft_ms": 7017.089,
+            "mean_total_ms": 19947.745,
+            "mean_decode_tps": 10.245,
+            "aggregate_tps": 6.66,
+            "strategies_used": [
+              "adaptive_high_70% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 7016.957166,
+                "total_ms": 19939.630417,
+                "decode_tps": 10.285481033694007,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 7017.09,
+                "total_ms": 19955.859582999998,
+                "decode_tps": 10.203847932895561,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              }
+            ],
+            "failures": [
+              "RuntimeError: llama_decode returned -3",
+              "RuntimeError: llama_decode returned -3"
+            ],
+            "success_rate": 0.5,
+            "error_count": 2,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 37,
+              "peak_total_ops": 18,
+              "mean_total_ops": 2.054,
+              "peak_pageouts": 18,
+              "peak_swapouts": 0
+            }
+          },
+          {
+            "mode": "optimized_path",
+            "concurrency": 4,
+            "round": 2,
+            "successes": 2,
+            "wall_time_sec": 40.633,
+            "mean_ttft_ms": 7685.408,
+            "p50_ttft_ms": 7685.408,
+            "p95_ttft_ms": 7694.666,
+            "p99_ttft_ms": 7695.489,
+            "mean_total_ms": 21658.976,
+            "mean_decode_tps": 9.566,
+            "aggregate_tps": 6.35,
+            "strategies_used": [
+              "adaptive_high_70% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 7675.121625,
+                "total_ms": 21641.824791,
+                "decode_tps": 9.570958566381004,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 7695.694834,
+                "total_ms": 21676.127833,
+                "decode_tps": 9.561288905957703,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              }
+            ],
+            "failures": [
+              "RuntimeError: llama_decode returned -3",
+              "RuntimeError: llama_decode returned -3"
+            ],
+            "success_rate": 0.5,
+            "error_count": 2,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 39,
+              "peak_total_ops": 64,
+              "mean_total_ops": 7.333,
+              "peak_pageouts": 64,
+              "peak_swapouts": 0
+            }
+          },
+          {
+            "mode": "optimized_path",
+            "concurrency": 4,
+            "round": 3,
+            "successes": 4,
+            "wall_time_sec": 108.701,
+            "mean_ttft_ms": 9916.99,
+            "p50_ttft_ms": 11182.72,
+            "p95_ttft_ms": 11834.568,
+            "p99_ttft_ms": 11906.503,
+            "mean_total_ms": 87330.363,
+            "mean_decode_tps": 1.766,
+            "aggregate_tps": 4.747,
+            "strategies_used": [
+              "adaptive_high_70% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 11325.029833,
+                "total_ms": 87065.988875,
+                "decode_tps": 1.7165174074051388,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 11924.48625,
+                "total_ms": 87291.978165,
+                "decode_tps": 1.7267031036721017,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 11040.409458,
+                "total_ms": 87402.279333,
+                "decode_tps": 1.7723139795519032,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 5378.035833,
+                "total_ms": 87561.2065,
+                "decode_tps": 1.8486449873030253,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 103,
+              "peak_total_ops": 108,
+              "mean_total_ops": 3.223,
+              "peak_pageouts": 108,
+              "peak_swapouts": 0
+            }
+          },
+          {
+            "mode": "optimized_path",
+            "concurrency": 4,
+            "round": 4,
+            "successes": 3,
+            "wall_time_sec": 86.112,
+            "mean_ttft_ms": 10486.217,
+            "p50_ttft_ms": 10513.507,
+            "p95_ttft_ms": 11603.793,
+            "p99_ttft_ms": 11700.707,
+            "mean_total_ms": 65279.827,
+            "mean_decode_tps": 2.398,
+            "aggregate_tps": 4.494,
+            "strategies_used": [
+              "adaptive_high_70% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 9220.208375,
+                "total_ms": 65084.102043,
+                "decode_tps": 2.352349064917565,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 10513.507375,
+                "total_ms": 65312.173582999996,
+                "decode_tps": 2.399058650314673,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 11724.935375,
+                "total_ms": 65443.204166999996,
+                "decode_tps": 2.442684867130547,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              }
+            ],
+            "failures": [
+              "RuntimeError: llama_decode returned -3"
+            ],
+            "success_rate": 0.75,
+            "error_count": 1,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 81,
+              "peak_total_ops": 35,
+              "mean_total_ops": 2.469,
+              "peak_pageouts": 35,
+              "peak_swapouts": 0
+            }
+          },
+          {
+            "mode": "optimized_path",
+            "concurrency": 4,
+            "round": 5,
+            "successes": 4,
+            "wall_time_sec": 107.724,
+            "mean_ttft_ms": 13495.888,
+            "p50_ttft_ms": 13518.073,
+            "p95_ttft_ms": 13699.879,
+            "p99_ttft_ms": 13709.236,
+            "mean_total_ms": 88777.982,
+            "mean_decode_tps": 1.765,
+            "aggregate_tps": 4.79,
+            "strategies_used": [
+              "adaptive_high_70% (capped_at_10)"
+            ],
+            "worker_rows": [
+              {
+                "success": true,
+                "ttft_ms": 13402.54775,
+                "total_ms": 88586.4285,
+                "decode_tps": 1.7661514507385365,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 13235.828834,
+                "total_ms": 88738.193501,
+                "decode_tps": 1.7596437171614165,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 13633.599042,
+                "total_ms": 88833.982918,
+                "decode_tps": 1.7678502131486038,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              },
+              {
+                "success": true,
+                "ttft_ms": 13711.575458,
+                "total_ms": 88953.32475,
+                "decode_tps": 1.7667836335859224,
+                "generated_tokens": 129,
+                "strategy": "adaptive_high_70% (capped_at_10)"
+              }
+            ],
+            "success_rate": 1.0,
+            "error_count": 0,
+            "vm_stat_summary": {
+              "available": true,
+              "samples": 102,
+              "peak_total_ops": 14959,
+              "mean_total_ops": 151.657,
+              "peak_pageouts": 38,
+              "peak_swapouts": 14952
+            }
+          }
+        ]
+      }
+    }
+  }
+}

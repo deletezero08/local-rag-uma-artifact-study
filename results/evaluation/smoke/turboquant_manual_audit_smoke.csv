@@ -1,0 +1,34 @@
+mode,id,question,source_docs,retrieved_doc_paths,recall_at_k,recall_hit_at_k,retrieval_ms,ttft_ms,total_ms,faith_m,rel_m,auto_error_category,answer
+fp32_off,Q008,docker_compose.md 中 API 服务的端口映射配置是什么？,E_config/docker_compose.md,E_config/docker_compose.md;E_config/docker_compose_llm_official.md;C_troubleshoot/port_conflict.md;C_troubleshoot/cuda_issues.md;B_deploy/tgi_docker.md;C_troubleshoot/port_conflict.md;C_troubleshoot/model_load_fail.md;D_design/microservices.md;B_deploy/vllm_single_gpu.md;D_design/llm_gateway.md,1.0,1.0,43.666,1893.119,5583.728,5.0,5.0,ok,"In the provided `docker-compose.yaml` file, the API service's port mapping configuration is:
+
+```yaml
+services:
+  gateway:
+    image: nginx:latest
+    ports:
+      - ""4000:4000""
+```
+
+This configuration maps port 4000 on the host machine to port 4000 in the container."
+fp32_off,Q009,vLLM Chat Completions 的端点路径是什么？,A_api/vllm_chat_completions.md,A_api/vllm_chat_completions.md;A_api/vllm_completions.md;A_api/tgi_chat.md;E_config/k8s_yaml.md;B_deploy/vllm_k8s_basic.md;A_api/vllm_nodejs_sdk.md;B_deploy/vllm_k8s_basic.md;D_design/inference_performance.md;B_deploy/vllm_k8s_basic.md;E_config/docker_compose.md,1.0,1.0,55.257,1428.608,8486.408,1.0,1.5,factual_drift,"Based on the provided context, I do not have enough information to determine the exact endpoint path of the vLLM Chat Completions API. However, I can infer that the vLLM Chat Completions API is likely a part of the vLLM (vLLM) system, which appears to be a service running on port 8000.
+
+The provided code snippets include a Kubernetes Service definition for the vLLM service, which specifies port 8000. Additionally, there is a command for port forwarding, `kubectl port-forward svc/vllm 8000:8000`, which suggests that the vLL"
+turboquant_on,Q008,docker_compose.md 中 API 服务的端口映射配置是什么？,E_config/docker_compose.md,E_config/docker_compose.md;C_troubleshoot/port_conflict.md;E_config/docker_compose_llm_official.md;B_deploy/vllm_single_gpu.md;B_deploy/tgi_docker.md;E_config/gpu_monitoring.md;D_design/microservices.md;C_troubleshoot/cuda_issues.md;C_troubleshoot/port_conflict.md;C_troubleshoot/model_load_fail.md,1.0,1.0,102.421,1660.56,8780.832,2.0,3.5,factual_drift,"According to the provided context, there is no specific configuration for API services' port mapping in the `docker-compose.yml` file. However, there is an example of port mapping for a service called `gateway`:
+
+```yaml
+services:
+  gateway:
+    image: nginx:latest
+```
+
+In this example, there is no port mapping configuration specified. If you need to expose a port for the `gateway` service, you would need to add a `ports` key to the service configuration:
+
+```yaml
+services:
+  gateway:
+    image: nginx:latest
+    ports:
+      - ""3000:80"""
+turboquant_on,Q009,vLLM Chat Completions 的端点路径是什么？,A_api/vllm_chat_completions.md,A_api/vllm_chat_completions.md;A_api/vllm_completions.md;B_deploy/vllm_k8s_basic.md;B_deploy/ollama_windows.md;A_api/tgi_chat.md;A_api/vllm_nodejs_sdk.md;B_deploy/cuda_install_official.md;D_design/inference_performance.md;B_deploy/vllm_quickstart_official.md;A_api/tgi_completions.md,1.0,1.0,85.825,1352.051,7020.692,0.5,1.0,factual_drift,"Based on the context, I can see that the `vLLM` stands for ""vLLM Chat Completions API"" and it seems to be related to a Kubernetes deployment. However, the context does not explicitly mention the endpoint path for the `vLLM Chat Completions API`.
+
+Therefore, I do not know the endpoint path for the `vLLM Chat Completions API`. If you provide more information or specify the context, I may be able to help you better."

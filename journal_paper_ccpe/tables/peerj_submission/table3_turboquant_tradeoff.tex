@@ -1,0 +1,15 @@
+\begin{table}[htbp]
+\centering
+\caption{TurboQuant retrieval compression trade-off under the current benchmark setting.}
+\label{tab:turboquant-tradeoff}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{p{3.8cm} r r r r r}
+\hline
+Method & Retrieval Latency (ms) & Index Size (MB) & Recall@10 & MAE & Max Error \\
+\hline
+Standard FP32 Distance & 128.4 & 420.0 & 1.000 & -- & -- \\
+TurboQuant ADC (8-bit) & 25.4 & 110.0 & 0.631 & 0.0144 & 0.0172 \\
+\hline
+\end{tabular}
+}
+\end{table}

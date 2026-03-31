@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-03-15 20:52:48",
+  "mode": "ensemble",
+  "sample_size": 20,
+  "iterations": 3,
+  "baseline": {
+    "name": "baseline_no_clip",
+    "top_n": 10,
+    "context_char_budget": 0,
+    "faithfulness_mean": 7.717,
+    "relevance_mean": 7.967,
+    "latency_mean": 74.138,
+    "n": 60
+  },
+  "optimized": {
+    "name": "optimized_t8_b1500",
+    "top_n": 8,
+    "context_char_budget": 1500,
+    "faithfulness_mean": 7.017,
+    "relevance_mean": 7.167,
+    "latency_mean": 71.869,
+    "n": 60
+  },
+  "acceptance": {
+    "faithfulness_drop_le_0_2": false,
+    "latency_drop_ge_10_percent": false,
+    "faithfulness_drop": 0.7,
+    "latency_drop_percent": 3.06
+  }
+}

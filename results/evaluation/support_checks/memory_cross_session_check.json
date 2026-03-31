@@ -1,0 +1,35 @@
+{
+  "tests": [
+    {
+      "name": "inject_and_retrieve",
+      "file": "A_api/embedding_models.md",
+      "insight_injected": "MemoraRAG 使用 RRF 算法融合向量检索与 BM25 关键词检索，k 值为 60。",
+      "fragments_loaded": 1,
+      "insight_found_in_new_session": true,
+      "pass": true
+    },
+    {
+      "name": "decay_score_valid",
+      "pass": true,
+      "sample_scores": [
+        0.9999999997324414
+      ]
+    },
+    {
+      "name": "multiple_insights_accumulate",
+      "fragments_after_two_saves": 2,
+      "both_insights_present": true,
+      "pass": true
+    },
+    {
+      "name": "llm_end_to_end",
+      "file": "A_api/embedding_models.md",
+      "insights_count": 1,
+      "memory_saved": true,
+      "memory_injected": true,
+      "pass": true
+    }
+  ],
+  "overall_pass": true,
+  "timestamp": "2026-03-13 09:35:24"
+}

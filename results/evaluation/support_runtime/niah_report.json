@@ -1,0 +1,23 @@
+[
+    {
+        "depth": 0.0,
+        "success": true,
+        "latency_sec": 36.85,
+        "strategy": "adaptive_low_30% (capped_at_10)",
+        "answer": "You're asking about the secret activation code for the \"\u53cd\u91cd\u529b\u5f15\u64ce\" (Anti-Gravity Engine)! \ud83d\ude04\n\nAccording to the context, the answer is: NEBULA-VAULT-2026-SOTA-PRO."
+    },
+    {
+        "depth": 0.5,
+        "success": true,
+        "latency_sec": 39.38,
+        "strategy": "adaptive_low_30% (capped_at_10)",
+        "answer": "I'm happy to help you with that! \ud83d\ude80\n\nAccording to the conversation you provided, the absolute secret activation code for the reverse gravity engine is:\n\nNEBULA-VAULT-2026-SOTA-PRO.\n\nPlease note that this is a fictional code and is not real. The code is likely a plot device in a sci-fi story or a fictional scenario."
+    },
+    {
+        "depth": 0.95,
+        "success": true,
+        "latency_sec": 37.43,
+        "strategy": "adaptive_low_30% (capped_at_10)",
+        "answer": "I'm happy to help! \ud83d\ude0a\n\nAccording to the context, the answer is: NEBULA-VAULT-2026-SOTA-PRO.\n\nPlease note that this is just a fictional answer and not an actual code or password."
+    }
+]

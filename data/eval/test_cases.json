@@ -1,0 +1,362 @@
+[
+  {
+    "id": "Q001",
+    "type": "factual",
+    "question": "忆联知库 MemoraRAG 的 API 服务默认运行在哪个端口？",
+    "ground_truth": "MemoraRAG 的 API 服务默认运行在 8000 端口（http://127.0.0.1:8000）。"
+  },
+  {
+    "id": "Q002",
+    "type": "factual",
+    "question": "系统支持预览哪些类型的文件？",
+    "ground_truth": "系统支持预览 PDF（通过 iframe 渲染）和图片（PNG, JPG, JPEG, WEBP，通过 Base64 渲染）。"
+  },
+  {
+    "id": "Q003",
+    "type": "factual",
+    "question": "混合检索中 RRF (Reciprocal Rank Fusion) 算法的常数 k 默认值是多少？",
+    "ground_truth": "在 `src/retriever.py` 的实现中，RRF 算法的常数 k 默认设置为 60。"
+  },
+  {
+    "id": "Q004",
+    "type": "factual",
+    "question": "Ollama 的默认访问地址是什么？",
+    "ground_truth": "默认地址是 `http://127.0.0.1:11434`。"
+  },
+  {
+    "id": "Q005",
+    "type": "factual",
+    "question": "MemoraRAG 要求的 Python 版本是多少？为什么？",
+    "ground_truth": "要求 Python 3.13，因为当前 chromadb 与 3.14 版本不兼容。"
+  },
+  {
+    "id": "Q006",
+    "type": "factual",
+    "question": "环境变量 `RAG_EMBED_MODEL` 的默认值是什么？",
+    "ground_truth": "默认值是 `BAAI/bge-large-zh-v1.5`。"
+  },
+  {
+    "id": "Q007",
+    "type": "factual",
+    "question": "全局记忆保存在哪个具体文件中？",
+    "ground_truth": "保存在 `memory/global_memory.json`。"
+  },
+  {
+    "id": "Q008",
+    "type": "factual",
+    "question": "向量库运行时生成在哪个目录下？",
+    "ground_truth": "生成在 `chroma_db/` 目录下。"
+  },
+  {
+    "id": "Q009",
+    "type": "factual",
+    "question": "系统通过哪种技术确保长文本输出时滚动平顺？",
+    "ground_truth": "采用 `overflow-anchor` 技术。"
+  },
+  {
+    "id": "Q010",
+    "type": "factual",
+    "question": "`/api/index` 接口使用哪种通信协议返回处理进度？",
+    "ground_truth": "使用 SSE (Server-Sent Events) 协议。"
+  },
+  {
+    "id": "Q011",
+    "type": "factual",
+    "question": "技能定义的根目录名是什么？",
+    "ground_truth": "目录名为 `skills/`。"
+  },
+  {
+    "id": "Q012",
+    "type": "factual",
+    "question": "系统如何判断文件是否需要重新建立索引？",
+    "ground_truth": "基于文件修改时间 (mtime)，如果修改时间偏移大于 1 秒则触发增量更新。"
+  },
+  {
+    "id": "Q013",
+    "type": "factual",
+    "question": "在 Docker 容器中访问宿主机 Ollama 建议使用哪个地址？",
+    "ground_truth": "建议使用 `host.docker.internal`。"
+  },
+  {
+    "id": "Q014",
+    "type": "factual",
+    "question": "`HybridRetriever` 支持哪三种模式？",
+    "ground_truth": "支持 `vector_only`、`ensemble` 和 `rrf` 模式。"
+  },
+  {
+    "id": "Q015",
+    "type": "factual",
+    "question": "闲聊旁路 (Smalltalk Bypass) 命中的关键词有哪些？",
+    "ground_truth": "关键词包括：你好、你是谁、在吗、谢谢、再见、你能做什么。"
+  },
+  {
+    "id": "Q016",
+    "type": "factual",
+    "question": "指代性问题过滤中捕获的短语有哪些？",
+    "ground_truth": "包括：“它/这份/该文档/上述内容/上面提到的”以及“继续/补充/还有哪些/下一步”。"
+  },
+  {
+    "id": "Q017",
+    "type": "factual",
+    "question": "意图抽取失败时，`memory_fallback` 的第二优先级是什么？",
+    "ground_truth": "读取 `memory/` 目录下最近修改的记忆文件。"
+  },
+  {
+    "id": "Q018",
+    "type": "factual",
+    "question": "`EncouRAGe` 自动化评测框架默认评估哪两个指标？",
+    "ground_truth": "评估 Faithfulness (忠实度) 和 Relevance (相关性)。"
+  },
+  {
+    "id": "Q019",
+    "type": "factual",
+    "question": "`experiments/config.yaml` 中 RRF 模式的默认 k 值是多少？",
+    "ground_truth": "默认 k 值为 60。"
+  },
+  {
+    "id": "Q020",
+    "type": "factual",
+    "question": "系统启动服务的命令（带热重载）是什么？",
+    "ground_truth": "命令为 `python main.py`。"
+  },
+  {
+    "id": "Q021",
+    "type": "summary",
+    "question": "简述 MemoraRAG 的增量索引机制。",
+    "ground_truth": "MemoraRAG 扫描指定目录下的文件修改时间，并与索引清册 `index_manifest.json` 对比。若发现 mtime 变化超过 1 秒，则仅对该文件进行重新解析和向量化，避免全量重建，从而实现增量更新。"
+  },
+  {
+    "id": "Q022",
+    "type": "summary",
+    "question": "总结 MemoraRAG 的记忆系统分类及功能。",
+    "ground_truth": "分为会话记忆和全局记忆。会话记忆基于当前会话内容的提炼，存储在 `memory/` 下的独立文件中；全局记忆定义在 `global_memory.json` 中，作为 LLM 的长期背景知识。它支持指代兜底，当意图不明时可自动回溯记忆。"
+  },
+  {
+    "id": "Q023",
+    "type": "summary",
+    "question": "概述技能引擎 (Skills System) 的原子性与检索机制。",
+    "ground_truth": "技能引擎将文件视为原子指令，确保逻辑完整。分为全局技能（对所有请求生效）和检索技能（根据意图动态拉取）。检索技能通过递归目录扫描实现按需注入，降低了 Prompt 的噪声并提升了效率。"
+  },
+  {
+    "id": "Q024",
+    "type": "summary",
+    "question": "简述 EncouRAGe 评测框架在毕业设计中的作用。",
+    "ground_truth": "EncouRAGe 是一个基于 LLM-as-a-Judge 的自动化评测框架。它定义了标准的测试用例和指标（如 Faithfulness），通过定量对比（如 RRF vs Vector-only）为论文提供实证数据支撑，确保系统的改进效果可度量、可复现。"
+  },
+  {
+    "id": "Q025",
+    "type": "summary",
+    "question": "概括 MemoraRAG 在受限硬件环境下（如 Mac MPS）的加速策略。",
+    "ground_truth": "通过 MPS 加速驱动 Embedding 模型（如 bge-large-zh），并建议在本地运行 Ollama 以调用 GPU 加速推理。同时，系统支持轻量化模型（如 qwen3:8b）和闲聊短路机制，显著降低响应延迟和计算开销。"
+  },
+  {
+    "id": "Q026",
+    "type": "summary",
+    "question": "总结意图提取阶段的“三阶段优化”逻辑。",
+    "ground_truth": "三阶段优化包括：Phase 0 为零延迟的正则/子串快速命中；Phase 1 为 LLM 预分析进行文件锁定；Phase 2 处理指代性兜底与闲聊旁路。这种层级机制在保证召回精度的同时尽可能降低了 LLM 的调用开销。"
+  },
+  {
+    "id": "Q027",
+    "type": "summary",
+    "question": "简述 RRF (Reciprocal Rank Fusion) 算法的原理及其在本项目中的优势。",
+    "ground_truth": "RRF 通过融合向量检索（语义）和 BM25（关键词）的排名倒数来计算综合得分：1/(rank + k)。在本项目中，它能有效平衡语义理解与精准匹配，特别是在长尾术语和特定文件名搜索上表现出比单一检索更高的召回稳健性。"
+  },
+  {
+    "id": "Q028",
+    "type": "summary",
+    "question": "概括 MemoraRAG 对多格式文档的处理流程。",
+    "ground_truth": "系统支持 PDF、Markdown、CSV、HTML 及图片（OCR）。处理流程包括：目录扫描 -> 格式探测 -> 内容解析（含 OCR）-> 文档切分 (Chunking) -> 向量化与 BM25 索引存储 -> 增量元数据更新。"
+  },
+  {
+    "id": "Q029",
+    "type": "summary",
+    "question": "简述系统在并发响应时的排队调度策略。",
+    "ground_truth": "系统采用智能会话排队机制。当 AI 正在响应某一会话时，若接收到新会话请求，系统会将新请求加入队列并标记为“排队中”。在当前流式输出结束后，系统会自动切换至排队会话并开始处理，确保资源调度的连贯性。"
+  },
+  {
+    "id": "Q030",
+    "type": "summary",
+    "question": "概述 `IMPROVEMENT_PLAN.md` 中提出的记忆蒸馏路径。",
+    "ground_truth": "记忆蒸馏采用碎片化记忆结构（Fragment-then-Compose），并引入时间戳与衰减因子（decay_score）。优先利用近期活跃信息，通过淘汰老旧或冲突的记忆片段，确保生成的记忆上下文具备极高的相关性与跨会话稳定性。"
+  },
+  {
+    "id": "Q031",
+    "type": "summary",
+    "question": "简述系统如何防范 LLM 对不存在文件的“幻觉”。",
+    "ground_truth": "在意图提取阶段增加严格匹配校验：若 LLM 返回的目标文件名不在实际索引的文件树中，系统会判定其为幻觉并将其重置为 None，随后转向 Phase 2 的指代兜底或 Phase 3 的全库检索。"
+  },
+  {
+    "id": "Q032",
+    "type": "summary",
+    "question": "概括 `src/config.py` 在系统中的角色。",
+    "ground_truth": "作为全局配置中控，管理环境变量（RAG_*）、目录结构（DOCS_DIR、MEMORY_DIR 等）、会话状态及实验配置映射。它确保了系统各组件间共享统一的一致性设置，支持通过 `config.yaml` 驱动实验参数的动态加载。"
+  },
+  {
+    "id": "Q033",
+    "type": "summary",
+    "question": "简述 `HybridRetriever` 中 `ensemble` 模式的工作原理。",
+    "ground_truth": "Ensemble 模式通过加权融合算法，将向量检索器和 BM25 检索器返回的文档列表进行初步融合。用户可以为不同检索器分配权重（如 Vector: 0.7, BM25: 0.3），从而在语义相关性和关键词命中之间寻找平衡点。"
+  },
+  {
+    "id": "Q034",
+    "type": "summary",
+    "question": "总结 `RESEARCH_LOG.md` 记录对毕设论文的重要性。",
+    "ground_truth": "它提供了系统改进的完整时间线与实验证据链。通过记录每次 Modification 的代码位置、评测脚本及结果文件名，确保了研究结论的可追溯性和可复现性，是答辩中展示实验严谨性的核心依据。"
+  },
+  {
+    "id": "Q035",
+    "type": "summary",
+    "question": "概括闲聊旁路模式对系统性能的影响。",
+    "ground_truth": "通过关键词检测直接短路 RAG 链路，使闲聊类问题的响应时间从秒级（需检索+生成）降低到百毫秒级（直接生成或模板回复），响应时延降低 90% 以上，显著提升了用户体验并节省了计算资源。"
+  },
+  {
+    "id": "Q036",
+    "type": "summary",
+    "question": "简述“按需检索”意图路由实现的必要性。",
+    "ground_truth": "传统 RAG 对所有提问均触发全库检索，这会导致长上下文带来的延迟增加和噪声干扰。按需路由仅在通过意图分析确认需要文档支撑时才触发检索，实现了检索链路的最小化开启，提高了回答的精准度。"
+  },
+  {
+    "id": "Q037",
+    "type": "summary",
+    "question": "总结系统对文档预览的安全访问机制。",
+    "ground_truth": "通过 FastAPI 挂载静态文件目录，并结合 `Content-Disposition` 响应头与认证 Token 机制。PDF 预览强制使用特定 MIME 类型以触发布鲁姆，同时防止非授权用户通过直链访问敏感文档。"
+  },
+  {
+    "id": "Q038",
+    "type": "summary",
+    "question": "概括 `THESIS_PROGRESS.md` 中 Week 3-5 的核心任务。",
+    "ground_truth": "核心任务聚焦于混合检索与重排序验证。通过实现 RRF 算法并进行 BM25-only 与混合检索的对照实验，形成对比报表，为论文的检索算法段落提供定量分析支撑。"
+  },
+  {
+    "id": "Q039",
+    "type": "summary",
+    "question": "总结系统日志 Schema (`log_schema.json`) 的设计初衷。",
+    "ground_truth": "旨在规范化实验输出格式，包含 intent_state、latency、scores 等核心字段。通过统一的 JSON 结构，使得自动化评估结果可以被直接读取、汇总并进行显著性检验，实现了实验数据的“结构化资产化”。"
+  },
+  {
+    "id": "Q040",
+    "type": "summary",
+    "question": "简述系统对本地 Ollama 服务的依赖关系。",
+    "ground_truth": "系统架构在 Ollama 之上，将其作为生成式推理的后端引擎。通过 Ollama API 进行模型拉取、参数注入（如 Temperature）及流式令牌生成。Ollama 的稳定运行是 MemoraRAG 提供交互智能的根本保障。"
+  },
+  {
+    "id": "Q041",
+    "type": "reasoning",
+    "question": "如果用户问“这份文档提到了哪些参数？”，系统首先会尝试正则匹配。若正则匹配失败而 LLM 分析也由于上下文不足未能确定目标，系统将如何处理？",
+    "ground_truth": "系统会进入 `memory_fallback` 流程。因为问题包含“这份文档”，满足指代性特征。系统会先查阅历史会话中最近被锁定的文件，若历史为空，则查找 `memory/` 目录下最近修改的记忆文件作为替代上下文进行回答。"
+  },
+  {
+    "id": "Q042",
+    "type": "reasoning",
+    "question": "分析为何 RRF 模式在处理“Q003 (RRF k 默认值)”此类问题时可能比纯向量检索更有效？",
+    "ground_truth": "此类问题包含强特征关键词“k”。向量检索可能因语义相似度分散（如很多文档提到默认值）而召回非目标代码段。BM25 能精准定位到 `retriever.py` 中对应的代码行，RRF 综合两者的排名，确保精准匹配的文档在最终列表中位次靠前。"
+  },
+  {
+    "id": "Q043",
+    "type": "reasoning",
+    "question": "假设用户修改了 `docs/api_v1.md` 但没有重启服务。当用户通过 Web UI 点击“同步索引”时，系统会发生什么？",
+    "ground_truth": "Web UI 会调用 `/api/index` 接口。后端 `indexer.py` 会扫描到 `api_v1.md` 的修改时间 (mtime) 变新。增量逻辑检测到该文件需要更新，仅解析这一个文件并更新 Chroma 数据库及 `index_manifest.json`，随后前端通过 SSE 实时显示进度条。"
+  },
+  {
+    "id": "Q044",
+    "type": "reasoning",
+    "question": "在 `HybridRetriever` 中，如果向量检索返回了 10 个无关文档，而 BM25 返回了 1 个高度匹配的文档。RRF 是如何确保这个文档出现在前列的？",
+    "ground_truth": "RRF 采用倒数排名融合。即使该文档在向量路径中排名极低（或未入围），它在 BM25 中排名第一（得分 1/(1+60)）。相比之下，向量返回的无关文档由于在 BM25 无分，整体得分较低。最终排序时，这个“单路高排名”文档会因 RRF 的稳健性被提拔至 Top 10 中。"
+  },
+  {
+    "id": "Q045",
+    "type": "reasoning",
+    "question": "若 `RAG_LLM_MODEL` 设置为 `deepseek-r1:latest`，但在启动时本地 Ollama 仅有 `qwen3:8b`，系统会如何表现？",
+    "ground_truth": "根据 `main.py` 的加载逻辑，系统会尝试初始化 LLM。如果 Ollama 返回找不到模型的错误，系统可能会报错并无法正常处理问答。用户应先执行 `ollama pull deepseek-r1:latest` 或修改配置。"
+  },
+  {
+    "id": "Q046",
+    "type": "reasoning",
+    "question": "对比“全局技能”与“检索技能”，说明在什么情况下应优先使用“检索技能”？",
+    "ground_truth": "当任务是特定领域（如“翻译规则”、“代码规范”）且文档量较大时。置于全局技能会持续占据 Context Window，导致推理变慢且易产生指令冲突。使用检索技能可以实现按需加载，仅在识别到相应需求时才注入相关提示词，保持 Prompt 的专注度。"
+  },
+  {
+    "id": "Q047",
+    "type": "reasoning",
+    "question": "如果用户在 `RESEARCH_LOG.md` 发现某次实验结果记录为 `evaluation_123456.json` 但该文件已删除。根据最新的规范，该记录应如何评估其有效性？",
+    "ground_truth": "无效。最新规范要求记录必须包含存在的文件名、样本量 n 和 Config 版本。缺失结果文件意味着实验无法复现、无法支撑论文论点，在审计中会被判定为“未验证成果”。"
+  },
+  {
+    "id": "Q048",
+    "type": "reasoning",
+    "question": "分析“正则边界匹配”在 Phase 0 意图识别中的必要性。如果没有边界匹配（如仅用 `in` 判断），查询“麻烦分析下内容”会产生什么后果？",
+    "ground_truth": "会导致误匹配。如果库中存在名为 `i.pdf` 的文件，字符串“分析”包含字母“i”的相似部分或环境干扰时，简单的 `in` 判断可能将此通用问题误认为是对 `i.pdf` 的特定检索，通过正则边界匹配 `(?<![a-zA-Z0-9])` 可以确保只有当文件名作为独立单词出现时才触发命中。"
+  },
+  {
+    "id": "Q049",
+    "type": "reasoning",
+    "question": "假设 `experiments/config.yaml` 中设置 iterations 为 3。运行 `evaluate.py` 生成的 JSON 文件结构会发生什么变化？",
+    "ground_truth": "JSON 的 `iterations` 字段将包含一个包含 3 个子列表的数组，每个子列表代表一次完整测试集的运行结果。系统会自动计算这 3 次运行的平均 Faithfulness 和 Relevance 并在控制台汇总展显，以消除 LLM 采样的随机性波动。"
+  },
+  {
+    "id": "Q050",
+    "type": "reasoning",
+    "question": "在跨文档推理场景下，RRF 相比 BM25-only 的主要优势是什么？",
+    "ground_truth": "跨文档推理通常需要综合多个文档的语义联系。BM25 仅处理字面匹配，很难跨越不同措辞将相关文档聚合。RRF 保留了向量检索的语义召回能力，能抓取到意思相近但字面不同的跨文档线索，并辅以关键词定位，召回的深度和广度更高。"
+  },
+  {
+    "id": "Q051",
+    "type": "reasoning",
+    "question": "解释为什么闲聊旁路逻辑要放在快速匹配 (Phase 0) 之前执行？",
+    "ground_circuit": "执行优先级是为了最大化性能节约。闲聊问题（如“你好”）由于极其简短，极易在 Phase 0 的文件名比对中误触（如果文件名也很短）。先通过简单正则/关键词短路，可以确保系统根本不尝试检索流程，从而实现毫秒级极速响应。"
+  },
+  {
+    "id": "Q052",
+    "type": "reasoning",
+    "question": "如果需要提高混合检索中“精准术语命中”的权重，应调整 `config.yaml` 中的哪个参数？",
+    "ground_truth": "应降低 `rrf_k` 的值（例如从 60 降至 20-30），或在 `ensemble` 模式下增加 `weights` 中 `bm25` 的比例。在 `HybridRetriever` 实现中，权重直接决定了两路分值的融合比率。"
+  },
+  {
+    "id": "Q053",
+    "type": "reasoning",
+    "question": "分析 `EncouRAGe` 报告中 Faithfulness 分数较低（例如 < 5.0）通常暗示系统存在什么问题？",
+    "ground_truth": "暗示存在“幻觉”现象或检索召回相关性低。低分数意味着 LLM 生成的回答在参考资料（Context）中找不到依据，或者存在明显的冲突。这通常需要通过优化嵌入模型、增大检索数量或改进分段策略（Chunking）来解决。"
+  },
+  {
+    "id": "Q054",
+    "type": "reasoning",
+    "question": "假设系统检测到意图目标为 `api_v1.md`，它在调用 `retriever.invoke` 时会有什么特殊行为？",
+    "ground_truth": "系统会应用“检索锁定”：通过 `filter` 参数或在意图引擎层强行将检索范围限定在 `api_v1.md` 相关的 Chunks 内。这会剔除 100% 的外部文档干扰（噪声），确保回答严格基于指定文档内容。"
+  },
+  {
+    "id": "Q055",
+    "type": "reasoning",
+    "question": "为什么在进行消融实验 (Exp A-D) 时需要锁定 `chunk_size` 和 `chunk_overlap`？",
+    "ground_truth": "为了控制变量。切分块的大小和重叠度会极大改变向量分布和 BM25 的词频统计。如果各实验组的底库切分方式不一致，就无法真实反映检索算法（如 RRF vs BM25）本身的性能差异。"
+  },
+  {
+    "id": "Q056",
+    "type": "reasoning",
+    "question": "如果用户的问题是“帮我把这些总结一下”，且历史会话中刚刚处理了 3 个不同的 PDF。`memory_fallback` 会如何选择候选文档？",
+    "ground_truth": "根据 `_pick_recent_from_history_or_memory` 的逻辑，它会逆序扫描历史。它会优先选择最近一次被标识和处理过的那个 `target_file`。这种“最近最少使用 (LRU) 镜像”策略符合人类对话中回归最近话题的习惯。"
+  },
+  {
+    "id": "Q057",
+    "type": "reasoning",
+    "question": "说明为何 `evaluate.py` 自带的汇总表特别强调“不包含统计显著性检验 (T-test)”的声明？",
+    "ground_truth": "这是为了学术严谨性。简单的平均值对比可能因样本噪声而产生误导。在完善的毕业论文实验中，通常还需要通过 T-test 验证改进是否具有显著性意义（p < 0.05）。该声明提醒研究者结果仅为均值概览，深层结论需进一步统计计算。"
+  },
+  {
+    "id": "Q058",
+    "type": "reasoning",
+    "question": "在单文件 RAG 模式下，若文件非常大（如 500 页 PDF），向量检索相比 BM25 可能会遇到什么问题？",
+    "ground_truth": "可能会遇到“关键词定位不准”和“语义淹没”。500 页文档存在大量语义相似但细节不同的段落，纯向量检索可能因 embedding 区分度有限而召回错误的页码。BM25 可以通过唯一性关键词（如页码、特定编号）实现物理级别的精准定位。"
+  },
+  {
+    "id": "Q059",
+    "type": "reasoning",
+    "question": "分析 `main.py` 加入 SSE 流式响应对毕业答辩演示的价值。",
+    "ground_truth": "核心价值在于交互的实时感和“确定性信心”。流式 SSE 能像 ChatGPT 一样让文本逐字出现，避免了长达数秒的空白等待，增强了演示的流畅性，并能同步展示后端“检索中”、“分析中”的状态节点。"
+  },
+  {
+    "id": "Q060",
+    "type": "reasoning",
+    "question": "如果实验发现 RRF 模式在 Latency 上变差了（<ctrl45> > 2x Baseline），可能的代码性能瓶颈在哪？",
+    "ground_truth": "瓶颈通常在于“双路检索的强制执行”和“二次重排序逻辑”。RRF 必须等向量和 BM25 都完成才能排序。如果 BM25 在大规模库下的初始化或执行过慢，会拖慢整条链路。优化方向是并行化两路检索或优化 BM25 索引预热。"
+  }
+]

@@ -1,0 +1,29 @@
+/* 渲染性能优化 (基于用户建议) */
+
+/* 1. 降低透明度系统级适配 */
+@media (prefers-reduced-transparency: reduce) {
+    :root {
+        --glass-bg: rgba(255, 255, 255, 0.95);
+        --glass-border: rgba(0, 0, 0, 0.1);
+    }
+
+    .glass-panel, .sidebar, .chat-area, .chat-header {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    .background-orb {
+        display: none; /* 彻底关闭高能耗动效 */
+    }
+}
+
+/* 2. 硬件加速优化 */
+.background-orb, .glass-panel, .message, .glass-btn {
+    will-change: transform, opacity;
+    transform: translateZ(0); /* 强制开启 GPU 加速层 */
+}
+
+/* 3. 滚动平滑度提升 */
+.chat-history, .file-tree-container, .log-content {
+    -webkit-overflow-scrolling: touch;
+}

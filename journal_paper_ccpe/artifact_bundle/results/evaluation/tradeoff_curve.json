@@ -1,0 +1,57 @@
+[
+    {
+        "keep_ratio": 1.0,
+        "original_length": 3573,
+        "compressed_length": 3565,
+        "retrieval_ms": 302.063708,
+        "scoring_ms": 239.125917,
+        "pruning_ms": 0.03308300000000486,
+        "ttft_ms": 5828.525125,
+        "tps": 18.272018178746286,
+        "total_e2e_ms": 20270.784791000002
+    },
+    {
+        "keep_ratio": 0.8,
+        "original_length": 3573,
+        "compressed_length": 2910,
+        "retrieval_ms": 30.3855,
+        "scoring_ms": 29.508625,
+        "pruning_ms": 0.02637500000000159,
+        "ttft_ms": 4251.454375,
+        "tps": 18.342133946971593,
+        "total_e2e_ms": 18159.272875
+    },
+    {
+        "keep_ratio": 0.6,
+        "original_length": 3573,
+        "compressed_length": 2380,
+        "retrieval_ms": 21.10375,
+        "scoring_ms": 28.887083,
+        "pruning_ms": 0.024124999999997954,
+        "ttft_ms": 874.265875,
+        "tps": 18.555927271957387,
+        "total_e2e_ms": 14612.629374
+    },
+    {
+        "keep_ratio": 0.4,
+        "original_length": 3573,
+        "compressed_length": 1915,
+        "retrieval_ms": 33.842667,
+        "scoring_ms": 29.284375,
+        "pruning_ms": 0.01870800000000017,
+        "ttft_ms": 3045.770042,
+        "tps": 18.712019124935928,
+        "total_e2e_ms": 16683.078917
+    },
+    {
+        "keep_ratio": 0.2,
+        "original_length": 3573,
+        "compressed_length": 1414,
+        "retrieval_ms": 38.147666,
+        "scoring_ms": 28.673291,
+        "pruning_ms": 0.01800100000000171,
+        "ttft_ms": 2258.020667,
+        "tps": 18.90555335975906,
+        "total_e2e_ms": 15760.065417
+    }
+]

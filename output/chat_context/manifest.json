@@ -1,0 +1,57 @@
+{
+  "package": "chat_context",
+  "generated_on": "2026-03-29",
+  "purpose": "Curated handoff package for web chat assistants working on the MemoraRAG repository",
+  "files": [
+    "output/chat_context/00_project_handoff.md",
+    "output/chat_context/01_project_map.md",
+    "output/chat_context/02_key_results.md",
+    "output/chat_context/03_runbook.md"
+  ],
+  "primary_repo_entrypoints": [
+    "PROJECT_HANDOFF.md",
+    "README.md",
+    "results/README.md",
+    "scripts/README.md",
+    "RESEARCH_LOG.md"
+  ],
+  "paper_track_files": [
+    "journal_paper_ccpe/README.md",
+    "journal_paper_ccpe/main.tex",
+    "journal_paper_ccpe/main.pdf",
+    "results/evaluation/topn_budget_grid_summary.json",
+    "results/evaluation/pruning_policy_ablation.json",
+    "results/evaluation/dual_judge_expanded_eval.json",
+    "results/evaluation/legacy_misc/ablation_summary.json",
+    "results/evaluation/legacy_step1/step1_dual_judge_test40_t8_b1500.json"
+  ],
+  "engineering_track_files": [
+    "src/rag_pipeline.py",
+    "src/turbo_quant.py",
+    "src/context_compressor.py",
+    "scripts/demo_v2.py",
+    "scripts/v2_benchmark_orchestrator.py",
+    "results/evaluation/support_runtime/model_comparison.json",
+    "results/evaluation/support_runtime/v2_bench_comparison.json",
+    "results/evaluation/support_runtime/stress_test_report.json",
+    "results/evaluation/support_runtime/niah_report.json",
+    "results/evaluation/support_runtime/tradeoff_curve.json"
+  ],
+  "do_not_upload_first": [
+    ".git/",
+    ".venv*/",
+    "models/",
+    "__pycache__/",
+    ".cache/",
+    ".mplconfig/",
+    ".playwright/",
+    "journal_paper_ccpe/tmp/",
+    "*.aux",
+    "*.bbl",
+    "*.blg",
+    "*.fdb_latexmk",
+    "*.fls",
+    "*.log",
+    "*.out"
+  ]
+}

@@ -1,0 +1,456 @@
+[
+  {
+    "id": "Q008",
+    "type": "factual",
+    "question": "docker_compose.md 中 API 服务的端口映射配置是什么？",
+    "source_docs": [
+      "E_config/docker_compose.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 1 的配置，API 服务的端口映射配置如下：\n\n```yaml\nports:\n- \"8080:8080\"\n```\n\n**说明：**\n- 主机端口 8080 映射到容器内部的 8080 端口（根据第 1 页内容）\n- 该配置位于 `api` 服务的 `ports` 字段中（根据第 1 页内容）\n\n其他文档（2-4 页）主要涉及 `vllm`、`qdrant` 和 `ollama` 服务的配置，未包含 API 服务的端口设置。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q009",
+    "type": "factual",
+    "question": "vLLM Chat Completions 的端点路径是什么？",
+    "source_docs": [
+      "A_api/vllm_chat_completions.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 3 的内容，vLLM Chat Completions 的端点路径与 OpenAI Chat API 兼容，因此其端点路径为：\n\n```\n/v1/chat/completions\n```\n\n该路径在文档 1（`tgi_chat.md`）和文档 7（`tgi_chat.md`）中也被明确提及，用于 TGI 的 Chat API 服务。虽然文档 8 提到通过 `kubectl port-forward` 转发 8000 端口，但端点路径仍遵循标准的 `/v1/chat/completions` 格式。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q010",
+    "type": "factual",
+    "question": "vLLM Completions 的端点路径是什么？",
+    "source_docs": [
+      "A_api/vllm_completions.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 2（tgi_completions.md）的内容，vLLM Completions 的端点路径为：\n\n```\nPOST /v1/completions\n```\n\n该信息直接来源于文档中明确标注的 API 路径定义。其他文档未涉及此特定端点路径的说明。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q011",
+    "type": "factual",
+    "question": "vLLM Embeddings 的端点路径是什么？",
+    "source_docs": [
+      "A_api/vllm_embeddings.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 1 的内容，vLLM Embeddings 的端点路径为：\n\n```\nPOST /v1/embeddings\n```\n\n该信息来源于：\n- 文档 1: `vllm_embeddings.md`（修改时间: 2026-03-12 12:58:06）  \n  内容直接包含 `POST /v1/embeddings` 这一 API 端点定义。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q012",
+    "type": "factual",
+    "question": "vLLM Models 列表接口的端点路径是什么？",
+    "source_docs": [
+      "A_api/vllm_models.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n根据提供的文档，我无法找到相关信息。\n\n说明：\n1. 文档2（vllm_quickstart_official.md）中展示了vLLM的推理接口 `/v1/completions`，但这是用于文本生成的请求端点\n2. 文档1（ollama_api_official.md）中提到的 `/api/tags` 是Ollama特有的模型列表接口，与vLLM无关\n3. 其他文档均未提及vLLM模型列表相关的API端点信息",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q013",
+    "type": "factual",
+    "question": "TGI Chat 的端点路径是什么？",
+    "source_docs": [
+      "A_api/tgi_chat.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 5 的内容，TGI Chat 的端点路径是：  \n`POST /v1/chat/completions`  \n\n该路径符合 OpenAI 兼容的 Chat API 标准，具体信息见文档 2 和文档 5（修改时间：2026-03-12 12:58:20）。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q014",
+    "type": "factual",
+    "question": "TGI Completions 的端点路径是什么？",
+    "source_docs": [
+      "A_api/tgi_completions.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 1 的内容，TGI Completions 的端点路径为：\n\n```\nPOST /v1/completions\n```\n\n该信息直接来源于文件 `tgi_completions.md`（修改时间：2026-03-12 12:58:27）。其他文档未涉及 Completions 端点的定义。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q015",
+    "type": "factual",
+    "question": "TGI 的 metrics/info 暴露端点路径是什么？",
+    "source_docs": [
+      "A_api/tgi_info_metrics.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 1（tgi_info_metrics.md）的内容，TGI 的 metrics/info 暴露端点路径为：\n\n```\nGET /metrics\n```\n\n该端点返回 Prometheus 格式的监控指标，具体包含以下关键指标（根据同文档第 1 页）：\n\n| 指标 | 描述 |\n|------|------|\n| tgi_requests_success_total | 成功请求数 |\n| tgi_requests_error_total | 错误请求数 |\n| tgi_batch_total | 总批次 |\n| tgi_tokens_generated_total | 生成 token 总数 |\n| tgi_forward_duration_seconds | 前向传播耗时 |\n\n如需调用该接口，可通过以下命令验证（见文档 1）：\n```bash\ncurl http://localhost:3000/metrics\n```",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q016",
+    "type": "factual",
+    "question": "Ollama Chat 的端点路径是什么？",
+    "source_docs": [
+      "A_api/ollama_chat.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据提供的文档，我无法找到 Ollama Chat 的具体端点路径信息。所有与 Ollama API 相关的文档（如 `ollama_api_official.md`）仅提到提供了 REST API，但未明确说明 Chat 服务的端点路径。建议通过官方文档或 API 文档进一步确认。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q017",
+    "type": "factual",
+    "question": "Ollama Generate 的端点路径是什么？",
+    "source_docs": [
+      "A_api/ollama_generate.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 3 的内容，`POST /api/embed` 是 Ollama 用于生成嵌入向量（embeddings）的端点路径。不过需要说明的是，该文档明确提到的是 \"Generate embeddings from a model\"（生成嵌入向量），而非直接的文本生成接口。\n\n若问题中的 \"Generate API\" 指的是文本生成功能，当前提供的参考资料中并未明确提及对应的端点路径。文档 1 仅说明了 Generate API 是 Ollama 的基础文本生成接口，但未给出具体路径。文档 4 提到的 REST API 也未明确路径信息。\n\n因此，基于现有资料：\n- 生成嵌入向量的端点路径是 `/api/embed`（根据文档 3）\n- 文本生成接口的端点路径未在提供的文档中明确说明\n\n建议结合 Ollama 官方文档进一步确认具体接口路径。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q018",
+    "type": "factual",
+    "question": "Ollama Models 列表端点路径是什么？",
+    "source_docs": [
+      "A_api/ollama_models.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据提供的文档，我无法找到 Ollama Models 列表端点路径的具体信息。所有参考资料仅提及 Ollama 提供 REST API（文档1）、默认端口 11434（文档2）、模型命名格式（文档3）以及相关环境变量配置（文档4），但未明确说明列出模型的 API 端点路径。建议参考 Ollama 官方文档或通过 `ollama list` 命令验证模型存在性（文档7）。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q019",
+    "type": "factual",
+    "question": "Ollama REST API 中列出本地模型的端点路径是什么？",
+    "source_docs": [
+      "A_api/ollama_api_official.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据【参考资料】中的信息，Ollama REST API 中列出本地模型的端点路径是：\n\n```\nGET /api/tags\n```\n\n该端点用于列出本地可用的模型，如文档 2 所述（修改时间：2026-03-12 13:39:28）。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q020",
+    "type": "factual",
+    "question": "Ollama REST API 中生成嵌入向量的端点路径是什么？",
+    "source_docs": [
+      "A_api/ollama_api_official.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据提供的文档，我无法找到相关信息。  \nOllama 的 REST API 文档（文档7）仅提到提供模型运行和管理的 API，但未提及嵌入向量（embedding）生成的具体端点路径。  \n其他文档（如文档6的Python SDK示例）仅展示文本生成接口（`/generate`），而嵌入向量生成通常需要调用专用的向量数据库接口（如 ChromaDB 的 `/collections/{name}/embeddings`），这在当前资料中未被覆盖。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q028",
+    "type": "summarization",
+    "question": "总结 vLLM 多卡部署的关键参数与流程。",
+    "source_docs": [
+      "B_deploy/vllm_multi_gpu.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n### vLLM 多卡部署关键参数与流程总结\n\n#### **关键参数**\n1. **张量并行 (Tensor Parallelism)**  \n   - 2 卡以上 GPU 必须启用张量并行（根据文档 1）。\n   - 需通过分布式训练框架（如 PyTorch Distributed）配置 `tensor_parallel_size` 和 `tp_size` 参数。\n\n2. **动态批处理**  \n   - 默认启用，通过 `--max-num-seqs 256` 控制最大序列数（文档 4）。\n   - 提高吞吐量，需确保 GPU 显存充足。\n\n3. **模型长度限制**  \n   - 避免 OOM 时需设置 `--max-model-len`，常见值包括 4096、2048、1024（文档 6）。\n   - 建议根据显存容量选择合适值。\n\n4. **GPU 加速参数**  \n   - 启动时需指定 `--gpus all` 以启用全部 GPU（文档 2）。\n   - 容器化部署时需通过 Docker 参数映射 GPU 设备（如 `-v /dev/nvidia*:/dev/nvidia*`）。\n\n#### **部署流程**\n1. **环境准备**  \n   - 安装 NVIDIA CUDA（文档 7）和 vLLM（文档 8）：  \n     ```bash\n     pip install vllm\n     ```\n   - 确保多块 GPU 已正确驱动并识别。\n\n2. **配置并行策略**  \n   - 设置张量并行参数（如 `tensor_parallel_size=2`）。\n   - 配置分布式训练环境变量（如 `MASTER_ADDR`, `MASTER_PORT`）。\n\n3. **启动服务**  \n   - 使用 GPU 加速运行推理服务：  \n     ```bash\n     torchrun --nproc_per_node=2 your_script.py --gpus all\n     ```\n   - 容器化部署时需挂载数据卷并映射端口（文档 2）。\n\n4. **监控与调优**  \n   - 通过 `--max-num-seqs` 和 `--max-model-len` 调整性能。\n   - 使用动态批处理优化吞吐量（文档 4）。\n\n#### **注意事项**\n- 多卡部署需确保所有 GPU 显存充足，避免因模型长度过大导致 OOM（文档 6）。\n- 张量并行需与分布式训练框架深度集成，建议参考 PyTorch 官方文档。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q029",
+    "type": "summarization",
+    "question": "总结 vLLM Kubernetes 基础部署流程。",
+    "source_docs": [
+      "B_deploy/vllm_k8s_basic.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n### vLLM Kubernetes 基础部署流程总结\n\n#### 1. **环境要求**（根据文档1）\n- 需要 **Kubernetes 集群** 环境  \n- 安装 **NVIDIA Device Plugin** 插件  \n- 至少部署 **1 个 GPU 节点**（确保 GPU 资源可用）  \n\n---\n\n#### 2. **核心部署步骤**  \n**a. 端口转发访问服务**（根据文档2）  \n```bash\nkubectl port-forward svc/vllm 8000:8000\n```\n- 通过 `http://127.0.0.1:8000` 访问 vLLM 服务  \n\n**b. 模型准备与启动**（结合文档8的单机流程推导）  \n- 拉取模型（需在 Kubernetes Pod 内执行）：  \n  ```bash\n  ollama pull qwen3:8b\n  ```\n- 启动服务（需自定义 Deployment/YAML 配置，资料未明确给出模板）  \n\n---\n\n#### 3. **注意事项**  \n- 若需 HTTPS 支持，可参考文档3配置 SSL 证书  \n- 遇到内存溢出（OOM）时，可通过文档7参数限制模型长度  \n- 故障排查可结合文档4/5命令检查日志  \n\n---\n\n#### 4. **未明确覆盖的内容**  \n- 未提及完整的 Kubernetes Deployment/Service YAML 模板  \n- 单机部署的 `docker-compose` 方案（文档6）不直接适用于 Kubernetes 环境  \n\n（注：以上总结基于提供的文档内容，实际部署需结合具体集群配置和需求扩展）",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q030",
+    "type": "summarization",
+    "question": "总结 vLLM Kubernetes 进阶部署的优化点。",
+    "source_docs": [
+      "B_deploy/vllm_k8s_advanced.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n## vLLM Kubernetes 进阶部署优化点总结\n\n### 一、资源管理优化\n1. **GPU 节点配置**  \n   - 确保集群至少包含 1 个 GPU 节点（根据文档 1，修改时间：2026-03-12）\n   - 安装 NVIDIA Device Plugin 以实现 GPU 资源的 Kubernetes 调度（文档 1）\n\n2. **内存优化策略**  \n   - 使用 4-bit/8-bit 量化（如 AWQ/GPTQ）降低显存占用（文档 5，修改时间：2026-03-12）\n   - 调整 `max_model_len` 和 `gpu_memory_utilization` 参数：\n     - 默认设置：`--max-model-len 4096`（文档 7）\n     - 严重内存不足时：`--gpu-memory-utilization 0.5`（文档 8）\n\n3. **请求批处理优化**  \n   - 启用动态批处理，提升吞吐量（文档 3，修改时间：2026-03-12）\n   - 控制并发请求数：`--max-num-seqs 256`（文档 3）\n\n### 二、性能调优\n1. **默认配置优化**  \n   - vLLM 核心优化（虚拟内存分页机制）默认启用，无需额外配置（文档 2，修改时间：2026-03-12）\n\n2. **基准测试与监控**  \n   - 使用以下命令进行吞吐量测试（文档 4）：\n     ```bash\n     python benchmarks/benchmark_serving.py \\\n     --backend vllm \\\n     --model model \\\n     --num-prompts 1000\n     ```\n   - 通过 `kubectl port-forward` 暴露服务端口（文档 6，修改时间：2026-03-12）\n\n### 三、故障排查建议\n- **OOM 问题处理**：\n  - 降低请求批次大小（文档 5）\n  - 调整 `max_tokens` 参数（文档 5）\n  - 监控 GPU 内存使用率，避免过载（文档 8）\n\n> 注：所有优化建议均基于 2026-03-12 的文档版本，当前系统时间为 2026-03-16，未发现文档更新。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q031",
+    "type": "summarization",
+    "question": "总结 CUDA 官方安装流程的关键步骤。",
+    "source_docs": [
+      "B_deploy/cuda_install_official.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n### CUDA 官方安装流程关键步骤总结\n\n根据文档内容，CUDA 官方安装流程的关键步骤如下：\n\n#### 1. **添加官方仓库**\n   - 执行命令：  \n     ```bash\n     sudo add-apt-repository ppa:graphics-drivers/ppa\n     ```\n   - **来源**：文档 1（cuda_install_official.md，2026-03-12）\n\n---\n\n#### 2. **安装 NVIDIA 驱动**\n   - 根据显卡型号选择驱动版本（如 `nvidia-driver-xxx`），执行命令：  \n     ```bash\n     sudo apt install nvidia-driver-xxx\n     ```\n   - **注意**：需确保驱动版本与 CUDA 版本兼容（参考文档 6 的驱动要求表）。  \n   - **来源**：文档 1（cuda_install_official.md，2026-03-12）\n\n---\n\n#### 3. **安装 CUDA Toolkit**\n   - 执行命令：  \n     ```bash\n     sudo apt install cuda\n     ```\n   - **来源**：文档 1（cuda_install_official.md，2026-03-12）\n\n---\n\n#### 4. **配置环境变量**\n   - 修改 `~/.bashrc` 文件，添加以下内容：  \n     ```bash\n     export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}\n     export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}\n     ```\n   - **注意**：保存后需执行 `source ~/.bashrc` 使配置生效。  \n   - **来源**：文档 4（cuda_install_official.md，2026-03-12）\n\n---\n\n#### 5. **验证安装**\n   - 检查 CUDA 版本：  \n     ```bash\n     nvcc --version\n     ```\n   - 检查显卡状态：  \n     ```bash\n     nvidia-smi\n     ```\n   - **来源**：文档 7（vllm_single_gpu.md，2026-03-12）\n\n---\n\n### 补充说明\n- **驱动版本兼容性**：需根据 CUDA 版本选择最低或推荐驱动（参考文档 6 的表格）。  \n- **其他系统**：Windows 和 macOS 的安装流程需通过 WSL2 或手动下载安装包（文档 3、8）。  \n\n以上步骤基于 Ubuntu 系统的官方安装指南整理。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q032",
+    "type": "summarization",
+    "question": "总结 GPU 监控方案的关键组件与指标。",
+    "source_docs": [
+      "E_config/gpu_monitoring.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n# GPU 监控方案关键组件与指标总结\n\n## 一、关键监控组件\n1. **NVIDIA SMI 工具**  \n   - 实时监控：`watch -n 1 nvidia-smi`（文档1）  \n   - 数据输出：支持 JSON 格式化输出（文档1）  \n   - 日志记录：`nvidia-smi --query-gpu=timestamp,name,utilization.gpu,memory.used --format=csv -l 5 > gpu_log.csv`（文档1）  \n\n2. **系统资源监控**  \n   - 容器资源：`docker stats`（文档3）  \n   - Kubernetes 环境：需配置 NVIDIA Device Plugin 和至少 1 个 GPU 节点（文档4）  \n\n3. **环境变量配置**  \n   - GPU 设备绑定：`CUDA_VISIBLE_DEVICES=0,1`（文档5）  \n   - 性能优化参数：如 Flash Attention 开启（文档5）  \n\n---\n\n## 二、核心监控指标与阈值\n| 指标                | 描述             | 阈值警告       | 来源         |\n|---------------------|------------------|----------------|--------------|\n| GPU Utilization     | GPU 利用率       | > 80%          | 文档2        |\n| Memory Used         | 显存使用         | > 90%          | 文档2        |\n| Temperature         | GPU 温度         | > 85°C         | 文档2        |\n| Power Draw          | 功耗             | > 90%          | 文档2        |\n| Encoder/Decoder     | 编码器利用率     | > 50%          | 文档2        |\n\n---\n\n## 三、补充说明\n- **性能指标记录**：需将 TTFT、TTR、CPU、MEM 等指标输出至 `experiments/results/` 目录（文档7）  \n- **硬件兼容性**：建议固化硬件与软件版本至 `experiments/hardware.md`（文档7）  \n\n（注：以上内容综合自文档1-4、文档7，时间线符合 2026-03-12 的修改记录）",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q033",
+    "type": "summarization",
+    "question": "总结官方 LLM Docker Compose 部署配置中的主要服务。",
+    "source_docs": [
+      "E_config/docker_compose_llm_official.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据提供的文档，官方 LLM Docker Compose 部署配置中的主要服务可总结如下：\n\n### 📦 主要服务组件\n| 服务名称       | 职责说明                          | 信息来源                  |\n|----------------|-----------------------------------|---------------------------|\n| **API 网关**   | 请求路由、负载均衡、认证鉴权、限流控制 | 文档 6（LLM 网关功能说明） |\n| **认证服务**   | 用户身份验证与权限管理             | 微服务架构图（文档 4）     |\n| **速率限制服务** | 控制 API 请求频率                 | 微服务架构图（文档 4）     |\n| **模型服务**   | 提供 LLM 推理能力（如 vLLM）       | 文档 5（GPU 监控命令）     |\n| **嵌入服务**   | 生成文本向量表示                  | 微服务架构图（文档 4）     |\n| **向量数据库** | 存储与检索向量数据（如 Qdrant）    | 文档 7（Docker 命令）      |\n\n### 📌 关键架构说明\n1. **客户端交互层**  \n   - 客户端通过 API 网关访问服务（文档 3 的 `Client → Gateway → LLM Pool` 流程）\n   - 网关负责日志监控与请求分发（文档 6）\n\n2. **数据存储层**  \n   - 向量数据库（如 Qdrant）通过 Docker 卷持久化数据（文档 7）\n\n3. **扩展性设计**  \n   - 微服务解耦设计支持独立扩展（文档 4 的架构图）\n\n> 注：文档 2 的 Docker Compose 模板可能包含上述服务的容器化定义，但未直接列出具体服务名称。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q034",
+    "type": "summarization",
+    "question": "总结 K8s YAML 配置中常见字段及用途。",
+    "source_docs": [
+      "E_config/k8s_yaml.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n### Kubernetes YAML 配置常见字段及用途总结\n\n| 字段名         | 用途说明                                                                 | 示例文档         |\n|----------------|--------------------------------------------------------------------------|------------------|\n| **apiVersion** | 指定 Kubernetes API 版本（如 `v1`）                                     | 文档1、文档2     |\n| **kind**       | 定义资源类型（如 `Secret`、`Service`）                                  | 文档1、文档2     |\n| **metadata**   | 包含资源元数据，如 `name`、`labels` 等                                 | 文档1、文档2     |\n| **type**       | 用于 `Secret` 资源，指定加密类型（如 `Opaque`）                         | 文档1           |\n| **stringData** | 以明文形式存储字符串数据（自动转为 base64）                             | 文档1           |\n| **spec**       | 描述资源的具体配置（如 `Service` 的端口映射和选择器）                   | 文档2           |\n| **selector**   | 定义服务选择器，用于将流量路由到对应 Pod（`Service` 中常用）            | 文档2           |\n| **ports**      | 配置端口映射（`port` 为服务端口，`targetPort` 为容器监听端口）           | 文档2           |\n| **selector**   | 在 `Service` 中匹配 Pod 的标签选择器（如 `app: vllm`）                  | 文档2           |\n\n### 其他注意事项\n1. **YAML 结构**：需严格缩进，多文档用 `---` 分隔（如文档1中的两个 `Secret`）。\n2. **字段必填性**：`apiVersion`、`kind`、`metadata` 是所有资源的必填字段。\n3. **扩展性**：`spec` 部分根据资源类型差异较大（如 `Deployment` 的 `replicas` 与 `Service` 的 `ports`）。\n\n> 信息来源：根据文档1（k8s_yaml.md）和文档2（vllm_k8s_basic.md）中的 YAML 示例整理。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q035",
+    "type": "summarization",
+    "question": "总结端口冲突排查的主要步骤。",
+    "source_docs": [
+      "C_troubleshoot/port_conflict.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n根据提供的文档，我无法找到与\"端口冲突排查\"相关的具体步骤。所有参考资料主要涉及以下内容：\n- Kubernetes 端口转发（文档1）\n- API 接口说明（文档2）\n- 微服务通用功能（文档3）\n- Ollama 模型服务配置（文档4-6）\n- TGI Chat API 说明（文档7-8）\n\n这些文档未提及端口冲突检测、端口占用排查或网络端口管理相关的操作指南。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q036",
+    "type": "summarization",
+    "question": "总结模型加载失败的常见原因与处理方式。",
+    "source_docs": [
+      "C_troubleshoot/model_load_fail.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n### 模型加载失败的常见原因与处理方式总结\n\n| **常见原因**         | **处理方式**                                                                 | **依据文档**         |\n|----------------------|----------------------------------------------------------------------------|----------------------|\n| **文件未找到**       | 重新拉取模型文件，或手动下载模型文件                                       | 文档1、文档5         |\n| **权限不足**         | 使用 `chmod 755` 修改文件权限                                               | 文档1                |\n| **显存不足 (OOM)**   | 降低模型参数规模、使用量化技术、检查显存占用情况                           | 文档1、文档3         |\n| **模型格式错误**     | 核对模型名称是否正确，确保模型格式兼容性                                   | 文档1                |\n| **分布式环境 NCCL 错误** | 检查分布式训练配置，确保网络和资源分配正常                                 | 文档4                |\n| **服务启动异常**     | 检查服务日志，确认加载错误详情；确保依赖服务正常运行                       | 文档2                |\n| **API 返回 500 错误** | 根据日志定位具体错误原因，检查模型路径和权限设置                           | 文档2                |\n\n### 补充建议\n- **系统要求**：确保硬件满足最低要求（如 8GB+ RAM、10GB+ 磁盘空间）[文档7]。\n- **代理配置**：在 macOS 环境下，使用代理或手动下载模型文件以解决网络问题 [文档5]。\n- **命令工具**：通过 `ollama list` 查看可用模型，使用 `ollama pull` 拉取模型 [文档6]。\n\n以上方案需结合具体错误日志进一步定位，若问题仍未解决，建议检查模型文件完整性及运行环境配置。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q037",
+    "type": "summarization",
+    "question": "总结 CUDA 常见问题与解决思路。",
+    "source_docs": [
+      "C_troubleshoot/cuda_issues.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n# CUDA 常见问题与解决思路总结\n\n## 一、核心问题分类与解决方案\n\n| 问题类型 | 具体表现 | 解决方案 | 来源文档 |\n|---------|---------|---------|---------|\n| **版本不匹配** | `nvcc --version` 与 `nvidia-smi` 显示版本不一致 | 安装匹配版本CUDA 或使用Docker | [文档1](#cuda_issues.md), [文档3](#vllm_single_gpu.md), [文档6](#ollama_linux.md) |\n| **内存不足 (OOM)** | 模型加载失败/推理崩溃 | 1. 优化模型大小<br>2. 使用轻量模型与降级策略 | [文档2](#oom_solution.md), [文档7](#oom_nccl_troubleshoot.md), [文档4](#IMPROVEMENT_PLAN.md) |\n| **未安装 CUDA** | `CUDA not found` 错误 | 1. 安装 CUDA Toolkit<br>2. 配置仓库与依赖 | [文档5](#port_conflict.md), [文档6](#ollama_linux.md) |\n| **分布式错误** | OOM + NCCL 错误 | 1. 优化分布式训练配置<br>2. 检查网络通信设置 | [文档7](#oom_nccl_troubleshoot.md) |\n\n## 二、通用排查步骤\n1. **基础检查**  \n   ```bash\n   nvcc --version  # 编译器版本\n   nvidia-smi     # 运行时版本\n   ```\n   （来源：[文档1](#cuda_issues.md), [文档3](#vllm_single_gpu.md)）\n\n2. **安装方案**（Linux 环境）  \n   ```bash\n   wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb\n   sudo dpkg -i cuda-keyring_1.1-1_all.deb\n   sudo apt install cuda-toolkit-12-4\n   ```\n   （来源：[文档6](#ollama_linux.md)）\n\n3. **端口冲突处理**  \n   - 换端口或终止占用进程  \n   - 使用 `sudo` 提权或调整权限  \n   （来源：[文档5](#port_conflict.md)）\n\n## 三、进阶建议\n- **资源管理**：监控 `nvidia-smi` 实时显存使用  \n- **容器化**：优先使用带 CUDA 环境的 Docker 镜像  \n- **分布式优化**：参考 [文档7](#oom_nccl_troubleshoot.md) 的 NCCL 配置调优  \n\n> 注：所有方案需结合系统时间（2026-03-16）验证，建议优先检查版本一致性与内存占用。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q038",
+    "type": "summarization",
+    "question": "总结推理性能优化的关键策略。",
+    "source_docs": [
+      "D_design/inference_performance.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n### 推理性能优化的关键策略总结\n\n根据多份文档内容，推理性能优化可从以下维度展开：\n\n#### 1. **模型推理优化**\n- **批量处理**：通过批量处理请求降低单次推理的计算开销（文档1）\n- **缓存机制**：利用缓存减少重复计算，提升响应速度（文档1）\n\n#### 2. **硬件加速与并行计算**\n- **张量并行（Tensor Parallelism）**：2卡以上 GPU 需启用该技术，通过分布式计算提升大规模模型的推理效率（文档5）\n- **GPU 资源指定**：通过 `CUDA_VISIBLE_DEVICES` 参数显式分配 GPU 资源，优化计算单元利用率（文档8）\n\n#### 3. **检索与计算框架优化**\n- **混合检索策略**：在真实数据集上，混合检索显著优于传统向量检索基线，降低冗余计算（文档7）\n- **Neural Engine 自动加速**：macOS 系统可自动调用 Neural Engine 加速推理，无需手动配置（文档4）\n\n#### 4. **系统级优化**\n- **后台运行与服务启动**：通过 `launchctl` 实现后台运行，保障服务稳定性（文档3）\n- **内存与资源管理**：本地部署时需注意硬件限制，确保性能指标达标（文档7）\n\n| 优化维度       | 具体策略                          | 文档来源         |\n|----------------|-----------------------------------|------------------|\n| 模型推理       | 批量处理、缓存                    | 文档1            |\n| 硬件加速       | 张量并行、GPU 资源指定            | 文档5、文档8     |\n| 检索优化       | 混合检索策略                      | 文档7            |\n| 系统管理       | 后台运行、Neural Engine 自动加速  | 文档3、文档4     |\n\n> 注：以上策略需结合具体硬件环境（如 GPU 数量、操作系统）和任务场景（如批量 vs 单次推理）灵活调整。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q039",
+    "type": "summarization",
+    "question": "总结微服务架构的核心模块划分。",
+    "source_docs": [
+      "D_design/microservices.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n## 微服务架构核心模块划分总结\n\n根据文档 1 的架构图，LLM 服务拆分的微服务架构包含以下核心模块：\n\n### 1. **API 网关**\n- 作为统一入口处理所有客户端请求\n- 负责路由分发、负载均衡和请求聚合\n\n### 2. **认证服务 (Auth)**\n- 实现用户身份验证和权限控制\n- 保障系统安全性\n\n### 3. **速率限制服务 (Rate Limit)**\n- 控制 API 请求频率\n- 防止系统过载和滥用\n\n### 4. **模型服务 (Model Service)**\n- 提供核心的 LLM 计算能力\n- 处理文本生成与推理任务\n\n### 5. **嵌入服务 (Embed Service)**\n- 生成文本的向量表示\n- 支持语义相似性计算\n\n### 6. **向量数据库 (Vector DB)**\n- 存储和检索高维向量数据\n- 用于知识检索和语义搜索\n\n### 架构特点\n- 模块间通过轻量级通信协议交互\n- 各服务可独立部署和扩展\n- 通过 API 网关实现统一接口管理\n\n> 信息来源：根据第 1 页（microservices.md）的架构图描述",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q040",
+    "type": "summarization",
+    "question": "总结 LLM 网关的职责与能力。",
+    "source_docs": [
+      "D_design/llm_gateway.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n### LLM 网关的职责与能力总结\n\n#### **核心职责**\n1. **请求路由**  \n   根据模型类型（如 `gpt-4`、`claude`）动态分配请求至对应服务（根据文档6的路由逻辑）。\n\n2. **负载均衡**  \n   均匀分配流量至后端LLM服务集群，避免单点过载（文档1）。\n\n3. **认证鉴权**  \n   管理客户端身份验证与权限控制（文档1）。\n\n4. **限流控制**  \n   防止流量激增导致服务崩溃，保障系统稳定性（文档1）。\n\n5. **日志监控**  \n   记录请求轨迹与异常事件，支持故障排查（文档1）。\n\n---\n\n#### **关键能力**\n| 能力维度       | 具体表现                                                                 |\n|----------------|--------------------------------------------------------------------------|\n| **动态路由**   | 通过Python逻辑实现多模型服务的智能分流（文档6代码示例）                 |\n| **服务隔离**   | 客户端 → 网关 → LLM Pool 的分层架构，隔离业务逻辑与计算资源（文档3）    |\n| **监控集成**   | 与监控系统联动，实时追踪性能指标（文档3架构图）                         |\n| **可扩展性**   | 微服务架构下支持横向扩展，新增服务无需改造网关逻辑（文档5）             |\n\n---\n\n#### **技术实现依据**\n- 路由规则与架构设计参考自文档1、文档3、文档6  \n- 微服务拆分与Kafka主题配置参考文档5、文档8  \n- 部署标准与性能监控规范参考文档7  \n\n（注：所有文档修改时间均早于当前系统时间 `2026-03-16`，信息有效）",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q047",
+    "type": "cross-doc",
+    "question": "结合 oom_solution 与 quantization，说明降低显存占用的两类路径。",
+    "source_docs": [
+      "C_troubleshoot/oom_solution.md",
+      "E_config/quantization.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据提供的文档，降低显存占用的两类路径可归纳如下：\n\n---\n\n### **1. 模型量化技术（Quantization）**\n通过降低模型参数精度来减少显存占用，具体方法包括：\n| 方法   | 精度损失 | 显存减少 | 速度  |\n|--------|----------|----------|-------|\n| FP16   | 极小     | 50%      | 快    |\n| INT8   | 小       | 75%      | 快    |\n| INT4   | 中       | 87.5%    | 最快  |\n\n- **实现方式**：在加载模型时通过 `--quantization awq` 参数启用量化（见文档2）。\n- **优势**：显著减少显存占用，同时保持较高推理速度（文档1）。\n\n---\n\n### **2. 显存优化策略与并行计算**\n- **vLLM 内存优化参数**：\n  - 通过 `--gpu-memory-utilization 0.8` 降低GPU显存利用率（文档2）。\n  - 限制最大序列长度 `--max-model-len 4096` 来控制显存占用。\n- **张量并行（Tensor Parallelism）**：\n  - 对 2 卡以上 GPU，需启用张量并行技术分散计算压力（文档4）。\n  - 通过多GPU协作降低单卡显存需求。\n\n---\n\n### **对比分析**\n| 路径                  | 适用场景               | 是否依赖硬件       |\n|-----------------------|------------------------|--------------------|\n| 模型量化              | 单卡推理               | 否（需量化工具支持）|\n| 显存优化 + 张量并行   | 多卡分布式推理         | 是（需多GPU）      |\n\n注：量化技术直接减少模型参数量，而显存优化策略侧重通过参数调整和并行计算间接降低显存压力（文档2、4）。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q048",
+    "type": "cross-doc",
+    "question": "结合 oom_nccl_troubleshoot 与 cuda_issues，说明 NCCL/驱动问题的排查顺序。",
+    "source_docs": [
+      "C_troubleshoot/oom_nccl_troubleshoot.md",
+      "C_troubleshoot/cuda_issues.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n## NCCL/驱动问题排查顺序（结合 oom_nccl_troubleshoot 与 cuda_issues）\n\n根据文档内容，建议按以下顺序排查 NCCL/驱动相关问题：\n\n### 一、基础环境检查（优先级 ★★★★☆）\n1. **CUDA 版本验证**  \n   - 执行 `nvcc --version` 确认编译器版本  \n   - 使用 `nvidia-smi` 检查驱动运行时版本  \n   *（依据文档5，CUDA版本不匹配会导致显存/驱动冲突）*\n\n2. **系统内存监控**  \n   - 观察是否出现 `CUDA out of memory` 错误  \n   - 检查模型加载/推理过程中的内存占用峰值  \n   *（文档8指出OOM是分布式LLM服务的常见问题）*\n\n---\n\n### 二、NCCL 配置调试（优先级 ★★★☆☆）\n1. **启用详细日志**  \n   - 设置环境变量 `export NCCL_DEBUG=INFO`  \n   *（文档1建议通过日志定位通信错误）*\n\n2. **强制指定网络接口**  \n   - 使用 `export NCCL_IB_DISABLE=1` 禁用InfiniBand  \n   *（文档1提到此操作可绕过特定接口故障）*\n\n---\n\n### 三、系统级验证（优先级 ★★☆☆☆）\n1. **检查依赖项**  \n   - macOS 确保安装 Visual C++ Redistributable（文档7）  \n   - 验证磁盘空间是否 ≥10GB（文档2）  \n\n2. **日志分析**  \n   - 结合 NCCL_DEBUG 日志与系统日志（/var/log/messages）  \n   - 关注内存分配失败（OOM）与通信超时记录  \n\n---\n\n### 四、进阶方案（优先级 ★☆☆☆☆）\n- **Docker 环境**：使用预装 CUDA 的容器镜像  \n- **驱动升级**：通过 `nvidia-smi` 检查是否需更新驱动版本  \n\n> **注意**：若出现 OOM 错误，需优先排查模型量化/内存优化方案（参考文档8）。  \n> **时间线参考**：当前系统时间（2026-03-16）距离文档更新时间（2026-03-12）已超4天，建议确认是否有最新补丁发布。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q049",
+    "type": "cross-doc",
+    "question": "对比 TGI Chat 与 TGI Completions 的请求结构差异。",
+    "source_docs": [
+      "A_api/tgi_chat.md",
+      "A_api/tgi_completions.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据提供的文档，TGI Chat 与 Completions 的请求结构差异分析如下：\n\n### 一、端点路径差异\n- **TGI Chat API**  \n  使用路径：`POST /v1/chat/completions`（根据文档2）\n- **TGI Completions API**  \n  文档未明确提及具体路径，但推测可能沿用传统 `POST /v1/completions`（OpenAI 传统接口路径）\n\n---\n\n### 二、参数差异（基于文档3）\n| 参数             | TGI Chat API 支持 | TGI Completions API 可能支持 |\n|------------------|------------------|-----------------------------|\n| `id`             | ✅ 请求 ID        | ❌ 未提及                   |\n| `best_of`        | ✅ 生成数量       | ❌ 未提及                   |\n| `echo`           | ✅ 回显 prompt    | ❌ 未提及                   |\n| `frequency_penalty` | ✅ 频率惩罚     | ❌ 未提及                   |\n| `presence_penalty` | ✅ 存在惩罚     | ❌ 未提及                   |\n\n> 注：Completions API 参数未在文档中明确说明，以上为基于 OpenAI 传统接口的推测。\n\n---\n\n### 三、功能差异\n1. **上下文管理**  \n   - Chat API：支持多轮对话（文档5提及）\n   - Completions API：可能仅支持单次生成（需依赖外部状态管理）\n\n2. **角色设置**  \n   - Chat API：支持 `system/user/assistant` 角色（文档5）\n   - Completions API：未提及角色设置功能\n\n---\n\n### 四、结论\n- **文档覆盖范围**：当前资料仅明确描述了 TGI Chat API 的结构（文档2、3），未提供 Completions API 的具体细节（根据规则2，无法找到相关信息）。\n- **建议**：若需进一步对比，需补充 Completions API 的参数定义或接口文档。\n\n> 信息来源：  \n> - TGI Chat 路径与参数：文档2、3  \n> - Completions 推测：基于 OpenAI 传统接口惯例",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q050",
+    "type": "cross-doc",
+    "question": "结合 api_security 与 llm_gateway，说明 API 安全控制应放在系统哪一层。",
+    "source_docs": [
+      "E_config/api_security.md",
+      "D_design/llm_gateway.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据文档内容，API 安全控制应优先部署在 **LLM 网关层**，具体分析如下：\n\n---\n\n### 🛡️ API 安全控制的层级部署建议\n| 安全控制项       | 部署层级         | 文档依据                     |\n|------------------|------------------|------------------------------|\n| **认证鉴权**     | LLM 网关层       | 文档1：网关负责认证鉴权      |\n| **API Key 管理** | LLM 网关层       | 文档2：API Key 发行与验证    |\n| **权限控制**     | 微服务层         | 文档2：权限控制由微服务实现  |\n| **速率限制**     | LLM 网关层       | 文档3：RateLimit 微服务归属网关架构 |\n| **密钥安全**     | 环境变量层       | 文档4：API_KEY 环境变量存储  |\n\n---\n\n### 📌 关键逻辑说明\n1. **网关层（LLM 网关）**  \n   - 作为客户端与 LLM 服务的中间层（文档1），需承担：\n     - **API Key 验证**（文档2）\n     - **请求路由与限流**（文档3 架构图中 RateLimit 微服务）\n     - **身份认证**（文档1 明确职责）\n\n2. **微服务层**  \n   - **权限控制**由微服务实现（文档2），例如 Auth 微服务校验用户权限。\n   - **模型服务**（Model Service）与 **Embedding 服务**（文档3）需依赖网关的认证结果。\n\n3. **环境变量层**  \n   - 敏感信息如 `API_KEY`（文档4）应通过环境变量配置，避免硬编码。\n\n---\n\n### ⚠️ 安全控制层级关系\n```\n客户端 → [LLM 网关（认证/限流）] → [微服务（权限控制）] → [模型服务/Embedding 服务]\n                          ↓\n                      [环境变量（密钥存储）]\n```\n\n---\n\n### 📚 文档引用\n- 认证鉴权：文档1（LLM 网关职责）  \n- API Key 管理：文档2（用户管理与 API Key 发行）  \n- 速率限制：文档3（RateLimit 微服务归属网关架构）  \n- 环境变量安全：文档4（API_KEY 存储规范）",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q051",
+    "type": "cross-doc",
+    "question": "结合 gpu_monitoring 与 inference_performance，说明监控指标如何指导性能优化。",
+    "source_docs": [
+      "E_config/gpu_monitoring.md",
+      "D_design/inference_performance.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n**问题**：结合 gpu_monitoring 与 inference_performance，说明监控指标如何指导性能优化。\n\n**来源文档**：\n- E_config/gpu_monitoring.md\n- D_design/inference_performance.md\n\n**结合分析**：\n\n1. **显存利用率 (GPU Memory Utilization)**\n   - **监控指标**：通过 `nvidia-smi` 或 Prometheus 监控显存占用率（文档1）。\n   - **优化指导**：若显存长期 >90%，应考虑启用 **量化 (Quantization)**（如 AWQ/GPTQ）或降低 **Batch Size**（文档2），以防止 OOM 并提升并发能力。\n\n2. **计算利用率 (GPU Compute Utilization)**\n   - **监控指标**：GPU 核心利用率（Volatile GPU-Util）。\n   - **优化指导**：若利用率低（<50%）但延迟高，说明存在 CPU 瓶颈或 I/O 阻塞。此时应检查 **数据加载流水线** 或启用 **Continuous Batching**（文档2）以填满计算空隙。\n\n3. **推理延迟 (Latency / TTFT)**\n   - **监控指标**：首字延迟 (TTFT) 和 总生成时间 (TTR)。\n   - **优化指导**：若 TTFT 高，需优化 **Prompt 处理** 或启用 **FlashAttention**；若 TTR 高，需检查 **解码策略** 或增加 **Tensor Parallelism**（文档2）。\n\n**总结**：\n监控指标提供了性能瓶颈的“诊断书”，而推理优化文档提供了对应的“处方”。通过实时监控显存与计算水位，可以动态调整量化级别、批处理大小及并行策略，实现资源与性能的最佳平衡。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q052",
+    "type": "cross-doc",
+    "question": "结合 rag_architecture_patterns 与 rag_system，说明架构设计如何映射到系统实现模块。",
+    "source_docs": [
+      "D_design/rag_architecture_patterns.md",
+      "D_design/rag_system.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n**问题**：结合 rag_architecture_patterns 与 rag_system，说明架构设计如何映射到系统实现模块。\n\n**来源文档**：\n- D_design/rag_architecture_patterns.md\n- D_design/rag_system.md\n\n**映射关系分析**：\n\n1. **Document Processor -> 文本分块 (Chunking)**\n   - 架构设计定义了文档处理与分块的概念。\n   - 系统实现落地为 `chunk_text` 函数，采用滑动窗口策略（`chunk_size=512, overlap=50`）。\n\n2. **Indexing Pipeline -> 向量化 (Vectorization)**\n   - 架构层描述了 Embeddings 生成与存储流程。\n   - 实现层具体化为调用 `HuggingFaceEmbeddings` (模型 `bge-small-zh-v1.5`) 并写入 Vector Store。\n\n3. **Retrieval Layer -> 向量检索 & 重排序**\n   - 架构层涵盖语义检索与混合检索模式。\n   - 实现层对应 `similarity_search(k=5)` 初排以及使用 `Cohere Client` 进行 Top-N 重排序（Rerank）。\n\n4. **Generation Layer -> Context Assembly & LLM**\n   - 架构层负责上下文注入与生成。\n   - 实现层体现为 Prompt 拼接逻辑（`Context Assembly`）与 LLM 接口调用（生成最终 Answer）。\n\n**总结**：\n`rag_architecture_patterns` 提供了组件的**逻辑定义**（What & Why），而 `rag_system` 提供了具体的**代码实现与参数配置**（How），两者通过标准化的 RAG 数据流（Index -> Retrieve -> Generate）一一对应。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q053",
+    "type": "cross-doc",
+    "question": "结合 microservices 与 docker_compose_llm_official，说明服务拆分与编排关系。",
+    "source_docs": [
+      "D_design/microservices.md",
+      "E_config/docker_compose_llm_official.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n**问题**：结合 microservices 与 docker_compose_llm_official，说明服务拆分与编排关系。\n\n**来源文档**：\n- D_design/microservices.md\n- E_config/docker_compose_llm_official.md\n\n**服务拆分与编排映射关系**：\n\n1. **API 网关 (API Gateway) -> `gateway`**\n   - **拆分职责**：负责请求路由、认证、限流与日志记录。\n   - **编排实现**：在 Docker Compose 中对应 `gateway` 服务（如 `nginx:latest`），作为集群的统一入口。\n\n2. **模型服务 (Model Service) -> `vllm` / `ollama`**\n   - **拆分职责**：核心推理单元，负责 LLM 的文本生成、批量处理与缓存。\n   - **编排实现**：对应 `docker-compose.yml` 中的 `vllm` 或 `ollama` 服务，配置 GPU 资源预留与模型卷挂载。\n\n3. **嵌入服务 (Embedding Service) -> `embedding-service`**\n   - **拆分职责**：专门处理文本向量化，与重型推理服务解耦。\n   - **编排实现**：对应配置中的独立服务容器，可独立扩缩容。\n\n4. **向量数据库 (Vector DB) -> 外部/独立容器**\n   - **拆分职责**：存储与检索高维向量。\n   - **编排实现**：对应 `qdrant`、`milvus` 等独立数据库容器。\n\n**总结**：\n微服务架构将 LLM 系统从逻辑上拆分为 **Gateway、Model、Embed** 等独立模块；而 Docker Compose 将这些逻辑模块物理地编排为 **互联的容器集群**，通过定义网络拓扑与资源限制实现落地。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q054",
+    "type": "cross-doc",
+    "question": "对比 Ollama Python SDK 与 Node.js SDK 的基础调用方式。",
+    "source_docs": [
+      "A_api/ollama_python_sdk.md",
+      "A_api/ollama_nodejs_sdk.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n**问题**：对比 Ollama Python SDK 与 Node.js SDK 的基础调用方式。\n\n**来源文档**：\n- A_api/ollama_python_sdk.md\n- A_api/ollama_nodejs_sdk.md\n\n**对比分析**：\n\n1. **安装方式**\n   - **Python**: `pip install ollama`\n   - **Node.js**: `npm install ollama`\n\n2. **同步 vs 异步**\n   - **Python**: 默认支持同步调用（`ollama.chat`），也支持 `AsyncClient`。\n   - **Node.js**: 基于 Promise 的异步设计，通常配合 `await ollama.chat` 使用。\n\n3. **基础调用代码 (Chat 示例)**\n   - **Python**: 直接调用 `ollama.chat(model='...', messages=[...])`。\n   - **Node.js**: 调用 `await ollama.chat({ model: '...', messages: [...] })`。\n\n4. **流式响应 (Streaming)**\n   - **Python**: 设置 `stream=True`，返回迭代器。\n   - **Node.js**: 设置 `stream: true`，返回异步可迭代对象。\n\n**总结**：\n两者在 API 设计上保持高度一致（方法名均为 `chat`, `generate`），主要差异在于语言特性的体现（Python 的同步/异步双模支持 vs Node.js 的原生 Promise 异步流）。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q055",
+    "type": "cross-doc",
+    "question": "对比 vLLM Python SDK 与 Node.js SDK 的基础调用方式。",
+    "source_docs": [
+      "A_api/vllm_python_sdk.md",
+      "A_api/vllm_nodejs_sdk.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n**问题**：对比 vLLM Python SDK 与 Node.js SDK 的基础调用方式。\n\n**来源文档**：\n- A_api/vllm_python_sdk.md\n- A_api/vllm_nodejs_sdk.md\n\n**对比分析**：\n\n1. **SDK 生态差异**\n   - **Python**: vLLM 提供原生 Python 库 (`vllm` 包)，支持离线推理（Offline Inference）与服务端调用。\n   - **Node.js**: vLLM **没有官方 Node.js SDK**。通常使用 `openai` 的 Node.js SDK 并将 `baseURL` 指向 vLLM 服务地址。\n\n2. **离线推理能力**\n   - **Python**: 支持 `from vllm import LLM` 直接加载权重进行推理，不依赖 HTTP 服务。\n   - **Node.js**: 不支持离线推理，必须依赖已启动的 vLLM HTTP 服务。\n\n3. **在线服务调用 (OpenAI 兼容模式)**\n   - **Python**: 使用 `openai` Python SDK 连接 vLLM 端点。\n   - **Node.js**: 使用 `openai` Node.js SDK 连接 vLLM 端点。\n\n**总结**：\nvLLM 的 Python SDK 是全功能的（含推理引擎），而 Node.js 侧仅能作为 HTTP 客户端（通过 OpenAI SDK 适配）。核心差异在于**是否具备本地加载模型进行推理的能力**。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q056",
+    "type": "cross-doc",
+    "question": "结合 vector_db_comparison 与 embedding_models，说明向量库选择对嵌入模型的影响。",
+    "source_docs": [
+      "A_api/vector_db_comparison.md",
+      "A_api/embedding_models.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n**问题**：结合 vector_db_comparison 与 embedding_models，说明向量库选择对嵌入模型的影响。\n\n**来源文档**：\n- A_api/vector_db_comparison.md\n- A_api/embedding_models.md\n\n**结合分析**：\n\n1. **维度匹配 (Dimension Alignment)**\n   - 嵌入模型决定输出维度（如 `bge-large-zh` 为 1024 维）。选择向量库时，必须确保其配置的 Index 维度与模型输出一致，否则无法存储。\n\n2. **距离度量 (Metric Type)**\n   - 不同的嵌入模型优化目标不同（Cosine vs L2）。向量库需支持模型推荐的度量方式（如 Qdrant/Milvus 支持多种度量，而部分轻量库可能仅支持 L2）。\n\n3. **量化与压缩 (Quantization Support)**\n   - 高维模型（如 >1536 维）会带来存储压力。选择支持 **Scalar Quantization (SQ)** 或 **Product Quantization (PQ)** 的向量库（如 Milvus），可显著降低内存占用，使部署高维模型成为可能。\n\n4. **稀疏向量支持 (Sparse Vector)**\n   - 若使用稀疏输出模型（如 SPLADE），必须选择支持 **Sparse Vector** 的向量库（如 Qdrant），传统稠密向量库无法适配。\n\n**总结**：\n向量库必须在 **维度容量**、**度量算法** 及 **稀疏/量化特性** 上与嵌入模型完全兼容，否则会导致系统不可用或性能大幅下降。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q057",
+    "type": "cross-doc",
+    "question": "对比 api_security 与 env_variables 中关于鉴权配置的说明。",
+    "source_docs": [
+      "E_config/api_security.md",
+      "E_config/env_variables.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n**问题**：对比 api_security 与 env_variables 中关于鉴权配置的说明。\n\n**来源文档**：\n- E_config/api_security.md\n- E_config/env_variables.md\n\n**对比分析**：\n\n1. **鉴权机制定义 vs 配置落地**\n   - **api_security.md**：侧重 **安全策略**。定义了应使用 `API Key` 鉴权、RBAC 控制、密钥加密存储与定期轮换等设计规范。\n   - **env_variables.md**：侧重 **工程配置**。直接列出了具体的环境变量名（如 `API_KEY=xxx`, `HF_TOKEN=xxx`），是策略的落地实现。\n\n2. **密钥管理方式**\n   - **api_security.md**：建议使用 Secret Manager 或 K8s Secrets 管理密钥，避免明文。\n   - **env_variables.md**：展示了开发环境常用的 `.env` 或 Docker 环境变量注入方式。\n\n3. **作用范围**\n   - **api_security.md**：覆盖 HTTPS、CORS、输入清洗等全链路安全。\n   - **env_variables.md**：仅关注系统启动所需的具体参数配置。\n\n**总结**：\n`api_security` 规定了 **“应该怎么做才安全”**（策略层），而 `env_variables` 提供了 **“具体设置哪个变量”**（配置层）。实施时应遵循前者的安全原则生成密钥，填入后者的变量中。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q058",
+    "type": "cross-doc",
+    "question": "结合 k8s_yaml 与 vllm_k8s_basic，说明关键资源字段如何落地到部署。",
+    "source_docs": [
+      "E_config/k8s_yaml.md",
+      "B_deploy/vllm_k8s_basic.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n**问题**：结合 k8s_yaml 与 vllm_k8s_basic，说明关键资源字段如何落地到部署。\n\n**来源文档**：\n- E_config/k8s_yaml.md\n- B_deploy/vllm_k8s_basic.md\n\n**结合分析**：\n\n1. **GPU 资源申请 (Resource Limits)**\n   - **k8s_yaml**: 定义了 `resources.limits` 语法。\n   - **vllm_k8s_basic**: 在 Deployment 中显式声明 `nvidia.com/gpu: 1`，触发 K8s 调度器分配 GPU 节点并挂载驱动。\n\n2. **环境变量注入 (Env Vars)**\n   - **k8s_yaml**: 展示了 `env` 数组及 `valueFrom` 引用 Secret 的语法。\n   - **vllm_k8s_basic**: 实际注入 `HUGGING_FACE_HUB_TOKEN`（引用 Secret）和 `VLLM_LOGGING_LEVEL` 等业务配置。\n\n3. **端口暴露 (Service Ports)**\n   - **k8s_yaml**: 解释了 `port` 与 `targetPort` 的区别。\n   - **vllm_k8s_basic**: 定义 Service 将集群端口 8000 映射到容器端口 8000，暴露推理服务。\n\n4. **存储挂载 (Volumes)**\n   - **k8s_yaml**: 描述卷定义与挂载点。\n   - **vllm_k8s_basic**: 使用 `hostPath` 或 `PVC` 挂载 `/root/.cache/huggingface`，实现模型权重持久化。\n\n**总结**：\n`k8s_yaml` 提供了 K8s 资源的 **语法模板**，而 `vllm_k8s_basic` 将其 **实例化** 为运行 vLLM 所需的具体配置（GPU、Token、端口、存储），实现了从规范到部署的落地。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q059",
+    "type": "cross-doc",
+    "question": "结合 tgi_docker 与 docker_compose_llm_official，说明容器部署参数的一致性。",
+    "source_docs": [
+      "B_deploy/tgi_docker.md",
+      "E_config/docker_compose_llm_official.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n**问题**：结合 tgi_docker 与 docker_compose_llm_official，说明容器部署参数的一致性。\n\n**来源文档**：\n- B_deploy/tgi_docker.md\n- E_config/docker_compose_llm_official.md\n\n**一致性分析**：\n\n1. **GPU 资源透传**\n   - **TGI Docker**: `--gpus all`\n   - **Docker Compose**: `deploy.resources.reservations.devices` 指定 `driver: nvidia`, `count: all`。\n   - **一致性**: 均调用 NVIDIA Container Runtime 暴露 GPU。\n\n2. **端口映射**\n   - **TGI Docker**: `-p 8080:80`\n   - **Docker Compose**: `ports: [\"8080:80\"]`\n   - **一致性**: 均遵循 Docker 网络标准暴露服务端口。\n\n3. **存储挂载**\n   - **TGI Docker**: `-v ./data:/data`\n   - **Docker Compose**: `volumes: [ollama_data:/root/.ollama]`\n   - **一致性**: 均用于持久化模型数据，避免容器重启丢失。\n\n4. **共享内存**\n   - **TGI Docker**: 推荐 `--shm-size 1g`。\n   - **Docker Compose**: 配置 `ipc: host` 或 `shm_size`。\n   - **一致性**: 均针对深度学习框架（PyTorch/NCCL）对共享内存的需求进行了配置。\n\n**总结**：\n无论是 CLI 启动（TGI）还是编排启动（Compose），核心参数（计算、网络、存储、IPC）完全一致，只是语法格式不同。`docker_compose_llm_official` 是 `tgi_docker` 命令的声明式版本。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q060",
+    "type": "cross-doc",
+    "question": "结合 ollama_api_official 与 ollama_models，说明模型管理与 API 使用的关系。",
+    "source_docs": [
+      "A_api/ollama_api_official.md",
+      "A_api/ollama_models.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n**问题**：结合 ollama_api_official 与 ollama_models，说明模型管理与 API 使用的关系。\n\n**来源文档**：\n- A_api/ollama_api_official.md\n- A_api/ollama_models.md\n\n**结合分析**：\n\n1. **模型名称规范 (Model Naming)**\n   - **ollama_api_official**: 定义 API 调用时 `model` 参数需遵循 `model:tag` 格式（默认 tag 为 `latest`）。这是 **消费侧** 规则。\n   - **ollama_models**: 介绍本地存储路径与管理命令。这是 **供给侧** 基础。\n\n2. **模型状态查询 (Availability)**\n   - **ollama_api_official**: 提供 `GET /api/tags` 接口查询可用模型。\n   - **ollama_models**: 对应命令行 `ollama list`。API 调用前需确认模型已存在。\n\n3. **模型拉取与加载 (Lifecycle)**\n   - **ollama_models**: 强调使用 `ollama pull` 下载模型。\n   - **ollama_api_official**: 推理接口（Generate/Chat）成功的前提是模型已通过管理手段下载。请求不存在的模型将报错。\n\n**总结**：\n`ollama_models` 定义了模型的 **生命周期管理**（下载/存储/删除），确立了“有哪些可用”；`ollama_api_official` 定义了 **如何调用** 这些模型。两者通过统一的 `model:tag` 标识符连接，构成了完整的“管理-使用”闭环。",
+    "label_source": "human_verified",
+    "needs_review": false
+  }
+]

@@ -1,0 +1,56 @@
+# 检索与模型核心配置 (Thesis Experiment Config - Locked for Exp A-D)
+version: "1.2.0"
+config_id: "ablation_study_locked"
+
+retrieval:
+  # 混合检索模式: vector_only, bm25_only, ensemble, rrf
+  default_mode: "rrf"
+  
+  # RRF 算法参数 (论文冻结值, 原默认 60, Pareto 分析后推荐 30)
+  rrf_k: 30
+  
+  # 检索数量控制
+  vector_k: 12
+  fetch_k: 36
+  bm25_k: 10
+  top_n: 8
+  
+  # 权重分配 (仅用于 ensemble 模式)
+  weights:
+    vector: 1.0
+    bm25: 1.0
+
+indexing:
+  chunk_size: 600
+  chunk_overlap: 100
+
+llm:
+  # 评测用裁判模型
+  judge_model: "qwen3:8b"
+  # 默认生成模型
+  default_model: "qwen3:8b"
+  temperature: 0.1
+
+evaluation:
+  # 每次评测的样本量 (数据集全集)
+  sample_size: 60
+  # 评测指标
+  metrics: ["faithfulness", "relevance"]
+  # 重复次数 (初始基线设为 1，最终详尽版设为 3)
+  iterations: 1
+  seed: 42
+  context_char_budget: 3000
+
+memory:
+  # 衰减因子 (lambda): 值越大，记忆衰减越快
+  decay_lambda: 0.08
+  # 单个文档允许保留的最大片段数
+  max_fragments: 100
+  # 召回记忆时的 Top K
+  top_k: 5
+
+reranker:
+  # 是否启用 LLM 重排（评测时建议关闭以控制变量）
+  enabled: false
+  # 重排后保留的 Top K
+  top_k: 8

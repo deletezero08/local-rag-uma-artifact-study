@@ -1,0 +1,142 @@
+[
+  {
+    "id": "Q001",
+    "type": "factual",
+    "question": "忆联知库 MemoraRAG 的 API 服务默认运行在哪个端口？",
+    "ground_truth": "MemoraRAG 的 API 服务默认运行在 8000 端口（http://127.0.0.1:8000）。",
+    "source_docs": ["E_config/env_variables.md"]
+  },
+  {
+    "id": "Q002",
+    "type": "factual",
+    "question": "在 `src/retriever.py` 的实现中，RRF 算法的常数 k 默认值是多少？",
+    "ground_truth": "RRF 算法的常数 k 默认设置为 60。",
+    "source_docs": ["_project_sources"]
+  },
+  {
+    "id": "Q003",
+    "type": "factual",
+    "question": "Ollama 的 REST API 中，生成补全请求的端点路径是什么？",
+    "ground_truth": "生成补全请求的端点路径是 POST /api/generate。",
+    "source_docs": ["A_api/ollama_api_official.md"]
+  },
+  {
+    "id": "Q004",
+    "type": "factual",
+    "question": "Ollama 模型名称遵循什么格式？默认的 tag 是什么？",
+    "ground_truth": "Ollama 模型名称遵循 model:tag 格式（例如 llama3:70b），默认 tag 是 latest。",
+    "source_docs": ["A_api/ollama_api_official.md"]
+  },
+  {
+    "id": "Q005",
+    "type": "factual",
+    "question": "使用 TGI Docker 进行单卡部署时，默认将容器的 80 端口映射到主机的哪个端口？",
+    "ground_truth": "默认将容器 80 端口映射到主机 3000 端口（-p 3000:80）。",
+    "source_docs": ["B_deploy/tgi_docker.md"]
+  },
+  {
+    "id": "Q006",
+    "type": "factual",
+    "question": "在 TGI Docker 多卡部署中，用于指定 GPU 分片数量的参数叫什么？",
+    "ground_truth": "用于指定 GPU 分片数量的参数是 --num-shard。",
+    "source_docs": ["B_deploy/tgi_docker.md"]
+  },
+  {
+    "id": "Q007",
+    "type": "factual",
+    "question": "vLLM 支持哪些量化方法？",
+    "ground_truth": "vLLM 支持 AWQ、GPTQ 和 SqueezeLLM 三种量化方法。",
+    "source_docs": ["E_config/quantization.md"]
+  },
+  {
+    "id": "Q008",
+    "type": "factual",
+    "question": "一个 7B 参数的模型在 INT4 量化下大约需要多少显存？",
+    "ground_truth": "7B 参数模型在 INT4 量化下大约需要 3.5GB 显存。",
+    "source_docs": ["C_troubleshoot/oom_solution.md"]
+  },
+  {
+    "id": "Q009",
+    "type": "summary",
+    "question": "总结 RAG 系统的四个核心组件及其各自的功能。",
+    "ground_truth": "RAG 系统包含四个核心组件：(1) 文档处理器（Document Processor）负责解析和分块；(2) 索引管线（Indexing Pipeline）将分块转换为向量并存入向量数据库；(3) 检索层（Retrieval Layer）使用语义或混合搜索查询索引；(4) 生成层（Generation Layer）将检索到的上下文和用户查询输入 LLM 生成答案。",
+    "source_docs": ["D_design/rag_architecture_patterns.md"]
+  },
+  {
+    "id": "Q010",
+    "type": "summary",
+    "question": "总结文档中提到的 RAG 系统常见设计模式有哪些？",
+    "ground_truth": "常见设计模式包括：Naive RAG（简单向量检索+生成）、Hybrid Search RAG（结合 BM25 和向量搜索）、Reranking（重排序优化 Top-K）、Agentic RAG（代理使用工具和推理决策检索方式）、Graph RAG（使用知识图谱提供实体关系上下文）。",
+    "source_docs": ["D_design/rag_architecture_patterns.md"]
+  },
+  {
+    "id": "Q011",
+    "type": "summary",
+    "question": "总结当遇到 CUDA OOM（显存不足）错误时的主要解决方案。",
+    "ground_truth": "主要解决方案包括：(1) 降低 GPU 内存利用率（--gpu-memory-utilization）；(2) 减小最大序列长度（--max-model-len）；(3) 使用量化模型（INT4/INT8）；(4) 使用更小的模型；(5) CPU offload；(6) 分布式部署（tensor-parallel-size）。",
+    "source_docs": ["C_troubleshoot/oom_solution.md"]
+  },
+  {
+    "id": "Q012",
+    "type": "summary",
+    "question": "总结 Ollama REST API 提供的主要端点功能。",
+    "ground_truth": "Ollama REST API 提供四个主要端点：(1) POST /api/generate 生成补全；(2) POST /api/chat 生成对话补全；(3) GET /api/tags 列出本地模型；(4) POST /api/embed 生成嵌入向量。",
+    "source_docs": ["A_api/ollama_api_official.md"]
+  },
+  {
+    "id": "Q013",
+    "type": "summary",
+    "question": "总结三种量化方法（FP16、INT8、INT4）在精度损失、显存减少和速度方面的对比。",
+    "ground_truth": "FP16 精度损失极小，显存减少 50%，速度快；INT8 精度损失小，显存减少 75%，速度快；INT4 精度损失中等，显存减少 87.5%，速度最快。",
+    "source_docs": ["E_config/quantization.md"]
+  },
+  {
+    "id": "Q014",
+    "type": "summary",
+    "question": "总结 TGI Docker 支持的量化部署方式及其对应的命令行参数。",
+    "ground_truth": "TGI Docker 支持通过 bitsandbytes 进行量化：INT8 使用 --quantize bitsandbytes，INT4 NF4 使用 --quantize bitsandbytes-nf4。",
+    "source_docs": ["B_deploy/tgi_docker.md"]
+  },
+  {
+    "id": "Q015",
+    "type": "cross-doc",
+    "question": "对比 Ollama 和 vLLM 在量化部署方式上的区别。",
+    "ground_truth": "Ollama 通过拉取不同量化标签的模型实现量化（如 llama3:8b-q4_0），内置支持 Q4_0、Q5_1、Q8_0 等格式；而 vLLM 通过运行时命令行参数指定量化方法（--quantization awq/gptq/squeezellm），需要预先准备量化后的模型权重。",
+    "source_docs": ["E_config/quantization.md", "C_troubleshoot/oom_solution.md"]
+  },
+  {
+    "id": "Q016",
+    "type": "cross-doc",
+    "question": "如果在 Kubernetes 上部署 vLLM 并遇到了 OOM 错误，有哪些可行的解决方案？",
+    "ground_truth": "可行方案包括：(1) 在 K8s Pod 配置中降低 --gpu-memory-utilization 参数；(2) 减小 --max-model-len；(3) 使用量化模型（--quantization awq/gptq）减少显存占用；(4) 使用更小的模型；(5) 通过 --tensor-parallel-size 配置多 GPU 分布式部署。",
+    "source_docs": ["C_troubleshoot/oom_solution.md", "B_deploy/vllm_k8s_basic.md"]
+  },
+  {
+    "id": "Q017",
+    "type": "cross-doc",
+    "question": "RAG 系统中的 Hybrid Search 模式与文档中描述的 RRF 算法有什么关系？",
+    "ground_truth": "Hybrid Search RAG 模式结合 BM25 关键词搜索与稠密向量搜索来提升特定术语的召回率。RRF（Reciprocal Rank Fusion）是实现 Hybrid Search 的一种具体融合算法，通过 1/(rank+k) 公式将不同检索管线的排名融合为统一排序，MemoraRAG 中 k 默认为 60。",
+    "source_docs": ["D_design/rag_architecture_patterns.md", "_project_sources"]
+  },
+  {
+    "id": "Q018",
+    "type": "reasoning",
+    "question": "分析为何 RRF 模式在处理长尾专业术语查询时通常优于单一向量检索？",
+    "ground_truth": "依靠 BM25 路径提供的关键词硬匹配，RRF 能够补位向量检索在低频长尾词上的语义稀释问题，使精准命中的片段即便语义相似度不高也能被排在前列。",
+    "source_docs": ["D_design/rag_architecture_patterns.md"]
+  },
+  {
+    "id": "Q019",
+    "type": "reasoning",
+    "question": "为什么在生产环境中推荐使用 INT4 量化而非 FP16？请从显存和性能角度分析。",
+    "ground_truth": "INT4 量化相比 FP16 可将显存需求降低约 87.5%（例如 7B 模型从约 14GB 降至 3.5GB），且推理速度最快。虽然精度损失为中等，但对于大多数生产场景（如对话、问答）影响可接受，而显存节省使得在消费级 GPU 上部署大模型成为可能。",
+    "source_docs": ["E_config/quantization.md", "C_troubleshoot/oom_solution.md"]
+  },
+  {
+    "id": "Q020",
+    "type": "reasoning",
+    "question": "在 RAG 系统设计中，为什么建议使用分块重叠（chunk overlap）策略？",
+    "ground_truth": "分块重叠可以保留相邻分块之间的上下文连续性，避免因硬切割导致的信息断裂。当一个关键概念恰好位于分块边界时，重叠部分确保该概念完整出现在至少一个分块中，从而提高检索的召回质量。",
+    "source_docs": ["D_design/rag_architecture_patterns.md"]
+  }
+]

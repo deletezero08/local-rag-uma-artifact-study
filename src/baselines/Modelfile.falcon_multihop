@@ -1,0 +1,10 @@
+FROM /Users/delete/Desktop/rag_system_副本/falcon-7b-multihop-q4_k_m.gguf
+
+PARAMETER temperature 0
+PARAMETER top_p 1
+PARAMETER num_ctx 2048
+PARAMETER repeat_penalty 1.05
+
+TEMPLATE """{{ .Prompt }}"""
+
+SYSTEM """You are MemoraRAG Falcon. Follow the user's instruction exactly and answer concisely."""

@@ -1,0 +1,9 @@
+Exp ID,Mode,Concurrency,Warm/Cold,Mean TTFT (ms),P95 TTFT (ms),P99 TTFT (ms),Aggregate TPS,Wall Time (s),Failures,Notes
+C1,Baseline,1,Warm,,,,,,,
+C2,Baseline,2,Warm,,,,,,,
+C3,Baseline,4,Warm,,,,,,,
+C4,Baseline,8,Warm,,,,,,,
+C5,Optimized,1,Warm,,,,,,,
+C6,Optimized,2,Warm,,,,,,,
+C7,Optimized,4,Warm,,,,,,,
+C8,Optimized,8,Warm,,,,,,,

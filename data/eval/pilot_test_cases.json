@@ -1,0 +1,182 @@
+[
+  {
+    "id": "Q001",
+    "type": "factual",
+    "question": "忆联知库 MemoraRAG 的 API 服务默认运行在哪个端口？",
+    "ground_truth": "MemoraRAG 的 API 服务默认运行在 8000 端口（http://127.0.0.1:8000）。"
+  },
+  {
+    "id": "Q002",
+    "type": "factual",
+    "question": "在 `src/retriever.py` 的实现中，RRF 算法的常数 k 默认值是多少？",
+    "ground_truth": "RRF 算法的常数 k 默认设置为 60。"
+  },
+  {
+    "id": "Q003",
+    "type": "factual",
+    "question": "全局记忆保存在哪个具体文件中？",
+    "ground_truth": "保存在 `memory/global_memory.json`。"
+  },
+  {
+    "id": "Q004",
+    "type": "factual",
+    "question": "`HybridRetriever` 目前支持哪几种检索模式？",
+    "ground_truth": "支持 `vector_only`, `bm25_only`, `ensemble`, `rrf` 模式。"
+  },
+  {
+    "id": "Q005",
+    "type": "factual",
+    "question": "指代性问题过滤中捕获的常用意图短语有哪些？",
+    "ground_truth": "包括：“它/这份/该文档/上述内容/上面提到的”以及“继续/补充/还有哪些/下一步”。"
+  },
+  {
+    "id": "Q006",
+    "type": "factual",
+    "question": "Ollama API 中用于生成回复的端点路径是什么？",
+    "ground_truth": "用于生成回复的端点是 `POST /api/generate`。"
+  },
+  {
+    "id": "Q007",
+    "type": "factual",
+    "question": "vLLM 官方建议如何使用 pip 安装？",
+    "ground_truth": "使用 `pip install vllm` 命令安装。"
+  },
+  {
+    "id": "Q008",
+    "type": "factual",
+    "question": "NVIDIA CUDA 安装指南中提到在 Ubuntu 上安装前的第一步是什么？",
+    "ground_truth": "第一步是系统准备，确保系统已更新并移除任何预装的驱动程序。"
+  },
+  {
+    "id": "Q009",
+    "type": "factual",
+    "question": "Docker Compose 模板中，Ollama 服务默认映射的宿主机端口是多少？",
+    "ground_truth": "默认映射的宿主机端口是 11434。"
+  },
+  {
+    "id": "Q010",
+    "type": "factual",
+    "question": "RAG 架构模式中，哪个组件负责将原始文档切分为更小的块？",
+    "ground_truth": "Document Processor (文档处理器) 负责将文档切分为块 (Chunks)。"
+  },
+  {
+    "id": "Q011",
+    "type": "factual",
+    "question": "vLLM 的离线批量推理示例代码中，需要导入哪个类？",
+    "ground_truth": "需要从 `vllm` 导入 `LLM` 类。"
+  },
+  {
+    "id": "Q012",
+    "type": "factual",
+    "question": "Ollama FAQ 中提到的 GPU/驱动兼容性主要针对哪个系列？",
+    "ground_truth": "主要针对 NVIDIA 和 AMD GPU。"
+  },
+  {
+    "id": "Q013",
+    "type": "factual",
+    "question": "故障排查指南中提到 OOM 错误的典型症状是什么？",
+    "ground_truth": "典型症状是 `RuntimeError: CUDA out of memory` 以及模型加载失败或推理时崩溃。"
+  },
+  {
+    "id": "Q014",
+    "type": "factual",
+    "question": "RAG 系统中计算嵌入向量 (Embeddings) 的常用模型示例是什么？",
+    "ground_truth": "常用示例包括 OpenAI 的 `text-embedding-3-small` 或开源的 `BAAI/bge-large-zh-v1.5`。"
+  },
+  {
+    "id": "Q015",
+    "type": "factual",
+    "question": "TGI (Text Generation Inference) 部署指南中提到的一个关键优势是什么？",
+    "ground_truth": "关键优势包括分布式推理支持、动态批处理 (Dynamic Batching) 和高性能 CUDA 内核优化。"
+  },
+  {
+    "id": "Q021",
+    "type": "summary",
+    "question": "简述 MemoraRAG 的增量索引检测文件变化的逻辑。",
+    "ground_truth": "增量索引机制通过扫描文件修改时间 (mtime)，并与 `chroma_db/index_manifest.json` 中记录的时间戳对比。如果文件修改时间大于 1 秒，则触发重新解析和向量库更新。"
+  },
+  {
+    "id": "Q022",
+    "type": "summary",
+    "question": "总结 MemoraRAG 的“技能引擎 (Skills System)”分类。",
+    "ground_truth": "分为全局技能（所有请求生效）和检索技能（根据意图动态拉取）。检索技能通过递归目录扫描实现按需注入，提高系统的灵活性。"
+  },
+  {
+    "id": "Q023",
+    "type": "summary",
+    "question": "总结意图识别阶段的“零延迟快速命中 (Phase 0)”的主要逻辑。",
+    "ground_truth": "Phase 0 为正则边界匹配逻辑，它无需调用 LLM，通过对用户查询进行文件名搜索直接锁定目标，从而实现零延迟响应。"
+  },
+  {
+    "id": "Q024",
+    "type": "summary",
+    "question": "简述 EncouRAGe 评测框架的主要流程。",
+    "ground_truth": "流程包括：加载测试集 -> 循环检索模式 -> 运行迭代测评 -> LLM-as-a-Judge 自动评分 -> 生成 JSON 报告并记录结果摘要至研究日志。"
+  },
+  {
+    "id": "Q025",
+    "type": "summary",
+    "question": "概括记忆系统 (Memory System) 中的指代兜底策略。",
+    "ground_truth": "当面临指代性问题且常规识别失败时，系统会回溯历史对话或读取 `memory/` 目录下最近修改的见解文件作为上下文，保证对话连贯性。"
+  },
+  {
+    "id": "Q026",
+    "type": "summary",
+    "question": "简述 RAG 系统中重排 (Reranking) 的作用。",
+    "ground_truth": "重排通过对初步检索出的文档进行更深度的语义打分，将最相关的片段排到最前面，减少 LLM 上下文中的噪声，提升回答质量。"
+  },
+  {
+    "id": "Q027",
+    "type": "summary",
+    "question": "概括 Docker Compose 部署本地 LLM 栈的优点。",
+    "ground_truth": "优点包括环境隔离、一键启动、易于管理多个服务（如 Ollama, 数据库, UI）以及配置可移植性。"
+  },
+  {
+    "id": "Q028",
+    "type": "summary",
+    "question": "简述 vLLM 如何通过 PagedAttention 提高吞吐量。",
+    "ground_truth": "PagedAttention 通过像操作系统虚拟内存一样管理 KV 缓存，减少了碎片化，并允许更高的并发请求处理。"
+  },
+  {
+    "id": "Q029",
+    "type": "summary",
+    "question": "概括 NVIDIA CUDA Toolkit 在 AI 部署中的角色。",
+    "ground_truth": "CUDA Toolkit 提供了一套开发环境和并行计算库，使得 AI 模型能够利用 GPU 加速计算，是深度学习推理和训练的基础。"
+  },
+  {
+    "id": "Q030",
+    "type": "summary",
+    "question": "总结 Ollama API 的流式输出 (Streaming) 特性。",
+    "ground_truth": "Ollama 的 `/api/generate` 和 `/api/chat` 端点支持通过 JSON 块流式传输响应，允许前端实时显示生成的文本，提升用户体验。"
+  },
+  {
+    "id": "Q041",
+    "type": "reasoning",
+    "question": "如果用户问“这份文档提到了哪些参数？”，而当前并无显式命中的文件名，系统将如何处理？",
+    "ground_truth": "系统会触发 `memory_fallback`，因为它识别到了“这份文档”这一指代。它会先尝试从历史记录中寻找最近提到的文件，其次会从 `memory/` 目录下寻找最近更新的记忆片段。"
+  },
+  {
+    "id": "Q042",
+    "type": "reasoning",
+    "question": "分析为何 RRF 模式在处理长尾专业术语查询时通常优于单一向量检索？",
+    "ground_truth": "依靠 BM25 路径提供的关键词硬匹配，RRF 能够补位向量检索在低频长尾词上的语义稀释问题，使精准命中的片段即便语义相似度不高也能被排在前列。"
+  },
+  {
+    "id": "Q043",
+    "type": "reasoning",
+    "question": "如果 `experiments/config.yaml` 设定 `iterations: 3`，评价报表中的最终评分是如何计算的？",
+    "ground_truth": "系统会对全部 3 次迭代中所有测试用例的评分求算数平均值，以消除 LLM 判分和生成的单次波动风险。"
+  },
+  {
+    "id": "Q044",
+    "type": "reasoning",
+    "question": "假设用户修改了 `docs/api.md` 并上传了一个新文件，手动触发同步索引后，`index_manifest.json` 会发生什么变化？",
+    "ground_truth": "它会更新原有 `api.md` 对应的 `mtime` 记录，并为新文件新增一条对应的路径与修改时间条目，确保下次增量扫描的正确性。"
+  },
+  {
+    "id": "Q045",
+    "type": "reasoning",
+    "question": "在使用 Docker 容器部署时，如果无法连接到宿主机的 Ollama，你应该检查哪个网络配置？",
+    "ground_truth": "应检查 `OLLAMA_HOST` 环境变量是否正确设置为 `http://host.docker.internal:11434`，并确保 Ollama 已设置为允许跨域连接。"
+  }
+]

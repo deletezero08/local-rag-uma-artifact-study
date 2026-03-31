@@ -1,0 +1,326 @@
+{
+  "timestamp": "2026-03-30 12:39:10",
+  "script": "scripts/evaluation/paper_niah_depth_expanded.py",
+  "output_schema_version": "1.0",
+  "experiment": "E6_niah_depth_expanded",
+  "config": {
+    "model_path": "/Users/delete/Desktop/rag_system_副本/models/Llama-3-8B-Instruct.Q4_K_M.gguf",
+    "index_path": "/Users/delete/Desktop/rag_system_副本/models/vector_indices/turbo_index.json",
+    "depths": [
+      0,
+      25,
+      50,
+      75,
+      90,
+      95,
+      99
+    ],
+    "rounds": 3,
+    "haystack_chars": 120000,
+    "n_ctx": 8192,
+    "seed": 42
+  },
+  "rows": [
+    {
+      "depth_percent": 0,
+      "rounds": 3,
+      "success_rate": 1.0,
+      "latency_sec_mean": 11.9,
+      "latency_sec_std": 0.544,
+      "strategies_used": [
+        "adaptive_low_30% (capped_at_10)"
+      ],
+      "failure_counts": {
+        "ok": 3
+      },
+      "rows": [
+        {
+          "round": 1,
+          "depth_percent": 0,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 12.588,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "I can help you with that! According to the provided context, the anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        },
+        {
+          "round": 2,
+          "depth_percent": 0,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 11.854,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "According to the context, the anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        },
+        {
+          "round": 3,
+          "depth_percent": 0,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 11.257,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "The anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        }
+      ]
+    },
+    {
+      "depth_percent": 25,
+      "rounds": 3,
+      "success_rate": 1.0,
+      "latency_sec_mean": 11.115,
+      "latency_sec_std": 0.256,
+      "strategies_used": [
+        "adaptive_low_30% (capped_at_10)"
+      ],
+      "failure_counts": {
+        "ok": 3
+      },
+      "rows": [
+        {
+          "round": 1,
+          "depth_percent": 25,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 10.783,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "According to the context, the anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        },
+        {
+          "round": 2,
+          "depth_percent": 25,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 11.155,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "According to the provided context, the anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        },
+        {
+          "round": 3,
+          "depth_percent": 25,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 11.407,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "According to the given context, the anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        }
+      ]
+    },
+    {
+      "depth_percent": 50,
+      "rounds": 3,
+      "success_rate": 1.0,
+      "latency_sec_mean": 11.2,
+      "latency_sec_std": 0.288,
+      "strategies_used": [
+        "adaptive_low_30% (capped_at_10)"
+      ],
+      "failure_counts": {
+        "ok": 3
+      },
+      "rows": [
+        {
+          "round": 1,
+          "depth_percent": 50,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 11.535,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "According to the provided context, the anti-gravity engine activation code is:\n\nNEBULA-VAULT-2026-SOTA-PRO"
+        },
+        {
+          "round": 2,
+          "depth_percent": 50,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 11.235,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "The anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        },
+        {
+          "round": 3,
+          "depth_percent": 50,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 10.831,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "The anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        }
+      ]
+    },
+    {
+      "depth_percent": 75,
+      "rounds": 3,
+      "success_rate": 0.667,
+      "latency_sec_mean": 11.18,
+      "latency_sec_std": 0.296,
+      "strategies_used": [
+        "adaptive_low_30% (capped_at_10)"
+      ],
+      "failure_counts": {
+        "ok": 2,
+        "needle_missed": 1
+      },
+      "rows": [
+        {
+          "round": 1,
+          "depth_percent": 75,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 11.361,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "According to the context, the anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        },
+        {
+          "round": 2,
+          "depth_percent": 75,
+          "success": false,
+          "failure_type": "needle_missed",
+          "latency_sec": 11.417,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "I apologize, but I don't have enough information to answer this question accurately. The given context does not provide a clear or specific answer to this question."
+        },
+        {
+          "round": 3,
+          "depth_percent": 75,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 10.762,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "According to the provided context, the anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        }
+      ]
+    },
+    {
+      "depth_percent": 90,
+      "rounds": 3,
+      "success_rate": 0.667,
+      "latency_sec_mean": 9.875,
+      "latency_sec_std": 2.384,
+      "strategies_used": [
+        "adaptive_low_30% (capped_at_10)",
+        "cliff_detected_drop_0.15",
+        "cliff_detected_drop_0.19"
+      ],
+      "failure_counts": {
+        "ok": 2,
+        "needle_missed": 1
+      },
+      "rows": [
+        {
+          "round": 1,
+          "depth_percent": 90,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 8.5,
+          "strategy": "cliff_detected_drop_0.19",
+          "answer_preview": "According to the provided context, the anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        },
+        {
+          "round": 2,
+          "depth_percent": 90,
+          "success": false,
+          "failure_type": "needle_missed",
+          "latency_sec": 13.228,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "I'm not aware of any information about an \"anti-gravity engine\" or its activation code in the provided context. The text appears to be a collection of random sentences and phrases with noise tags, but there is no mention"
+        },
+        {
+          "round": 3,
+          "depth_percent": 90,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 7.896,
+          "strategy": "cliff_detected_drop_0.15",
+          "answer_preview": "According to the provided context, the anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        }
+      ]
+    },
+    {
+      "depth_percent": 95,
+      "rounds": 3,
+      "success_rate": 0.667,
+      "latency_sec_mean": 9.484,
+      "latency_sec_std": 0.576,
+      "strategies_used": [
+        "adaptive_low_30% (capped_at_10)",
+        "cliff_detected_drop_0.11",
+        "cliff_detected_drop_0.14"
+      ],
+      "failure_counts": {
+        "partial_needle": 1,
+        "ok": 2
+      },
+      "rows": [
+        {
+          "round": 1,
+          "depth_percent": 95,
+          "success": false,
+          "failure_type": "partial_needle",
+          "latency_sec": 10.272,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "According to the context, the anti-gravity engine activation code is NEBULA-VAULT-2026-SOT."
+        },
+        {
+          "round": 2,
+          "depth_percent": 95,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 9.268,
+          "strategy": "cliff_detected_drop_0.11",
+          "answer_preview": "According to the context provided, the anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        },
+        {
+          "round": 3,
+          "depth_percent": 95,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 8.911,
+          "strategy": "cliff_detected_drop_0.14",
+          "answer_preview": "According to the provided context, the anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        }
+      ]
+    },
+    {
+      "depth_percent": 99,
+      "rounds": 3,
+      "success_rate": 1.0,
+      "latency_sec_mean": 11.254,
+      "latency_sec_std": 0.199,
+      "strategies_used": [
+        "adaptive_low_30% (capped_at_10)"
+      ],
+      "failure_counts": {
+        "ok": 3
+      },
+      "rows": [
+        {
+          "round": 1,
+          "depth_percent": 99,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 11.518,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "According to the provided context, the anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        },
+        {
+          "round": 2,
+          "depth_percent": 99,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 11.039,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "The anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        },
+        {
+          "round": 3,
+          "depth_percent": 99,
+          "success": true,
+          "failure_type": "ok",
+          "latency_sec": 11.206,
+          "strategy": "adaptive_low_30% (capped_at_10)",
+          "answer_preview": "According to the provided context, the anti-gravity engine activation code is NEBULA-VAULT-2026-SOTA-PRO."
+        }
+      ]
+    }
+  ]
+}

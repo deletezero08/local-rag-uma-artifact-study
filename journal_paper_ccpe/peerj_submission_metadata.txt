@@ -1,0 +1,28 @@
+Title
+An Artifact-Backed Empirical Study of Local RAG Execution on Constrained Unified Memory Devices
+
+Abstract
+Local Retrieval-Augmented Generation (RAG) on Apple Silicon Unified Memory Architecture (UMA) is constrained not only by retrieval quality, but by the shared execution budget consumed by model weights, KV cache, retrieved context, and operating-system activity. This paper studies a local RAG execution path that combines GGUF deployment, TurboQuant retrieval compression, and KV-aware context pruning on a Mac mini M4 with 16GB unified memory. Within the Falcon-7B family, migrating from transformers + MPS to a quantized GGUF route reduces TTFT from 77.6 s to 123.7 ms; across deployable configurations, Llama-3-8B-Q + GGUF serves as the preferred practical reference at 51.2 ms. In the keep-ratio scan, keep_ratio = 0.6 reduces TTFT from 5.83 s to 0.87 s while decode throughput remains in the 18--19 TPS range. Under concurrent load, the optimized path lowers P95 TTFT and wall time, while also exposing a stability cost at higher concurrency. Stage-wise latency decomposition shows that prompt-side and retrieval-side optimizations recover deployability on the tested device, but the dominant residual cost migrates to generation, especially decode. These findings are reported as an artifact-linked systems study on a constrained UMA deployment path and support the view that local RAG optimization is best treated as shared-budget systems co-design rather than isolated module acceleration.
+
+Keywords
+Local RAG; GGUF; llama.cpp; TurboQuant; Context Compression; Unified Memory Architecture
+
+Authors / affiliation / corresponding author email
+Author: Chaoran Wang
+Affiliation: College of Science and Information, Qingdao Agricultural University, Qingdao, China
+Corresponding author email: chaoranw47@gmail.com
+
+Competing interests
+The author declares no competing interests.
+
+Ethics statement
+This study does not involve human subjects, protected personal data, or clinical decision-making. No human-participant intervention, medical treatment, or sensitive personal-data collection was performed.
+
+Data and code availability
+A review artifact bundle is included with the submission package and contains the benchmark JSON files, plotting scripts, table sources, manuscript source, artifact manifest, and a minimal README. A public repository URL and persistent archival identifier will be released with the final version.
+
+Funding
+No external funding was received for this work.
+
+ORCID
+Chaoran Wang: 0009-0003-9428-3039

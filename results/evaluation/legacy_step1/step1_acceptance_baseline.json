@@ -1,0 +1,9 @@
+{
+  "name": "baseline_no_clip",
+  "top_n": 10,
+  "context_char_budget": 0,
+  "faithfulness_mean": 7.717,
+  "relevance_mean": 7.967,
+  "latency_mean": 74.138,
+  "n": 60
+}

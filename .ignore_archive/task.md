@@ -1,0 +1,11 @@
+- [x] Implement `scripts/v2_benchmark_orchestrator.py` for real-world measurements
+    - [x] Add model loading and inference logic
+    - [x] Implement TTFT, TPS, and RSS logging
+    - [x] Add context scaling test (1K-8K)
+    - [x] Add concurrency test (N=1, 2, 4)
+- [x] Refine `src/kv_compressor.py`
+    - [x] Correct batch handling in `compress`
+    - [x] Add RAM back-pressure logging
+- [x] Optimize `src/turbo_quant.py` for batch queries
+- [/] Execute benchmarks and generate `v2_performance_final.json`
+- [ ] Update `RESEARCH_LOG.md` with final metrics

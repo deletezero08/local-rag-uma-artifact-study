@@ -1,0 +1,9 @@
+{
+  "name": "optimized_clip",
+  "top_n": 8,
+  "context_char_budget": 3000,
+  "faithfulness_mean": 6.117,
+  "relevance_mean": 6.133,
+  "latency_mean": 75.906,
+  "n": 60
+}

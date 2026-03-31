@@ -1,0 +1,18 @@
+\begin{table}[htbp]
+\centering
+\caption{Component ablation summary. Removing context pruning mainly hurts prompt-side latency, whereas removing TurboQuant mainly hurts retrieval cost and index footprint.}
+\label{tab:component-ablation}
+\small
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{l l r r r}
+\toprule
+Drop & Metric & Full & W/o & Effect \\
+\midrule
+CP & TTFT (ms) & 874.3 & 5828.5 & +566.7\% \\
+CP & Total E2E (ms) & 14612.6 & 20270.8 & +38.7\% \\
+TQ & Retrieval (ms) & 25.4 & 128.4 & +405.5\% \\
+TQ & Index size (MB) & 110 & 420 & +281.8\% \\
+TQ & Recall@10 & 0.631 & 1.000 & +58.5\% \\
+\bottomrule
+\end{tabular}
+\end{table}

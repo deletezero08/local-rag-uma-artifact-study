@@ -1,0 +1,50 @@
+[
+  {
+    "id": "R001",
+    "description": "历史命中：由会话历史反推目标文件",
+    "question": "它刚才写了什么？",
+    "history": [
+      {
+        "user": "请先总结 referential_alpha.md",
+        "assistant": "已完成 referential_alpha.md 的总结。"
+      }
+    ],
+    "expected_state": "memory_fallback",
+    "expected_fallback_reason": "history_match",
+    "expected_file": "referential_alpha.md"
+  },
+  {
+    "id": "R002",
+    "description": "近期记忆命中：无历史时回退到最新记忆文件",
+    "question": "继续说它的重点结论。",
+    "setup_memory_file": "referential_beta.md",
+    "expected_state": "memory_fallback",
+    "expected_fallback_reason": "recent_memory",
+    "expected_file": "referential_beta.md"
+  },
+  {
+    "id": "R003",
+    "description": "目标不存在：显式文件名不存在时不应误命中",
+    "question": "请总结 ghost_missing.md 的内容。",
+    "expected_state": "none"
+  },
+  {
+    "id": "R004",
+    "description": "误触发抑制：有类别约束时不走记忆兜底",
+    "question": "继续分析它的参数。",
+    "category": "markdown",
+    "expected_state": "none"
+  },
+  {
+    "id": "R005",
+    "description": "显式文件命中：文件名边界匹配应直接命中",
+    "question": "总结 referential_alpha.md 的要点。",
+    "expected_state": "hit"
+  },
+  {
+    "id": "R006",
+    "description": "闲聊旁路：问候语应走 smalltalk",
+    "question": "你好",
+    "expected_state": "smalltalk"
+  }
+]

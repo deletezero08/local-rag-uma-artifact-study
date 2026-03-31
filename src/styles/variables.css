@@ -1,0 +1,39 @@
+:root {
+    --bg-color: #edf3f3;
+    --bg-gradient:
+        radial-gradient(circle at top left, rgba(15, 118, 110, 0.10), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.10), transparent 30%),
+        linear-gradient(180deg, #f9fcfc 0%, #eef4f5 52%, #e7eef4 100%);
+    --text-primary: #102131;
+    --text-secondary: #5c6b7a;
+    --text-muted: #7b8897;
+
+    --surface-strong: rgba(255, 255, 255, 0.92);
+    --surface-soft: rgba(255, 255, 255, 0.72);
+    --surface-tint: rgba(248, 251, 253, 0.8);
+
+    --glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(247, 250, 253, 0.76) 100%);
+    --glass-border: rgba(255, 255, 255, 0.78);
+    --glass-shadow: rgba(15, 23, 42, 0.08);
+    --border-soft: rgba(15, 23, 42, 0.08);
+
+    --primary: #0f766e;
+    --primary-strong: #115e59;
+    --secondary: #2563eb;
+    --accent: #0f766e;
+    --accent-hover: #115e59;
+    --accent-glow: rgba(15, 118, 110, 0.18);
+
+    --success: #059669;
+    --warning: #f59e0b;
+    --error: #dc2626;
+
+    --shadow-sm: 0 10px 24px rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 22px 45px rgba(15, 23, 42, 0.10);
+    --shadow-lg: 0 36px 72px rgba(15, 23, 42, 0.14);
+
+    --panel-radius: 30px;
+    --element-radius: 16px;
+    --input-radius: 24px;
+    --sidebar-width: 344px;
+}

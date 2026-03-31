@@ -1,0 +1,15 @@
+\begin{table}[htbp]
+\centering
+\caption{Concurrency stability under baseline and collaboratively optimized execution paths.}
+\label{tab:concurrency-stability}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{p{2.7cm} r r r}
+\hline
+Mode & Wall Time (s) & P95 TTFT (ms) & Aggregate TPS \\
+\hline
+Full context & 134.09 & 17435.46 & 3.85 \\
+Optimized path & 55.29 & 8979.26 & 4.67 \\
+\hline
+\end{tabular}
+}
+\end{table}

@@ -1,0 +1,8 @@
+Exp ID,Keep Ratio,Retrieval (ms),Compression (ms),TTFT (ms),Decode TPS,Total E2E (ms),Faithfulness,Relevance,Selected?,Notes
+K1,1.0,,,,,,,,,
+K2,0.9,,,,,,,,,
+K3,0.8,,,,,,,,,
+K4,0.7,,,,,,,,,
+K5,0.6,,,,,,,,YES/NO,
+K6,0.5,,,,,,,,,
+K7,0.4,,,,,,,,,

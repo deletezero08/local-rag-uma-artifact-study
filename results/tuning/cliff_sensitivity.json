@@ -1,0 +1,26 @@
+[
+    {
+        "threshold": 0.05,
+        "avg_retained": 2.75,
+        "cliff_trigger_rate": 0.75,
+        "status": "Baseline"
+    },
+    {
+        "threshold": 0.1,
+        "avg_retained": 2.75,
+        "cliff_trigger_rate": 0.5,
+        "status": "Target"
+    },
+    {
+        "threshold": 0.15,
+        "avg_retained": 3.0,
+        "cliff_trigger_rate": 0.25,
+        "status": "Baseline"
+    },
+    {
+        "threshold": 0.2,
+        "avg_retained": 3.0,
+        "cliff_trigger_rate": 0.25,
+        "status": "Baseline"
+    }
+]

@@ -1,0 +1,7 @@
+{
+  "timestamp": "2026-03-20 17:07:20",
+  "branding_status": "MemoraRAG",
+  "fragments_count": 1,
+  "sample_insight": "MemoraRAG 已成功完成 14 项工程改进，并确立了系统时延瓶颈已从检索层转移至 LLM 生成层。",
+  "pass": true
+}

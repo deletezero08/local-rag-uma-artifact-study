@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\caption{Quality preservation under the selected optimized configuration. The table compares the baseline and optimized paths using TTFT, total latency, and merged dual-judge Faithfulness/Relevance scores on the evaluation split.}
+\label{tab:quality-preservation}
+\resizebox{\columnwidth}{!}{%
+\renewcommand{\arraystretch}{1.4}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{c r r r r r r}
+\hline
+\shortstack{Config.} & \shortstack{TTFT\\(ms)} & \shortstack{Total\\latency (ms)} & \shortstack{Merged\\faithfulness} & \shortstack{$\Delta$\\Faithfulness} & \shortstack{Merged\\relevance} & \shortstack{$\Delta$\\Relevance} \\
+\hline
+Baseline & 2026.509 & 7844.002 & 4.237 & --- & 4.975 & --- \\
+Optimized & 1515.248 & 7399.523 & 4.275 & +0.038 & 4.875 & -0.100 \\
+\hline
+\end{tabular}%
+}
+\end{table}

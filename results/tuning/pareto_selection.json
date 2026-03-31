@@ -1,0 +1,91 @@
+{
+  "baseline": {
+    "mode": "ensemble",
+    "faithfulness_mean": 7.333,
+    "relevance_mean": 7.817
+  },
+  "candidate_count": 13,
+  "pareto_front": [
+    {
+      "mode": "ensemble",
+      "weights": {
+        "vector": 0.6,
+        "bm25": 0.4
+      },
+      "rrf_k": 30,
+      "phase_a_enabled": false,
+      "file": "sweep_evaluation_ensemble_w0.6_b0.4_k30_1773468463.json",
+      "faithfulness": 8.0,
+      "relevance": 9.0,
+      "latency_mean": 47.928,
+      "latency_p90": 47.928,
+      "latency_max": 47.928,
+      "ttft_mean": 0.0,
+      "tokens_per_sec_mean": 1.857,
+      "rss_peak_mb_mean": 717.797,
+      "rss_peak_delta_mb_mean": 0.0,
+      "n": 1
+    },
+    {
+      "mode": "ensemble",
+      "weights": {
+        "vector": 0.8,
+        "bm25": 0.2
+      },
+      "rrf_k": 60,
+      "phase_a_enabled": false,
+      "file": "sweep_evaluation_ensemble_w0.8_b0.2_k60_1773469067.json",
+      "faithfulness": 9.0,
+      "relevance": 10.0,
+      "latency_mean": 48.591,
+      "latency_p90": 48.591,
+      "latency_max": 48.591,
+      "ttft_mean": 0.0,
+      "tokens_per_sec_mean": 2.531,
+      "rss_peak_mb_mean": 717.797,
+      "rss_peak_delta_mb_mean": 0.0,
+      "n": 1
+    },
+    {
+      "mode": "ensemble",
+      "weights": {
+        "vector": 0.8,
+        "bm25": 0.2
+      },
+      "rrf_k": 30,
+      "phase_a_enabled": false,
+      "file": "sweep_evaluation_ensemble_w0.8_b0.2_k30_1773468922.json",
+      "faithfulness": 10.0,
+      "relevance": 10.0,
+      "latency_mean": 57.02,
+      "latency_p90": 57.02,
+      "latency_max": 57.02,
+      "ttft_mean": 0.0,
+      "tokens_per_sec_mean": 1.754,
+      "rss_peak_mb_mean": 717.797,
+      "rss_peak_delta_mb_mean": 0.0,
+      "n": 1
+    }
+  ],
+  "recommended": {
+    "mode": "ensemble",
+    "weights": {
+      "vector": 0.6,
+      "bm25": 0.4
+    },
+    "rrf_k": 30,
+    "phase_a_enabled": false,
+    "file": "sweep_evaluation_ensemble_w0.6_b0.4_k30_1773468463.json",
+    "faithfulness": 8.0,
+    "relevance": 9.0,
+    "latency_mean": 47.928,
+    "latency_p90": 47.928,
+    "latency_max": 47.928,
+    "ttft_mean": 0.0,
+    "tokens_per_sec_mean": 1.857,
+    "rss_peak_mb_mean": 717.797,
+    "rss_peak_delta_mb_mean": 0.0,
+    "n": 1
+  },
+  "selection_rule": "优先满足质量不低于 baseline，再按 latency_mean 最小化；若无满足项，则在 Pareto 前沿中选 latency 最小。"
+}

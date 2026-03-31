@@ -1,0 +1,19 @@
+{
+  "test_runs": [
+    {
+      "query": "你好",
+      "result": "",
+      "phase": "phase_2_smalltalk"
+    },
+    {
+      "query": "它刚才写了什么？",
+      "result": "🔍 正在分析您的意图... | 📂 正在检索知识库... | 🧠 命中指代性兜底。 目标文件: system_architecture.md. (基于历史记忆)",
+      "phase": "phase_3_memory_fallback"
+    },
+    {
+      "query": "分析一下这些内容",
+      "result": "🔍 正在分析您的意图... | 📂 正在检索知识库... | 🔍 意图分析完成。 | 📑 正在提取全库最相关的参考片段...",
+      "phase": "phase_1_robustness"
+    }
+  ]
+}

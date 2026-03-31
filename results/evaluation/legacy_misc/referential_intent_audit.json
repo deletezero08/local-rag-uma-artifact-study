@@ -1,0 +1,124 @@
+{
+  "timestamp": "2026-03-14 13:47:34",
+  "total": 6,
+  "passed": 6,
+  "overall_pass": true,
+  "cases": [
+    {
+      "id": "R001",
+      "description": "历史命中：由会话历史反推目标文件",
+      "question": "它刚才写了什么？",
+      "expected": {
+        "intent_state": "memory_fallback",
+        "fallback_reason": "history_match",
+        "file": "referential_alpha.md"
+      },
+      "actual": {
+        "intent_state": "memory_fallback",
+        "fallback_reason": "history_match",
+        "memory_fallback_file": "referential_alpha.md",
+        "target_file": "referential_alpha.md"
+      },
+      "pass": true
+    },
+    {
+      "id": "R002",
+      "description": "近期记忆命中：无历史时回退到最新记忆文件",
+      "question": "继续说它的重点结论。",
+      "expected": {
+        "intent_state": "memory_fallback",
+        "fallback_reason": "recent_memory",
+        "file": "referential_beta.md"
+      },
+      "actual": {
+        "intent_state": "memory_fallback",
+        "fallback_reason": "recent_memory",
+        "memory_fallback_file": "referential_beta.md",
+        "target_file": "referential_beta.md"
+      },
+      "pass": true
+    },
+    {
+      "id": "R003",
+      "description": "目标不存在：显式文件名不存在时不应误命中",
+      "question": "请总结 ghost_missing.md 的内容。",
+      "expected": {
+        "intent_state": "none",
+        "fallback_reason": null,
+        "file": null
+      },
+      "actual": {
+        "intent_state": "none",
+        "fallback_reason": "none",
+        "memory_fallback_file": null,
+        "target_file": null
+      },
+      "pass": true
+    },
+    {
+      "id": "R004",
+      "description": "误触发抑制：有类别约束时不走记忆兜底",
+      "question": "继续分析它的参数。",
+      "expected": {
+        "intent_state": "none",
+        "fallback_reason": null,
+        "file": null
+      },
+      "actual": {
+        "intent_state": "none",
+        "fallback_reason": "none",
+        "memory_fallback_file": null,
+        "target_file": null
+      },
+      "pass": true
+    },
+    {
+      "id": "R005",
+      "description": "显式文件命中：文件名边界匹配应直接命中",
+      "question": "总结 referential_alpha.md 的要点。",
+      "expected": {
+        "intent_state": "hit",
+        "fallback_reason": null,
+        "file": null
+      },
+      "actual": {
+        "intent_state": "hit",
+        "fallback_reason": "none",
+        "memory_fallback_file": null,
+        "target_file": "referential_alpha.md"
+      },
+      "pass": true
+    },
+    {
+      "id": "R006",
+      "description": "闲聊旁路：问候语应走 smalltalk",
+      "question": "你好",
+      "expected": {
+        "intent_state": "smalltalk",
+        "fallback_reason": null,
+        "file": null
+      },
+      "actual": {
+        "intent_state": "smalltalk",
+        "fallback_reason": "none",
+        "memory_fallback_file": null,
+        "target_file": null
+      },
+      "pass": true
+    }
+  ],
+  "confusion_matrix": {
+    "memory_fallback": {
+      "memory_fallback": 2
+    },
+    "none": {
+      "none": 2
+    },
+    "hit": {
+      "hit": 1
+    },
+    "smalltalk": {
+      "smalltalk": 1
+    }
+  }
+}

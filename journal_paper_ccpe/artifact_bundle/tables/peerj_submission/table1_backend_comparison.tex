@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\caption{Backend and model comparison on a Mac mini M4 with 16GB unified memory. The \texttt{MPS} row is retained as a cautionary baseline, whereas repeated statistics are reported in the main text for the two GGUF routes.}
+\label{tab:backend-comparison}
+\resizebox{\columnwidth}{!}{%
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{2.8cm} p{4.2cm} r r r p{2.2cm}}
+\hline
+Configuration & Backend / Model & TTFT (ms) & TPS & Total Latency (s) & Verdict \\
+\hline
+Negative & Falcon-7B on MPS & 77573.00 & 0.01 & 264.25 & Impractical \\
+Quantized & Falcon-7B-Q + GGUF & 123.71 & 18.09 & 3.83 & Usable \\
+Preferred & Llama-3-8B-Q + GGUF & 51.25 & 19.27 & 6.69 & Preferred \\
+\hline
+\end{tabular}%
+}
+\end{table}

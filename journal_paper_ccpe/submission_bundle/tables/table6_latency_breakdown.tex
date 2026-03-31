@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\centering
+\caption{Representative stage-wise latency of the optimized path at \texttt{keep\_ratio = 0.6}. Decode remains the dominant residual cost.}
+\label{tab:latency-breakdown}
+\small
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{l r r}
+\hline
+Stage & Time (ms) & Share (\%) \\
+\hline
+Retrieval & 21.1 & 0.14 \\
+Compression & 28.9 & 0.20 \\
+Prefill & 874.3 & 5.98 \\
+Decode & 13688.3 & 93.67 \\
+\hline
+Total & 14612.6 & 100.00 \\
+\hline
+\end{tabular}
+\end{table}

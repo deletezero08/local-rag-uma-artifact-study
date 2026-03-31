@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\caption{Concurrency behavior under full-context and optimized execution paths at two contention levels.}
+\label{tab:concurrency-stability}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{p{2.15cm} r r r r r}
+\hline
+Mode / N & Success rate & P95 TTFT (ms) & Aggregate TPS & Wall time (s) & Errors \\
+\hline
+Full context / 2 & $1.00$ & $7725.955$ & $6.352$ & $40.670$ & $0.0$ \\
+Optimized path / 2 & $1.00$ & $6921.581$ & $7.025$ & $36.818$ & $0.0$ \\
+Full context / 4 & $0.95$ & $13200.869$ & $4.613$ & $106.391$ & $0.2$ \\
+Optimized path / 4 & $0.75$ & $10369.998$ & $5.408$ & $76.382$ & $1.0$ \\
+\hline
+\end{tabular}
+}
+\end{table}

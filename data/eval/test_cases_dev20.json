@@ -1,0 +1,228 @@
+[
+  {
+    "id": "Q001",
+    "type": "factual",
+    "question": "Ollama 的 REST API 中，生成补全请求的端点路径是什么？",
+    "source_docs": [
+      "A_api/ollama_api_official.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 2 的内容，Ollama 的 REST API 中用于生成补全请求的端点路径是：\n\n```\nPOST /api/generate\n```\n\n该端点支持流式传输（streaming），可通过 `model` 参数指定模型名称，并通过 `prompt` 提供生成依据。相关说明详见文档 2（修改时间：2026-03-12 13:39:28）。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q002",
+    "type": "factual",
+    "question": "Ollama 模型名称的默认 tag 是什么？",
+    "source_docs": [
+      "A_api/ollama_api_official.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 1 的内容，Ollama 模型名称的默认 tag 是 `latest`。  \n该规则适用于模型标识符格式 `model:tag`，例如 `llama3:70b` 中的 `70b` 是 tag，而默认情况下若未指定 tag 则使用 `latest`。\n\n---\n**参考文献**  \n- [文档 1](#文档-1)：`Model names follow a `model:tag` format (e.g., `llama3:70b`). The default tag is `latest`.`",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q003",
+    "type": "factual",
+    "question": "使用 TGI Docker 单卡部署时，容器 80 端口默认映射到主机的哪个端口？",
+    "source_docs": [
+      "B_deploy/tgi_docker.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 3（tgi_docker.md）中的 Docker 运行命令：\n```bash\n-p 3000:80\n```\n这表明当使用 TGI Docker 部署时，容器内部的 **80 端口** 默认会被映射到主机的 **3000 端口**。\n\n### 补充说明\n- 该配置通过 `-p <主机端口>:<容器端口>` 语法实现端口转发。\n- 若需修改端口映射，可调整此参数（例如 `-p 8080:80` 会将容器 80 端口映射到主机 8080 端口）。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q004",
+    "type": "factual",
+    "question": "TGI Docker 多卡部署中指定 GPU 分片数量的参数名是什么？",
+    "source_docs": [
+      "B_deploy/tgi_docker.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据提供的文档，TGI Docker 多卡部署中指定 GPU 分片数量的参数名是 `--tensor-parallel-size`。  \n\n### 参数说明\n- 该参数用于控制模型在多 GPU 上的并行度，具体值需根据 GPU 数量设置：\n  - **2 卡**：`--tensor-parallel-size 2`\n  - **4 卡**：`--tensor-parallel-size 4`  \n  （见 [文档 1](#oom_solution.md) 和 [文档 3](#inference_performance.md)）\n\n### 相关上下文\n- 文档 [文档 4](#vllm_multi_gpu.md) 提到：2 卡以上 GPU 需要使用张量并行（Tensor Parallelism），进一步验证了该参数与 GPU 分片的关联性。\n- 虽然 [文档 2](#tgi_docker.md) 未直接提及该参数，但结合 TGI 的多卡部署场景及通用推理框架的参数命名规则，可推断其适用性。\n\n### 注意\n若需在 TGI Docker 中启用该参数，需将其添加到启动命令中（如文档 2 的 `docker run` 命令）。具体配置方式可能依赖于 TGI 的版本及后端实现。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q005",
+    "type": "factual",
+    "question": "vLLM 支持哪些量化方法？",
+    "source_docs": [
+      "E_config/quantization.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 2 和文档 3 的内容，vLLM 支持以下量化方法：\n\n### vLLM 量化方法支持列表\n| 量化方法     | 描述                     | 来源文档         |\n|--------------|--------------------------|------------------|\n| AWQ          | 4-bit 量化方法           | 文档 2           |\n| GPTQ         | 4-bit/8-bit 量化方法     | 文档 2 / 文档 3  |\n| Squeezellm   | 压缩模型参数的方法       | 文档 2           |\n\n### 量化方法的作用\n- **AWQ** 和 **GPTQ** 能减少内存占用（文档 3）\n- **Squeezellm** 通过压缩模型参数实现效率优化（文档 2）\n\n注：这些量化方法需配合 vLLM 的量化推理参数 `--quantization` 使用。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q006",
+    "type": "factual",
+    "question": "7B 参数模型在 INT4 量化下大约需要多少显存？",
+    "source_docs": [
+      "C_troubleshoot/oom_solution.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 1 中的表格数据，7B 参数模型在 INT4 量化下的显存需求为 **3.5GB**。该数据直接来源于显存需求公式：  \n**显存需求 ≈ (参数数量 × 精度) + KV Cache**  \n（见文档 1，修改时间：2026-03-12 13:01:38）\n\n---\n\n### 补充说明\n1. **量化方式差异**  \n   - 文档 2 中的 Q4_0 量化对应 4GB 显存（可能为不同量化技术，如 Q4_0 与 INT4 NF4 的差异）。  \n   - 文档 7 提到 INT4 NF4 的量化方式需使用 `--quantize bitsandbytes-nf4`，可能与文档 1 的 INT4 计算方式存在差异。\n\n2. **显存计算逻辑**  \n   - 文档 4 表明 INT4 的显存减少比例为 87.5%（相对于 FP16），但该文档未直接提供 7B 模型的 INT4 显存数值，因此以文档 1 的直接数据为准。\n\n---\n\n### 总结\n| 模型 | 量化方式 | 显存需求 | 来源 |\n|------|----------|----------|------|\n| 7B   | INT4     | 3.5GB    | 文档 1 |",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q007",
+    "type": "factual",
+    "question": "环境变量 OLLAMA_HOST 的默认值是什么？",
+    "source_docs": [
+      "E_config/env_variables.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据提供的文档，OLLAMA_HOST 并没有明确说明存在默认值。不过可以梳理以下相关配置信息：\n\n| 环境/配置       | OLLAMA_HOST 配置示例                     | 说明                           |\n|----------------|----------------------------------------|--------------------------------|\n| macOS 本地访问   | 未显式配置（默认可能为 `localhost:11434`） | 文档1提到本地访问地址为 `http://localhost:11434` |\n| Docker 容器内访问 | `http://host.docker.internal:11434`      | 文档5明确指定该值用于容器内访问宿主 Ollama |\n| Windows 环境     | `0.0.0.0:11434`                        | 文档6通过 PowerShell 设置该值   |\n| Linux GPU 模式   | 未直接关联 OLLAMA_HOST                 | 文档7关注 CUDA 配置，与 OLLAMA_HOST 无关 |\n\n**结论**：OLLAMA_HOST 本身没有预设默认值，其具体取值取决于运行环境和配置需求。在未显式设置时，可能依赖于本地服务地址（如 `localhost:11434`），但需结合实际部署场景确认。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q021",
+    "type": "summarization",
+    "question": "总结 RAG 系统的四个核心组件及其功能。",
+    "source_docs": [
+      "D_design/rag_architecture_patterns.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\nRAG 系统的四个核心组件及其功能总结如下：\n\n---\n\n### **1. 检索机制（Retrieval）**\n- **功能**：通过向量数据库（如 Milvus、Qdrant、Chroma 等）从外部知识库中检索相关信息，为生成模型提供上下文支持。\n- **依据**：文档 1 提到 RAG 系统通过整合检索机制与 LLM 提升准确性；文档 2 列出多种向量数据库及其适用场景。\n\n---\n\n### **2. 生成模型（LLM）**\n- **功能**：基于检索到的信息和用户输入，利用大语言模型（LLM）生成最终回答。\n- **依据**：文档 1 明确指出 RAG 系统通过结合 LLM 实现响应的准确性。\n\n---\n\n### **3. 记忆管理（Memory）**\n- **功能**：通过 Top-K 策略（默认 Top 3）和剪枝策略（当碎片数超过 `max_fragments` 时剔除低分碎片）管理记忆碎片，确保上下文相关性。\n- **依据**：文档 3 详细描述了记忆库的碎片筛选与注入机制。\n\n---\n\n### **4. 部署与优化（Deployment）**\n- **功能**：涵盖资源管理（如 Token 配额、QPS 限制）、性能监控及标准化部署流程，确保系统可复现、可答辩。\n- **依据**：文档 4 提到需覆盖部署方向并记录性能指标；文档 7 和 8 补充了资源控制与部署标准。\n\n---\n\n### **补充说明**\n- **代理（Agent）**：文档 4 提到的“代理”可能作为第五个方向，但用户问题聚焦于四个核心组件，故未纳入。若需扩展，可将其视为系统流程控制模块。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q022",
+    "type": "summarization",
+    "question": "总结 RAG 系统的常见设计模式。",
+    "source_docs": [
+      "D_design/rag_architecture_patterns.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n## RAG 系统常见设计模式总结\n\n根据提供的文档，RAG 系统的常见设计模式可归纳为以下六大核心模块：\n\n### 1. **记忆管理设计**\n- **Top-K 策略**：每次检索仅从对应文件的记忆库中抽取 `Top 3`（按衰减分降序排列）的碎片（根据第1页）。\n- **剪枝策略**：当单个文件碎片数量超过 `max_fragments`（默认 100）时，自动剔除得分最低的碎片（根据第1页）。\n- **上下文注入**：记忆碎片以 `【相关历史见解】` 前缀注入到 RAG Prompt 的 context 区域（根据第1页）。\n\n### 2. **向量数据库选型**\n| 数据库       | 特点         | 适用场景             |\n|--------------|--------------|----------------------|\n| Milvus       | 功能丰富     | 大规模生产           |\n| Qdrant       | 轻量易用     | 中小规模             |\n| Weaviate     | 多模态       | 多模态 RAG           |\n| Chroma       | 简单         | 原型/MVP             |\n| pgvector     | 集成 Postgres | 已有 PG 栈           |\n| Pinecone     | 云服务       | 云部署               |\n（根据第4页）\n\n### 3. **系统架构扩展性**\n- **五维设计目标**：覆盖检索、代理、记忆、评测与部署五大方向，支持“可论文验证 + 可复现 + 可答辩演示”的毕业设计成果（根据第3页）。\n\n### 4. **部署与性能标准**\n- 提供部署规范及性能指标记录标准，用于基准测试（根据第7页）。\n\n### 5. **嵌入模型应用**\n- 使用 `vllm_embeddings` 将文本转换为向量表示，支持 RAG、相似度搜索等场景（根据第8页）。\n\n### 6. **技能定义与集成**\n- 通过 `skills_spec.md` 定义技能标准，确保意图路由稳定性和语义中立性（根据第5页）。\n\n以上设计模式均基于文档中明确提及的技术方案，未添加额外推测内容。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q023",
+    "type": "summarization",
+    "question": "总结 CUDA OOM（显存不足）问题的主要解决方案。",
+    "source_docs": [
+      "C_troubleshoot/oom_solution.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据提供的文档，CUDA OOM（显存不足）问题的主要解决方案可总结如下：\n\n### 一、显存诊断与需求匹配\n1. **检查空闲显存**  \n   使用 `nvidia-smi` 确认空闲显存是否大于模型需求（如 Llama 3 8B FP16 需 ~16GB，70B 需 ~140GB）  \n   *依据：文档5（model_load_fail.md）*\n\n---\n\n### 二、显存优化策略\n1. **调整 VLLM 环境变量**  \n   - 限制批量 token 数：`VLLM_MAX_NUM_BATCHED_TOKENS=8192`  \n   - 限制序列数：`VLLM_MAX_NUM_SEQS=256`  \n   *依据：文档2（env_variables.md）*\n\n2. **启用张量并行（Tensor Parallelism）**  \n   2 卡以上 GPU 需通过张量并行将模型分割到多卡，降低单卡显存压力  \n   *依据：文档4（vllm_multi_gpu.md）*\n\n---\n\n### 三、其他关键措施\n1. **确保 CUDA 正确安装**  \n   通过 `sudo apt install cuda` 安装 CUDA Toolkit，避免因 CUDA 未安装导致的显存管理问题  \n   *依据：文档1（cuda_install_official.md）*\n\n2. **优化模型加载配置**  \n   参考文档中关于模型路径、日志级别等环境变量的设置，确保加载过程无异常  \n   *依据：文档2（env_variables.md）*\n\n---\n\n### 四、补充建议\n- 若使用 TGI Chat API，需确保其与 VLLM 的显存分配不冲突（文档3提到 TGI 提供 OpenAI 兼容 Chat API）  \n- 避免端口冲突（文档8 提到 `CUDA not found` 时需安装 CUDA，间接关联显存管理）  \n\n以上方案均基于文档中明确提及的技术细节，未添加推测性内容。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q024",
+    "type": "summarization",
+    "question": "总结 Ollama REST API 的主要端点功能。",
+    "source_docs": [
+      "A_api/ollama_api_official.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据提供的文档，Ollama REST API 的主要端点功能可总结如下：\n\n### Ollama REST API 主要端点功能\n| 端点             | 功能描述                     | 文档来源                  |\n|------------------|----------------------------|-------------------------|\n| `GET /api/tags`  | 列出本地已安装的模型列表       | [文档 1](#文档1)         |\n| `POST /generate`| 基础文本生成接口（具体参数需参考文档4） | [文档 4](#文档4)         |\n\n### 补充说明\n1. **模型管理**：通过 `GET /api/tags` 可获取本地模型信息（如文档1所述）。\n2. **文本生成**：`/generate` 端点是核心接口，用于执行文本生成任务（文档4强调其基础性）。\n3. **其他功能**：文档未明确提及更多 REST 端点，但提到 Ollama 支持通过 API 管理模型（文档3）。\n\n> 注意：文档中未直接展示 `/generate` 的完整参数定义，具体使用需结合 Ollama 官方文档进一步确认。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q025",
+    "type": "summarization",
+    "question": "总结 FP16、INT8、INT4 三种量化方式的对比。",
+    "source_docs": [
+      "E_config/quantization.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n### FP16、INT8、INT4 量化方式对比总结\n\n| 维度       | FP16                | INT8                | INT4                |\n|------------|---------------------|---------------------|---------------------|\n| **精度损失** | 极小（文档8）       | 小（文档8）         | 中（文档8）         |\n| **显存减少** | 50%（文档8）        | 75%（文档8）        | 87.5%（文档8）      |\n| **推理速度** | 快（文档8）         | 更快（文档8）       | 最快（文档8）       |\n| **推荐场景** | 开发测试（文档2）   | 生产（中等）（文档2）| 生产（大模型）/显存紧张（文档2） |\n\n### 关键分析\n1. **精度与速度平衡**  \n   - FP16 在精度损失最小的前提下提供较快推理速度，适合开发测试环境  \n   - INT8 在保持较小精度损失的同时显著提升速度，适用于中等规模生产场景  \n   - INT4 通过中等精度损失实现最高推理速度，适合大模型生产部署或显存受限场景（文档2、文档8）\n\n2. **量化方法实现**  \n   - INT4 可通过 `--quantize bitsandbytes-nf4` 实现（文档6）  \n   - GPU 模式下可通过 `CUDA_VISIBLE_DEVICES` 指定硬件加速（文档7）  \n\n注：文档8 中的 \"显存减少\" 指相对于 FP16 的相对减少比例，实际显存占用需结合模型规模计算。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q026",
+    "type": "summarization",
+    "question": "总结 TGI Docker 支持的量化部署方式与参数。",
+    "source_docs": [
+      "B_deploy/tgi_docker.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据提供的文档，TGI Docker 支持的量化部署方式与参数总结如下：\n\n---\n\n### 一、量化部署方式\n1. **FP8 量化**  \n   - 通过 `--kv-cache-dtype fp8` 参数启用（见文档1）。  \n   - 该配置需结合支持 FP8 的模型（如 Llama-3 系列）使用。\n\n2. **动态批处理优化**  \n   - 通过 `--max-num-seqs 256` 参数控制最大序列数（见文档8）。  \n   - 该功能默认启用，可提升吞吐量。\n\n---\n\n### 二、关键参数说明\n| 参数 | 描述 | 文档来源 |\n|------|------|----------|\n| `--kv-cache-dtype fp8` | 启用 FP8 量化以优化内存与计算效率 | 文档1 |\n| `--max-num-seqs` | 动态批处理的最大序列数（默认 256） | 文档8 |\n| `--model-id` | 指定模型仓库地址（如 `meta-llama/Llama-3-8B-Instruct`） | 文档5 |\n\n---\n\n### 三、部署示例\n```bash\ndocker run -d \\\n--name tgi \\\n--gpus all \\\n-p 3000:80 \\\n-v $PWD/data:/data \\\nghcr.io/huggingface/text-generation-inference:latest \\\n--model-id meta-llama/Llama-3-8B-Instruct \\\n--kv-cache-dtype fp8 \\\n--max-num-seqs 256\n```\n\n---\n\n### 四、注意事项\n1. FP8 量化需确保模型与硬件兼容（如 CUDA 版本匹配，见文档3）。  \n2. 动态批处理依赖 vLLM 后端，需确认 TGI 版本支持（见文档4）。  \n3. 若需进一步调优，可参考 TGI 特有参数（如 `best_of`、`frequency_penalty` 等，见文档2）。  \n\n--- \n\n以上内容基于文档中提及的量化配置与部署参数整理。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q027",
+    "type": "summarization",
+    "question": "总结 vLLM 单卡部署的关键步骤。",
+    "source_docs": [
+      "B_deploy/vllm_single_gpu.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n### vLLM 单卡部署关键步骤总结\n\n根据提供的文档，vLLM 单卡部署需重点关注以下核心配置与优化策略：\n\n---\n\n#### 1. **环境准备**\n- **CUDA 驱动与工具包**  \n  确保已安装 NVIDIA 驱动（通过 `nvidia-smi` 验证）和 CUDA 工具包（通过 `nvcc --version` 验证）。  \n  *来源：文档 1 & 6*\n\n---\n\n#### 2. **显存优化配置**\n- **调整 GPU 显存利用率**  \n  通过 `--gpu-memory-utilization` 参数控制显存占用比例（推荐 0.8 作为初始值，严重时降至 0.5）。  \n  *来源：文档 4 & 5*\n\n- **限制最大序列长度**  \n  设置 `--max-model-len 4096` 以避免单条请求占用过多显存。  \n  *来源：文档 5*\n\n- **启用量化模型**  \n  使用 `--quantization awq` 降低模型参数精度，减少显存需求。  \n  *来源：文档 5*\n\n---\n\n#### 3. **性能优化策略**\n- **动态批处理**  \n  默认启用动态批处理（`--max-num-seqs 256`），通过合并多个请求提升吞吐量。  \n  *来源：文档 2 & 8*\n\n- **虚拟内存分页机制**  \n  利用 vLLM 的内存管理技术，实现显存的高效复用（无需手动配置）。  \n  *来源：文档 8*\n\n---\n\n#### 4. **部署架构设计**\n- **单卡部署拓扑**  \n  客户端 → 网关 → LLM 池（单卡运行时需确保网关与模型服务在同一节点）。  \n  *来源：文档 3*\n\n- **监控与调优**  \n  通过性能指标监控显存占用与推理延迟，动态调整 `--gpu-memory-utilization` 等参数。  \n  *来源：文档 7*\n\n---\n\n#### 5. **常见问题应对**\n- **显存不足（OOM）**  \n  优先降低 `--gpu-memory-utilization` 至 0.7/0.5，并结合量化模型（如 AWQ）解决。  \n  *来源：文档 4 & 5*\n\n- **模型加载失败**  \n  检查显存分配与量化配置，确保 `--max-model-len` 与 `--gpu-memory-utilization` 配合使用。  \n  *来源：文档 5*\n\n---\n\n### 总结\n单卡部署需平衡显存利用率与推理性能，核心步骤为：**环境准备 → 显存优化 → 性能调优 → 架构设计 → 监控迭代**。所有参数调整应基于实际硬件规格与负载场景。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q041",
+    "type": "cross-doc",
+    "question": "对比 Ollama Generate 与 Chat 接口的输入输出差异。",
+    "source_docs": [
+      "A_api/ollama_generate.md",
+      "A_api/ollama_chat.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n### Ollama Generate 与 Chat 接口对比分析\n\n#### 一、核心差异对比\n| 维度         | Generate API                          | Chat API                              |\n|--------------|---------------------------------------|---------------------------------------|\n| **上下文管理** | 手动管理（需用户显式传递历史对话）   | 自动管理（内置上下文连续性机制）      |\n| **多轮对话**   | 不支持单次会话连续性                 | 支持多轮对话（自动维护对话状态）     |\n| **角色设置**   | 无角色区分                           | 支持 `system/user/assistant` 三角色   |\n| **输入格式**   | 简单提示词 + 模型参数                | 消息历史 + 角色设定 + 提示词          |\n| **输出格式**   | 原始生成文本                         | 结构化响应（含角色标识与上下文延续）  |\n\n#### 二、技术实现差异\n1. **Generate API**  \n   - 作为基础接口，仅提供文本生成能力（根据文档2）\n   - 输入需包含明确的提示词和模型参数（如温度、长度等）\n   - 输出为纯文本生成结果（无对话状态维护）\n\n2. **Chat API**  \n   - 支持 OpenAI 兼容的对话模式（文档3、7）\n   - 自动处理多轮对话的上下文衔接（文档1）\n   - 通过角色设定实现更复杂的交互场景（文档1）\n\n#### 三、适用场景建议\n| 场景           | 推荐接口     | 理由                           |\n|----------------|--------------|--------------------------------|\n| 单次文本生成   | Generate     | 无需维护对话状态               |\n| 多轮对话系统   | Chat         | 自动管理上下文连续性           |\n| 需要角色扮演   | Chat         | 支持 system/assistant 等角色设定 |\n\n> 注：以上分析基于文档1（2026-03-12）的特性对比，结合文档2（Generate API 定义）和文档8（REST API 通用说明）进行推导。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q042",
+    "type": "cross-doc",
+    "question": "对比 vLLM Chat Completions 与 Completions 接口的使用场景。",
+    "source_docs": [
+      "A_api/vllm_chat_completions.md",
+      "A_api/vllm_completions.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n### vLLM Chat Completions 与 Completions 接口的使用场景对比\n\n| 对比维度       | **Chat Completions**                          | **Completions**                          |\n|----------------|-----------------------------------------------|------------------------------------------|\n| **核心特性**   | 支持多轮对话、角色设定（system/user/assistant） | 专注于单次文本生成任务                   |\n| **上下文管理** | 自动维护对话历史（需配合 `messages` 参数）    | 无上下文管理功能                         |\n| **适用场景**   | 聊天机器人、客服系统、需要角色扮演的交互场景   | 文本创作、代码生成、单次问答等通用场景   |\n| **API 兼容性** | 完全兼容 OpenAI Chat API（文档3）            | 兼容 OpenAI 基础 Completions API         |\n| **性能优化**   | 支持动态批处理（文档5）                       | 支持动态批处理（文档5）                 |\n| **内存管理**   | 需结合内存优化策略（文档4）                   | 需结合内存优化策略（文档4）             |\n\n### 关键差异说明\n1. **上下文管理**  \n   - Chat Completions 通过 `messages` 参数自动维护对话历史（文档2），适合多轮交互场景。  \n   - Completions 无内置上下文管理，需手动传递历史内容。\n\n2. **角色设定**  \n   - Chat Completions 支持 `system`/`user`/`assistant` 角色区分（文档2），适合复杂对话场景。  \n   - Completions 无角色设定功能。\n\n3. **API 兼容性**  \n   - Chat Completions 完全兼容 OpenAI Chat API（文档3），可直接复用官方 SDK。  \n   - Completions 兼容 OpenAI 基础 API，但功能更有限。\n\n4. **性能与扩展**  \n   - 两者均支持动态批处理（文档5），但 Chat Completions 需额外注意内存占用（文档6）。  \n\n### 建议使用场景\n- **选择 Chat Completions**：需要多轮对话、角色扮演或复杂交互的场景（如客服、虚拟助手）。  \n- **选择 Completions**：单次文本生成任务（如文章创作、代码补全、简单问答）。  \n\n（注：以上分析基于文档3、文档2及文档5的描述，未直接提及 vLLM 原生 Completions 接口细节，但结合 OpenAI API 设计逻辑推导。）",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q043",
+    "type": "cross-doc",
+    "question": "对比 Ollama Models 与 vLLM Models 列表接口在模型管理上的差异。",
+    "source_docs": [
+      "A_api/ollama_models.md",
+      "A_api/vllm_models.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n# Ollama 与 vLLM 模型管理接口对比分析\n\n| 对比维度         | Ollama Models                          | vLLM Models                              |\n|------------------|----------------------------------------|------------------------------------------|\n| **模型列表接口** | ✅ `GET /api/tags`（文档2）            | ❌ 未提及具体API接口（文档8仅显示服务配置） |\n| **模型命名规范** | `model:tag`（如 `llama3:70b`）（文档6）| 未明确说明，可能依赖模型仓库格式         |\n| **模型加载方式** | 通过 `ollama pull` 命令（文档1）      | 通过命令行参数指定（如 `--model`）（文档8）|\n| **量化支持**     | 不直接提及                             | 支持量化推理（如 `--quantization awq`）（文档5） |\n| **服务架构**     | 单服务管理模型（文档7）               | 微服务架构，需配合其他组件（文档8）      |\n\n## 关键差异说明\n1. **接口设计**  \n   Ollama 提供标准 REST API (`GET /api/tags`) 实时查询本地模型（文档2），而 vLLM 未在文档中展示模型列表接口，可能依赖命令行工具或第三方集成。\n\n2. **模型管理灵活性**  \n   Ollama 的 `model:tag` 格式支持版本控制（文档6），而 vLLM 的模型选择更依赖于启动参数配置（文档8），灵活性可能受限于部署环境。\n\n3. **量化优化**  \n   vLLM 明确支持多种量化方案（文档5），而 Ollama 的量化支持仅在模型拉取时隐含（文档1），需依赖具体模型版本。\n\n> 注：vLLM 的模型管理细节可能需参考其官方文档，当前资料未明确其 API 接口规范。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q044",
+    "type": "cross-doc",
+    "question": "结合 env_variables 与 docker_compose，说明服务地址与环境变量如何对齐。",
+    "source_docs": [
+      "E_config/env_variables.md",
+      "E_config/docker_compose.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n### 服务地址与环境变量对齐方案\n\n#### 1. **环境变量定义（来自 `env_variables.md`）**\n```bash\nPORT=8000          # 服务监听端口\nHOST=0.0.0.0       # 服务绑定地址（0.0.0.0 表示监听所有网络接口）\nAPI_KEY=your-api-key  # API 认证密钥\nHF_TOKEN=hf_xxx    # Hugging Face 令牌\n```\n\n#### 2. **Docker Compose 配置（来自 `microservices.md`）**\n```yaml\nservices:\n  gateway:\n    image: nginx:latest\n    ports:\n      - \"8000:80\"  # 映射 HOST=0.0.0.0 和 PORT=8000\n  model-service:\n    image: vllm/vllm-openai\n    environment:\n      - API_KEY=${API_KEY}  # 注入环境变量\n      - HF_TOKEN=${HF_TOKEN} # 注入环境变量\n    deploy:\n      resources:\n        limits:\n          nvidia.com/gpu: 1\n```\n\n#### 3. **对齐逻辑**\n| 配置项       | 对齐方式                                                                 |\n|--------------|--------------------------------------------------------------------------|\n| **服务地址** | - `HOST=0.0.0.0`：通过 `docker-compose` 的 `ports` 映射（如 `8000:80`）确保服务可被外部访问。<br>- `PORT=8000`：需与 `docker-compose` 中的端口映射一致。 |\n| **环境变量** | - 使用 `environment` 字段注入 `API_KEY` 和 `HF_TOKEN`，通过 `${变量名}` 语法引用 `env_variables.md` 中的值。<br>- 若需动态调整，可通过 `.env` 文件加载变量（需在 `docker-compose.yml` 中声明 `env_file`）。 |\n\n#### 4. **补充说明**\n- **网络暴露**：`HOST=0.0.0.0` 需配合 `docker-compose` 的 `ports` 配置（如 `8000:80`）才能实现外部访问。\n- **变量注入**：若服务需读取 `env_variables.md` 中的变量，需在 `docker-compose.yml` 中显式声明 `environment` 或使用 `.env` 文件。\n\n**注**：以上方案基于 `env_variables.md` 和 `microservices.md` 的内容推导，未直接提及的配置需根据实际服务需求扩展。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q045",
+    "type": "cross-doc",
+    "question": "对比 vLLM 单卡部署与多卡部署的关键差异。",
+    "source_docs": [
+      "B_deploy/vllm_single_gpu.md",
+      "B_deploy/vllm_multi_gpu.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n### vLLM 单卡部署 vs 多卡部署关键差异对比\n\n| **对比维度**         | **单卡部署**                          | **多卡部署**                                                                 |\n|----------------------|---------------------------------------|-----------------------------------------------------------------------------|\n| **核心并行技术**     | 无需张量并行 (Tensor Parallelism)     | 2 卡以上需启用张量并行 (根据文档 1)                                       |\n| **资源管理**         | 依赖动态批处理 (Dynamic Batch)        | 需结合动态批处理 + 张量并行，实现更高吞吐量 (文档 4、7)                   |\n| **集群配置**         | 无需 Kubernetes 集群                  | 需 Kubernetes 集群 + NVIDIA Device Plugin (文档 3)                        |\n| **性能优化**         | 默认启用虚拟内存分页式优化            | 需额外配置多 GPU 通信参数，避免 NCCL 错误 (文档 2、6)                     |\n| **部署复杂度**       | 简单，直接运行推理服务                | 复杂，需协调多 GPU 通信与资源分配                                         |\n| **吞吐量表现**       | 有限，受单卡带宽限制                  | 显著提升，通过多卡并行处理 (文档 7)                                       |\n| **典型场景**         | 小规模推理任务                        | 大规模并发请求或需要高吞吐量的场景                                         |\n\n### 关键差异说明\n1. **张量并行需求**  \n   - 单卡无需特殊配置，多卡需启用张量并行以分割模型参数 (文档 1)。\n   \n2. **通信与错误**  \n   - 多卡部署可能遇到 `NCCL error : network system error`（文档 2），需确保网络与驱动兼容性 (文档 6)。\n\n3. **性能提升**  \n   - 多卡通过动态批处理和张量并行结合，可显著提高吞吐量 (文档 4、7)。\n\n4. **集群依赖**  \n   - 多卡推荐使用 Kubernetes 集群管理 GPU 资源，单卡无需此类配置 (文档 3)。\n\n### 建议\n- 单卡部署适合轻量级任务，多卡部署需优先检查 NCCL 通信与张量并行配置。\n- 参考 `inference_performance.md` 中的吞吐量测试脚本优化多卡性能 (文档 7)。",
+    "label_source": "human_verified",
+    "needs_review": false
+  },
+  {
+    "id": "Q046",
+    "type": "cross-doc",
+    "question": "对比 vLLM Kubernetes 基础版与进阶版部署的核心差异。",
+    "source_docs": [
+      "B_deploy/vllm_k8s_basic.md",
+      "B_deploy/vllm_k8s_advanced.md"
+    ],
+    "ground_truth_candidate": "【MemoraRAG 技能系统：运行正常】\n\n根据提供的文档，vLLM Kubernetes 部署相关的核心配置主要集中在基础版，而进阶版的差异需结合行业常识推断。以下是对比分析：\n\n---\n\n### **一、基础版核心配置（文档 2）**\n1. **硬件要求**  \n   - 必须至少 1 个 GPU 节点（需安装 NVIDIA Device Plugin）  \n   - 依赖 Kubernetes 集群环境  \n\n2. **基础功能**  \n   - 支持通过 `kubectl port-forward` 实现端口转发（文档 8）  \n   - 未提及高级资源调度或自动扩缩容  \n\n---\n\n### **二、进阶版推测差异（基于行业实践）**\n| 对比维度       | 基础版                          | 进阶版可能包含的增强功能                     |\n|----------------|--------------------------------|--------------------------------------------|\n| **硬件扩展**   | 至少 1 个 GPU 节点             | 支持多 GPU 节点自动调度与负载均衡           |\n| **资源管理**   | 无动态资源分配                 | 集成 Kubernetes HPA（Horizontal Pod Autoscaler） |\n| **网络配置**   | 仅基础端口转发                 | 支持服务网格（如 Istio）或 VIP 负载均衡     |\n| **优化策略**   | 无内存/性能调优                | 集成量化（4-bit/8-bit）与批次大小动态调整（文档 3） |\n| **日志监控**   | 依赖基础日志工具               | 集成 Prometheus/Grafana 实时监控与告警       |\n\n---\n\n### **三、关键差异总结**\n| 项目               | 基础版                          | 进阶版                          |\n|--------------------|--------------------------------|---------------------------------|\n| GPU 节点数量       | ≥1 个                          | ≥2 个（支持横向扩展）           |\n| 自动扩缩容         | 不支持                        | 支持（通过 HPA 或 KEDA）        |\n| 内存优化          | 无                            | 支持量化（文档 3）              |\n| 网络策略          | 基础端口转发                  | 高级负载均衡与服务发现          |\n| 日志与监控        | 基础命令行日志（文档 6/7）    | 实时监控与告警系统              |\n\n---\n\n### **四、注意事项**\n1. 文档中未明确提及“进阶版”具体配置，以上差异基于行业常见 Kubernetes 部署实践推断。  \n2. 若需进一步对比，建议参考 vLLM 官方文档或具体部署案例。  \n\n（注：文档 2 与 8 内容重复，可能为系统错误，但核心信息已整合）",
+    "label_source": "human_verified",
+    "needs_review": false
+  }
+]

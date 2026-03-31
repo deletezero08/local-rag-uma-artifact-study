@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\caption{Quality preservation under the selected operating point. The table compares the baseline path with the final operating point from the bounded \texttt{topn} $\times$ \texttt{budget} search region using TTFT, total latency, and merged dual-judge Faithfulness/Relevance scores on the evaluation split.}
+\label{tab:quality-preservation}
+\resizebox{\columnwidth}{!}{%
+\renewcommand{\arraystretch}{1.4}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{c r r r r r r}
+\hline
+\shortstack{Config.} & \shortstack{TTFT\\(ms)} & \shortstack{Total\\latency (ms)} & \shortstack{Merged\\faithfulness} & \shortstack{$\Delta$\\Faithfulness} & \shortstack{Merged\\relevance} & \shortstack{$\Delta$\\Relevance} \\
+\hline
+Baseline & 2026.509 & 7844.002 & 4.237 & --- & 4.975 & --- \\
+Selected & 1344.748 & 7915.441 & 4.500 & +0.263 & 5.112 & +0.137 \\
+\hline
+\end{tabular}%
+}
+\end{table}

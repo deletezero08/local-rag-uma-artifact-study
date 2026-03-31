@@ -1,0 +1,702 @@
+{
+  "timestamp": "2026-03-30 13:08:52",
+  "script": "scripts/evaluation/paper_topn_budget_grid.py",
+  "output_schema_version": "1.0",
+  "experiment": "E7_topn_budget_grid",
+  "cases_file": "/Users/delete/Desktop/rag_system_副本/data/eval/test_cases_test40.json",
+  "sample_size": 2,
+  "keep_ratio": 0.6,
+  "topn_values": [
+    5,
+    8
+  ],
+  "budget_values": [
+    "none",
+    "1500"
+  ],
+  "baseline_reference": {
+    "source_file": "/Users/delete/Desktop/rag_system_副本/results/evaluation/dual_judge_expanded_eval.json",
+    "quality_threshold": 5.0,
+    "baseline": {
+      "name": "baseline",
+      "n": 40,
+      "latency_mean": 7.844,
+      "ttft_mean_ms": 2026.509,
+      "total_mean_ms": 7844.002,
+      "faithfulness_mean_judge_a": 3.7,
+      "relevance_mean_judge_a": 4.475,
+      "faithfulness_mean_judge_b": 4.775,
+      "relevance_mean_judge_b": 5.475,
+      "faithfulness_mean_merged": 4.237,
+      "relevance_mean_merged": 4.975,
+      "judge_gap_faithfulness_mean": 2.675,
+      "judge_gap_relevance_mean": 2.85,
+      "judge_agreement_rate_gap_le_1": 0.275,
+      "answer_error_rate_proxy": 0.625
+    },
+    "optimized": {
+      "name": "optimized",
+      "n": 40,
+      "latency_mean": 7.4,
+      "ttft_mean_ms": 1515.248,
+      "total_mean_ms": 7399.523,
+      "faithfulness_mean_judge_a": 3.775,
+      "relevance_mean_judge_a": 4.575,
+      "faithfulness_mean_judge_b": 4.775,
+      "relevance_mean_judge_b": 5.175,
+      "faithfulness_mean_merged": 4.275,
+      "relevance_mean_merged": 4.875,
+      "judge_gap_faithfulness_mean": 2.65,
+      "judge_gap_relevance_mean": 2.4,
+      "judge_agreement_rate_gap_le_1": 0.275,
+      "answer_error_rate_proxy": 0.575
+    }
+  },
+  "selection_thresholds": {
+    "max_faithfulness_drop": 0.2,
+    "max_relevance_drop": 0.2,
+    "max_error_rate_increase": 0.1,
+    "max_judge_gap_mean": 3.0,
+    "quality_threshold": 5.0
+  },
+  "points": [
+    {
+      "point_id": "t5_bnone",
+      "topn": 5,
+      "budget": null,
+      "budget_label": "none",
+      "status": "completed",
+      "rows": [
+        {
+          "id": "Q008",
+          "question": "docker_compose.md 中 API 服务的端口映射配置是什么？",
+          "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 1 的配置，API 服务的端口映射配置如下：\n\n```yaml\nports:\n- \"8080:8080\"\n```\n\n**说明：**\n- 主机端口 8080 映射到容器内部的 8080 端口（根据第 1 页内容）\n- 该配置位于 `api` 服务的 `ports` 字段中（根据第 1 页内容）\n\n其他文档（2-4 页）主要涉及 `vllm`、`qdrant` 和 `ollama` 服务的配置，未包含 API 服务的端口设置。",
+          "source_docs": [
+            "E_config/docker_compose.md"
+          ],
+          "answer": "Based on the provided context, the API service's port mapping configuration in `docker-compose.yml` is `-p 3000:80`, which maps port 3000 on the host machine to port 80 in the container.",
+          "context": "# Docker Compose 完整配置\n\n```bash\n# Docker\ndocker --version\nnvidia-docker --version\n\n## Template: `docker-compose.yml`\n\n# 查看容器资源\ndocker stats\n```\n\n| 参数 | 描述 |\n|------|------|\n| -p 3000:80 | 端口映射 (host:container) |\n| -v $PWD/data:/data | 数据卷挂载 |\n| --gpus all | GPU 加速 |",
+          "retrieved_doc_paths": [
+            "E_config/docker_compose.md",
+            "C_troubleshoot/port_conflict.md",
+            "E_config/docker_compose_llm_official.md",
+            "B_deploy/vllm_single_gpu.md",
+            "B_deploy/tgi_docker.md"
+          ],
+          "retrieval_ms": 336.284,
+          "retrieval_inner_ms": 336.26,
+          "scoring_ms": 0.0,
+          "pruning_ms": 0.013,
+          "ttft_ms": 935.777,
+          "total_latency_ms": 3802.3,
+          "prompt_tokens_final": 216,
+          "prompt_chars_final": 645,
+          "context_chars_final": 265,
+          "generated_tokens": 48,
+          "topn": 5,
+          "budget": null,
+          "keep_ratio": 0.6,
+          "strategy": "passthrough",
+          "budget_meta": {
+            "budget_chars": null,
+            "budget_applied": false,
+            "budget_mode": "none",
+            "pre_budget_chars": 265,
+            "post_budget_chars": 265
+          },
+          "recall_at_k": 1.0,
+          "recall_hit_at_k": 1.0,
+          "judge_a": {
+            "faithfulness": 6.0,
+            "relevance": 7.0
+          },
+          "judge_b": {
+            "faithfulness": 0.0,
+            "relevance": 0.0
+          },
+          "faith_a": 6.0,
+          "rel_a": 7.0,
+          "faith_b": 0.0,
+          "rel_b": 0.0,
+          "faith_m": 3.0,
+          "rel_m": 3.5,
+          "gap_f": 6.0,
+          "gap_r": 7.0,
+          "auto_error_category": "factual_drift"
+        },
+        {
+          "id": "Q009",
+          "question": "vLLM Chat Completions 的端点路径是什么？",
+          "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 3 的内容，vLLM Chat Completions 的端点路径与 OpenAI Chat API 兼容，因此其端点路径为：\n\n```\n/v1/chat/completions\n```\n\n该路径在文档 1（`tgi_chat.md`）和文档 7（`tgi_chat.md`）中也被明确提及，用于 TGI 的 Chat API 服务。虽然文档 8 提到通过 `kubectl port-forward` 转发 8000 端口，但端点路径仍遵循标准的 `/v1/chat/completions` 格式。",
+          "source_docs": [
+            "A_api/vllm_chat_completions.md"
+          ],
+          "answer": "Based on the context provided, I can see that the user is using vLLM Chat Completions API and has a Kubernetes deployment setup. However, the endpoint path for vLLM Chat Completions API is not explicitly mentioned in the provided context.\n\nAccording to the vLLM documentation, the endpoint path for Chat Completions API is usually `/v1/completions`. However, without further information, I cannot confirm this with certainty.",
+          "context": "# vLLM Chat Completions API\n\n# vLLM Completions API\n\n# vLLM Kubernetes 部署 - 基础篇\n\n```powershell\n# 检查端口\nnetstat -ano | findstr 11434\n\n# TGI Chat Completions API",
+          "retrieved_doc_paths": [
+            "A_api/vllm_chat_completions.md",
+            "A_api/vllm_completions.md",
+            "B_deploy/vllm_k8s_basic.md",
+            "B_deploy/ollama_windows.md",
+            "A_api/tgi_chat.md"
+          ],
+          "retrieval_ms": 64.691,
+          "retrieval_inner_ms": 64.668,
+          "scoring_ms": 0.0,
+          "pruning_ms": 0.004,
+          "ttft_ms": 516.297,
+          "total_latency_ms": 5698.328,
+          "prompt_tokens_final": 176,
+          "prompt_chars_final": 532,
+          "context_chars_final": 158,
+          "generated_tokens": 93,
+          "topn": 5,
+          "budget": null,
+          "keep_ratio": 0.6,
+          "strategy": "passthrough",
+          "budget_meta": {
+            "budget_chars": null,
+            "budget_applied": false,
+            "budget_mode": "none",
+            "pre_budget_chars": 158,
+            "post_budget_chars": 158
+          },
+          "recall_at_k": 1.0,
+          "recall_hit_at_k": 1.0,
+          "judge_a": {
+            "faithfulness": 2.0,
+            "relevance": 3.0
+          },
+          "judge_b": {
+            "faithfulness": 0.0,
+            "relevance": 3.0
+          },
+          "faith_a": 2.0,
+          "rel_a": 3.0,
+          "faith_b": 0.0,
+          "rel_b": 3.0,
+          "faith_m": 1.0,
+          "rel_m": 3.0,
+          "gap_f": 2.0,
+          "gap_r": 0.0,
+          "auto_error_category": "factual_drift"
+        }
+      ],
+      "summary": {
+        "topn": 5,
+        "budget": null,
+        "budget_label": "none",
+        "n": 2,
+        "retrieval_latency_ms": 200.488,
+        "ttft_ms": 726.037,
+        "total_latency_ms": 4750.314,
+        "merged_faithfulness": 2.0,
+        "merged_relevance": 3.25,
+        "answer_error_rate": 1.0,
+        "prompt_tokens_final": 196.0,
+        "prompt_chars_final": 588.5,
+        "context_chars_final": 211.5,
+        "judge_gap_faithfulness": 4.0,
+        "judge_gap_relevance": 3.5,
+        "recall_at_k": 1.0,
+        "failure_count": 2,
+        "failure_types": {
+          "factual_drift": 2
+        },
+        "strategies_used": [
+          "passthrough"
+        ]
+      },
+      "selection": {
+        "faithfulness_drop_vs_baseline": 2.237,
+        "relevance_drop_vs_baseline": 1.725,
+        "answer_error_rate_delta_vs_baseline_proxy": 0.375,
+        "baseline_answer_error_rate_proxy": 0.625,
+        "is_candidate": false,
+        "selection_note": "faithfulness_drop=2.237>threshold; relevance_drop=1.725>threshold; error_rate_delta=0.375>threshold; judge_gap_f=4.000>threshold; judge_gap_r=3.500>threshold"
+      }
+    },
+    {
+      "point_id": "t5_b1500",
+      "topn": 5,
+      "budget": 1500,
+      "budget_label": "1500",
+      "status": "completed",
+      "rows": [
+        {
+          "id": "Q008",
+          "question": "docker_compose.md 中 API 服务的端口映射配置是什么？",
+          "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 1 的配置，API 服务的端口映射配置如下：\n\n```yaml\nports:\n- \"8080:8080\"\n```\n\n**说明：**\n- 主机端口 8080 映射到容器内部的 8080 端口（根据第 1 页内容）\n- 该配置位于 `api` 服务的 `ports` 字段中（根据第 1 页内容）\n\n其他文档（2-4 页）主要涉及 `vllm`、`qdrant` 和 `ollama` 服务的配置，未包含 API 服务的端口设置。",
+          "source_docs": [
+            "E_config/docker_compose.md"
+          ],
+          "answer": "According to the context, the port mapping configuration for an API service in `docker-compose.yml` is specified using the `-p` option, followed by the host port and container port. For example:\n```\n- p 3000:80\n```\nThis maps port 3000 on the host machine to port 80 in the container.",
+          "context": "# Docker Compose 完整配置\n\n```bash\n# Docker\ndocker --version\nnvidia-docker --version\n\n## Template: `docker-compose.yml`\n\n# 查看容器资源\ndocker stats\n```\n\n| 参数 | 描述 |\n|------|------|\n| -p 3000:80 | 端口映射 (host:container) |\n| -v $PWD/data:/data | 数据卷挂载 |\n| --gpus all | GPU 加速 |",
+          "retrieved_doc_paths": [
+            "E_config/docker_compose.md",
+            "C_troubleshoot/port_conflict.md",
+            "E_config/docker_compose_llm_official.md",
+            "B_deploy/vllm_single_gpu.md",
+            "B_deploy/tgi_docker.md"
+          ],
+          "retrieval_ms": 786.813,
+          "retrieval_inner_ms": 785.068,
+          "scoring_ms": 0.0,
+          "pruning_ms": 0.005,
+          "ttft_ms": 3438.917,
+          "total_latency_ms": 8040.472,
+          "prompt_tokens_final": 216,
+          "prompt_chars_final": 645,
+          "context_chars_final": 265,
+          "generated_tokens": 72,
+          "topn": 5,
+          "budget": 1500,
+          "keep_ratio": 0.6,
+          "strategy": "passthrough",
+          "budget_meta": {
+            "budget_chars": 1500,
+            "budget_applied": false,
+            "budget_mode": "within_limit",
+            "pre_budget_chars": 265,
+            "post_budget_chars": 265
+          },
+          "recall_at_k": 1.0,
+          "recall_hit_at_k": 1.0,
+          "judge_a": {
+            "faithfulness": 1.0,
+            "relevance": 2.0
+          },
+          "judge_b": {
+            "faithfulness": 3.0,
+            "relevance": 3.0
+          },
+          "faith_a": 1.0,
+          "rel_a": 2.0,
+          "faith_b": 3.0,
+          "rel_b": 3.0,
+          "faith_m": 2.0,
+          "rel_m": 2.5,
+          "gap_f": 2.0,
+          "gap_r": 1.0,
+          "auto_error_category": "factual_drift"
+        },
+        {
+          "id": "Q009",
+          "question": "vLLM Chat Completions 的端点路径是什么？",
+          "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 3 的内容，vLLM Chat Completions 的端点路径与 OpenAI Chat API 兼容，因此其端点路径为：\n\n```\n/v1/chat/completions\n```\n\n该路径在文档 1（`tgi_chat.md`）和文档 7（`tgi_chat.md`）中也被明确提及，用于 TGI 的 Chat API 服务。虽然文档 8 提到通过 `kubectl port-forward` 转发 8000 端口，但端点路径仍遵循标准的 `/v1/chat/completions` 格式。",
+          "source_docs": [
+            "A_api/vllm_chat_completions.md"
+          ],
+          "answer": "Based on the provided context, it appears that vLLM Chat Completions is a feature within the vLLM (vLLM Chat Completions API) system. However, the exact endpoint path for vLLM Chat Completions is not specified in the given context.\n\nWithout further information, I cannot provide the exact endpoint path for vLLM Chat Completions. If you have more details or documentation about the system, I would be happy to try and help you find the endpoint path.",
+          "context": "# vLLM Chat Completions API\n\n# vLLM Completions API\n\n# vLLM Kubernetes 部署 - 基础篇\n\n```powershell\n# 检查端口\nnetstat -ano | findstr 11434\n\n# TGI Chat Completions API",
+          "retrieved_doc_paths": [
+            "A_api/vllm_chat_completions.md",
+            "A_api/vllm_completions.md",
+            "B_deploy/vllm_k8s_basic.md",
+            "B_deploy/ollama_windows.md",
+            "A_api/tgi_chat.md"
+          ],
+          "retrieval_ms": 123.027,
+          "retrieval_inner_ms": 123.013,
+          "scoring_ms": 0.0,
+          "pruning_ms": 0.005,
+          "ttft_ms": 535.037,
+          "total_latency_ms": 6204.49,
+          "prompt_tokens_final": 176,
+          "prompt_chars_final": 532,
+          "context_chars_final": 158,
+          "generated_tokens": 105,
+          "topn": 5,
+          "budget": 1500,
+          "keep_ratio": 0.6,
+          "strategy": "passthrough",
+          "budget_meta": {
+            "budget_chars": 1500,
+            "budget_applied": false,
+            "budget_mode": "within_limit",
+            "pre_budget_chars": 158,
+            "post_budget_chars": 158
+          },
+          "recall_at_k": 1.0,
+          "recall_hit_at_k": 1.0,
+          "judge_a": {
+            "faithfulness": 0.0,
+            "relevance": 2.0
+          },
+          "judge_b": {
+            "faithfulness": 2.0,
+            "relevance": 4.0
+          },
+          "faith_a": 0.0,
+          "rel_a": 2.0,
+          "faith_b": 2.0,
+          "rel_b": 4.0,
+          "faith_m": 1.0,
+          "rel_m": 3.0,
+          "gap_f": 2.0,
+          "gap_r": 2.0,
+          "auto_error_category": "factual_drift"
+        }
+      ],
+      "summary": {
+        "topn": 5,
+        "budget": 1500,
+        "budget_label": "1500",
+        "n": 2,
+        "retrieval_latency_ms": 454.92,
+        "ttft_ms": 1986.977,
+        "total_latency_ms": 7122.481,
+        "merged_faithfulness": 1.5,
+        "merged_relevance": 2.75,
+        "answer_error_rate": 1.0,
+        "prompt_tokens_final": 196.0,
+        "prompt_chars_final": 588.5,
+        "context_chars_final": 211.5,
+        "judge_gap_faithfulness": 2.0,
+        "judge_gap_relevance": 1.5,
+        "recall_at_k": 1.0,
+        "failure_count": 2,
+        "failure_types": {
+          "factual_drift": 2
+        },
+        "strategies_used": [
+          "passthrough"
+        ]
+      },
+      "selection": {
+        "faithfulness_drop_vs_baseline": 2.737,
+        "relevance_drop_vs_baseline": 2.225,
+        "answer_error_rate_delta_vs_baseline_proxy": 0.375,
+        "baseline_answer_error_rate_proxy": 0.625,
+        "is_candidate": false,
+        "selection_note": "faithfulness_drop=2.737>threshold; relevance_drop=2.225>threshold; error_rate_delta=0.375>threshold"
+      }
+    },
+    {
+      "point_id": "t8_bnone",
+      "topn": 8,
+      "budget": null,
+      "budget_label": "none",
+      "status": "completed",
+      "rows": [
+        {
+          "id": "Q008",
+          "question": "docker_compose.md 中 API 服务的端口映射配置是什么？",
+          "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 1 的配置，API 服务的端口映射配置如下：\n\n```yaml\nports:\n- \"8080:8080\"\n```\n\n**说明：**\n- 主机端口 8080 映射到容器内部的 8080 端口（根据第 1 页内容）\n- 该配置位于 `api` 服务的 `ports` 字段中（根据第 1 页内容）\n\n其他文档（2-4 页）主要涉及 `vllm`、`qdrant` 和 `ollama` 服务的配置，未包含 API 服务的端口设置。",
+          "source_docs": [
+            "E_config/docker_compose.md"
+          ],
+          "answer": "Based on the provided context, there is no API service mentioned in the `docker-compose.yml` file. The file only defines three services: `gateway`, `model-service`, and `embedding-service`, but there is no mention of API service.\n\nHowever, in the `docker-compose.yml` file, there is a `gateway` service that is based on the `nginx:latest` image. Nginx is a web server, and it is possible that this service is intended to serve an API.\n\nIn that case, if you want to expose the API, you would need to configure the `gateway` service to expose its port",
+          "context": "# Docker Compose 完整配置\n\n```bash\n# Docker\ndocker --version\nnvidia-docker --version\n\n## Template: `docker-compose.yml`\n\n# 查看容器资源\ndocker stats\n```\n\n| 参数 | 描述 |\n|------|------|\n| -p 3000:80 | 端口映射 (host:container) |\n| -v $PWD/data:/data | 数据卷挂载 |\n| --gpus all | GPU 加速 |\n\n```yaml\n# node_exporter 配置\nscrape_configs:\n  - job_name: 'nvidia'\n    static_configs:\n      - targets: ['nvidia-exporter:9100']\n```\n\n```yaml\n# docker-compose.yaml\nservices:\n  gateway:\n    image: nginx:latest\n    \n  model-service:\n    image: vllm/vllm-openai\n    deploy:\n      replicas: 3\n      resources:\n        limits:\n          nvidia.com/gpu: 1\n    \n  embedding-service:\n    image: embedding-service\n    deploy:\n      replicas: 2\n```\n\n# 解决方案\n# 安装匹配的 CUDA 版本\n# 或使用 Docker (自带 CUDA)\n```",
+          "retrieved_doc_paths": [
+            "E_config/docker_compose.md",
+            "C_troubleshoot/port_conflict.md",
+            "E_config/docker_compose_llm_official.md",
+            "B_deploy/vllm_single_gpu.md",
+            "B_deploy/tgi_docker.md",
+            "E_config/gpu_monitoring.md",
+            "D_design/microservices.md",
+            "C_troubleshoot/cuda_issues.md"
+          ],
+          "retrieval_ms": 2245.397,
+          "retrieval_inner_ms": 2244.16,
+          "scoring_ms": 0.0,
+          "pruning_ms": 0.012,
+          "ttft_ms": 12777.56,
+          "total_latency_ms": 22767.773,
+          "prompt_tokens_final": 366,
+          "prompt_chars_final": 1135,
+          "context_chars_final": 755,
+          "generated_tokens": 129,
+          "topn": 8,
+          "budget": null,
+          "keep_ratio": 0.6,
+          "strategy": "passthrough",
+          "budget_meta": {
+            "budget_chars": null,
+            "budget_applied": false,
+            "budget_mode": "none",
+            "pre_budget_chars": 755,
+            "post_budget_chars": 755
+          },
+          "recall_at_k": 1.0,
+          "recall_hit_at_k": 1.0,
+          "judge_a": {
+            "faithfulness": 10.0,
+            "relevance": 10.0
+          },
+          "judge_b": {
+            "faithfulness": 8.0,
+            "relevance": 6.0
+          },
+          "faith_a": 10.0,
+          "rel_a": 10.0,
+          "faith_b": 8.0,
+          "rel_b": 6.0,
+          "faith_m": 9.0,
+          "rel_m": 8.0,
+          "gap_f": 2.0,
+          "gap_r": 4.0,
+          "auto_error_category": "ok"
+        },
+        {
+          "id": "Q009",
+          "question": "vLLM Chat Completions 的端点路径是什么？",
+          "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 3 的内容，vLLM Chat Completions 的端点路径与 OpenAI Chat API 兼容，因此其端点路径为：\n\n```\n/v1/chat/completions\n```\n\n该路径在文档 1（`tgi_chat.md`）和文档 7（`tgi_chat.md`）中也被明确提及，用于 TGI 的 Chat API 服务。虽然文档 8 提到通过 `kubectl port-forward` 转发 8000 端口，但端点路径仍遵循标准的 `/v1/chat/completions` 格式。",
+          "source_docs": [
+            "A_api/vllm_chat_completions.md"
+          ],
+          "answer": "Based on the context provided, I do not know the specific endpoint path for vLLM Chat Completions. The context only mentions the PowerShell command `netstat -ano | findstr 11434` to check the port, and the installation process for vLLM, but it does not provide information about the endpoint path for vLLM Chat Completions.",
+          "context": "# vLLM Chat Completions API\n\n# vLLM Completions API\n\n# vLLM Kubernetes 部署 - 基础篇\n\n```powershell\n# 检查端口\nnetstat -ano | findstr 11434\n\n# TGI Chat Completions API\n\n# vLLM JavaScript SDK\n\n## 3. Post-installation\nAdd the following to your `~/.bashrc`:\n```bash\nexport PATH=/usr/local/cuda/bin${PATH:+:${PATH}}\nexport LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}\n```\n\n```bash\n# vLLM benchmark\npython -m vllm.entrypoints.openai.api_server --model model",
+          "retrieved_doc_paths": [
+            "A_api/vllm_chat_completions.md",
+            "A_api/vllm_completions.md",
+            "B_deploy/vllm_k8s_basic.md",
+            "B_deploy/ollama_windows.md",
+            "A_api/tgi_chat.md",
+            "A_api/vllm_nodejs_sdk.md",
+            "B_deploy/cuda_install_official.md",
+            "D_design/inference_performance.md"
+          ],
+          "retrieval_ms": 270.752,
+          "retrieval_inner_ms": 270.717,
+          "scoring_ms": 0.0,
+          "pruning_ms": 0.004,
+          "ttft_ms": 1046.176,
+          "total_latency_ms": 5794.7,
+          "prompt_tokens_final": 268,
+          "prompt_chars_final": 849,
+          "context_chars_final": 475,
+          "generated_tokens": 77,
+          "topn": 8,
+          "budget": null,
+          "keep_ratio": 0.6,
+          "strategy": "passthrough",
+          "budget_meta": {
+            "budget_chars": null,
+            "budget_applied": false,
+            "budget_mode": "none",
+            "pre_budget_chars": 475,
+            "post_budget_chars": 475
+          },
+          "recall_at_k": 1.0,
+          "recall_hit_at_k": 1.0,
+          "judge_a": {
+            "faithfulness": 0.0,
+            "relevance": 1.0
+          },
+          "judge_b": {
+            "faithfulness": 0.0,
+            "relevance": 1.0
+          },
+          "faith_a": 0.0,
+          "rel_a": 1.0,
+          "faith_b": 0.0,
+          "rel_b": 1.0,
+          "faith_m": 0.0,
+          "rel_m": 1.0,
+          "gap_f": 0.0,
+          "gap_r": 0.0,
+          "auto_error_category": "factual_drift"
+        }
+      ],
+      "summary": {
+        "topn": 8,
+        "budget": null,
+        "budget_label": "none",
+        "n": 2,
+        "retrieval_latency_ms": 1258.074,
+        "ttft_ms": 6911.868,
+        "total_latency_ms": 14281.237,
+        "merged_faithfulness": 4.5,
+        "merged_relevance": 4.5,
+        "answer_error_rate": 0.5,
+        "prompt_tokens_final": 317.0,
+        "prompt_chars_final": 992.0,
+        "context_chars_final": 615.0,
+        "judge_gap_faithfulness": 1.0,
+        "judge_gap_relevance": 2.0,
+        "recall_at_k": 1.0,
+        "failure_count": 1,
+        "failure_types": {
+          "ok": 1,
+          "factual_drift": 1
+        },
+        "strategies_used": [
+          "passthrough"
+        ]
+      },
+      "selection": {
+        "faithfulness_drop_vs_baseline": -0.263,
+        "relevance_drop_vs_baseline": 0.475,
+        "answer_error_rate_delta_vs_baseline_proxy": -0.125,
+        "baseline_answer_error_rate_proxy": 0.625,
+        "is_candidate": false,
+        "selection_note": "relevance_drop=0.475>threshold"
+      }
+    },
+    {
+      "point_id": "t8_b1500",
+      "topn": 8,
+      "budget": 1500,
+      "budget_label": "1500",
+      "status": "completed",
+      "rows": [
+        {
+          "id": "Q008",
+          "question": "docker_compose.md 中 API 服务的端口映射配置是什么？",
+          "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 1 的配置，API 服务的端口映射配置如下：\n\n```yaml\nports:\n- \"8080:8080\"\n```\n\n**说明：**\n- 主机端口 8080 映射到容器内部的 8080 端口（根据第 1 页内容）\n- 该配置位于 `api` 服务的 `ports` 字段中（根据第 1 页内容）\n\n其他文档（2-4 页）主要涉及 `vllm`、`qdrant` 和 `ollama` 服务的配置，未包含 API 服务的端口设置。",
+          "source_docs": [
+            "E_config/docker_compose.md"
+          ],
+          "answer": "The `docker-compose.yaml` file provided in the context does not specify any API service port mapping configuration. The `docker-compose.yaml` file only defines the services `gateway`, `model-service`, and `embedding-service`, but it does not specify any port mapping for these services.",
+          "context": "# Docker Compose 完整配置\n\n```bash\n# Docker\ndocker --version\nnvidia-docker --version\n\n## Template: `docker-compose.yml`\n\n# 查看容器资源\ndocker stats\n```\n\n| 参数 | 描述 |\n|------|------|\n| -p 3000:80 | 端口映射 (host:container) |\n| -v $PWD/data:/data | 数据卷挂载 |\n| --gpus all | GPU 加速 |\n\n```yaml\n# node_exporter 配置\nscrape_configs:\n  - job_name: 'nvidia'\n    static_configs:\n      - targets: ['nvidia-exporter:9100']\n```\n\n```yaml\n# docker-compose.yaml\nservices:\n  gateway:\n    image: nginx:latest\n    \n  model-service:\n    image: vllm/vllm-openai\n    deploy:\n      replicas: 3\n      resources:\n        limits:\n          nvidia.com/gpu: 1\n    \n  embedding-service:\n    image: embedding-service\n    deploy:\n      replicas: 2\n```\n\n# 解决方案\n# 安装匹配的 CUDA 版本\n# 或使用 Docker (自带 CUDA)\n```",
+          "retrieved_doc_paths": [
+            "E_config/docker_compose.md",
+            "C_troubleshoot/port_conflict.md",
+            "E_config/docker_compose_llm_official.md",
+            "B_deploy/vllm_single_gpu.md",
+            "B_deploy/tgi_docker.md",
+            "E_config/gpu_monitoring.md",
+            "D_design/microservices.md",
+            "C_troubleshoot/cuda_issues.md"
+          ],
+          "retrieval_ms": 985.345,
+          "retrieval_inner_ms": 985.056,
+          "scoring_ms": 0.0,
+          "pruning_ms": 0.008,
+          "ttft_ms": 3866.263,
+          "total_latency_ms": 8638.423,
+          "prompt_tokens_final": 366,
+          "prompt_chars_final": 1135,
+          "context_chars_final": 755,
+          "generated_tokens": 58,
+          "topn": 8,
+          "budget": 1500,
+          "keep_ratio": 0.6,
+          "strategy": "passthrough",
+          "budget_meta": {
+            "budget_chars": 1500,
+            "budget_applied": false,
+            "budget_mode": "within_limit",
+            "pre_budget_chars": 755,
+            "post_budget_chars": 755
+          },
+          "recall_at_k": 1.0,
+          "recall_hit_at_k": 1.0,
+          "judge_a": {
+            "faithfulness": 10.0,
+            "relevance": 10.0
+          },
+          "judge_b": {
+            "faithfulness": 10.0,
+            "relevance": 10.0
+          },
+          "faith_a": 10.0,
+          "rel_a": 10.0,
+          "faith_b": 10.0,
+          "rel_b": 10.0,
+          "faith_m": 10.0,
+          "rel_m": 10.0,
+          "gap_f": 0.0,
+          "gap_r": 0.0,
+          "auto_error_category": "ok"
+        },
+        {
+          "id": "Q009",
+          "question": "vLLM Chat Completions 的端点路径是什么？",
+          "ground_truth": "【MemoraRAG 技能系统：运行正常】\n\n根据文档 3 的内容，vLLM Chat Completions 的端点路径与 OpenAI Chat API 兼容，因此其端点路径为：\n\n```\n/v1/chat/completions\n```\n\n该路径在文档 1（`tgi_chat.md`）和文档 7（`tgi_chat.md`）中也被明确提及，用于 TGI 的 Chat API 服务。虽然文档 8 提到通过 `kubectl port-forward` 转发 8000 端口，但端点路径仍遵循标准的 `/v1/chat/completions` 格式。",
+          "source_docs": [
+            "A_api/vllm_chat_completions.md"
+          ],
+          "answer": "According to the context, the endpoint path for vLLM Chat Completions is not explicitly mentioned. However, based on the provided information, it seems that the vLLM Chat Completions API is related to the `vllm.entrypoints.openai.api_server` command. \n\nHowever, without further information, I cannot provide the exact endpoint path for vLLM Chat Completions. If you can provide more context or clarify the specific endpoint you are looking for, I'll be happy to help.",
+          "context": "# vLLM Chat Completions API\n\n# vLLM Completions API\n\n# vLLM Kubernetes 部署 - 基础篇\n\n```powershell\n# 检查端口\nnetstat -ano | findstr 11434\n\n# TGI Chat Completions API\n\n# vLLM JavaScript SDK\n\n## 3. Post-installation\nAdd the following to your `~/.bashrc`:\n```bash\nexport PATH=/usr/local/cuda/bin${PATH:+:${PATH}}\nexport LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}\n```\n\n```bash\n# vLLM benchmark\npython -m vllm.entrypoints.openai.api_server --model model",
+          "retrieved_doc_paths": [
+            "A_api/vllm_chat_completions.md",
+            "A_api/vllm_completions.md",
+            "B_deploy/vllm_k8s_basic.md",
+            "B_deploy/ollama_windows.md",
+            "A_api/tgi_chat.md",
+            "A_api/vllm_nodejs_sdk.md",
+            "B_deploy/cuda_install_official.md",
+            "D_design/inference_performance.md"
+          ],
+          "retrieval_ms": 54.164,
+          "retrieval_inner_ms": 54.132,
+          "scoring_ms": 0.0,
+          "pruning_ms": 0.003,
+          "ttft_ms": 980.04,
+          "total_latency_ms": 7066.909,
+          "prompt_tokens_final": 268,
+          "prompt_chars_final": 849,
+          "context_chars_final": 475,
+          "generated_tokens": 106,
+          "topn": 8,
+          "budget": 1500,
+          "keep_ratio": 0.6,
+          "strategy": "passthrough",
+          "budget_meta": {
+            "budget_chars": 1500,
+            "budget_applied": false,
+            "budget_mode": "within_limit",
+            "pre_budget_chars": 475,
+            "post_budget_chars": 475
+          },
+          "recall_at_k": 1.0,
+          "recall_hit_at_k": 1.0,
+          "judge_a": {
+            "faithfulness": 0.0,
+            "relevance": 0.0
+          },
+          "judge_b": {
+            "faithfulness": 2.0,
+            "relevance": 2.0
+          },
+          "faith_a": 0.0,
+          "rel_a": 0.0,
+          "faith_b": 2.0,
+          "rel_b": 2.0,
+          "faith_m": 1.0,
+          "rel_m": 1.0,
+          "gap_f": 2.0,
+          "gap_r": 2.0,
+          "auto_error_category": "factual_drift"
+        }
+      ],
+      "summary": {
+        "topn": 8,
+        "budget": 1500,
+        "budget_label": "1500",
+        "n": 2,
+        "retrieval_latency_ms": 519.755,
+        "ttft_ms": 2423.151,
+        "total_latency_ms": 7852.666,
+        "merged_faithfulness": 5.5,
+        "merged_relevance": 5.5,
+        "answer_error_rate": 0.5,
+        "prompt_tokens_final": 317.0,
+        "prompt_chars_final": 992.0,
+        "context_chars_final": 615.0,
+        "judge_gap_faithfulness": 1.0,
+        "judge_gap_relevance": 1.0,
+        "recall_at_k": 1.0,
+        "failure_count": 1,
+        "failure_types": {
+          "ok": 1,
+          "factual_drift": 1
+        },
+        "strategies_used": [
+          "passthrough"
+        ]
+      },
+      "selection": {
+        "faithfulness_drop_vs_baseline": -1.263,
+        "relevance_drop_vs_baseline": -0.525,
+        "answer_error_rate_delta_vs_baseline_proxy": -0.125,
+        "baseline_answer_error_rate_proxy": 0.625,
+        "is_candidate": true,
+        "selection_note": "within bounded operating region under current thresholds"
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+\begin{table}[htbp]
+\centering
+\caption{Expanded 120k-character needle-in-a-haystack depth sweep, reported as bounded robustness evidence.}
+\label{tab:long-context-robustness}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{r r r l}
+\hline
+Needle depth (\%) & Success rate & Latency (s) & Failure \\
+\hline
+0 & 1.00 & 11.90 & -- \\
+25 & 1.00 & 11.12 & -- \\
+50 & 1.00 & 11.20 & -- \\
+75 & 0.67 & 11.18 & missed \\
+90 & 0.67 & 9.88 & missed \\
+95 & 0.67 & 9.48 & partial \\
+99 & 1.00 & 11.25 & -- \\
+\hline
+\end{tabular}
+\end{table}

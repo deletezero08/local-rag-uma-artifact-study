@@ -1,0 +1,7 @@
+Exp ID,TurboQuant,Context Pruning,Keep Ratio,TopN,Budget,Retrieval (ms),Compression (ms),Prefill (ms),Decode (ms),Total E2E (ms),Recall@10,Faithfulness,Relevance,Notes
+A0,ON,ON,,,,,,,,,,,,Full path
+A1,OFF,ON,,,,,,,,,,,,No TurboQuant
+A2,ON,OFF,,,,,,,,,,,,No pruning
+A3,OFF,OFF,,,,,,,,,,,,Baseline
+A4,OFF,ON,,,,,,,,,,,,Only pruning
+A5,ON,OFF,,,,,,,,,,,,Only TurboQuant

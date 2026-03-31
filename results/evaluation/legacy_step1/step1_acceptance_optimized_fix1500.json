@@ -1,0 +1,9 @@
+{
+  "name": "optimized_t8_b1500",
+  "top_n": 8,
+  "context_char_budget": 1500,
+  "faithfulness_mean": 7.017,
+  "relevance_mean": 7.167,
+  "latency_mean": 71.869,
+  "n": 60
+}
